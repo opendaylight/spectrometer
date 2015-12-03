@@ -1,0 +1,5 @@
+modulename:
+  repo: repo/address
+
+test:
+  repo: ./.
