@@ -21,10 +21,10 @@ views.py: Web App
 
 """
 
-
-from flask import json, jsonify, Response
+from flask import jsonify
 from spectrometer.githelpers import GitHandler
 from spectrometer.dashboard import app
+
 # todo: http://flask.pocoo.org/snippets/83/
 
 
