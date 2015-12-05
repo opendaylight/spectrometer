@@ -1,1 +1,5 @@
+# Python3
+__pycache__/
+
+# Testing
 .tox/
