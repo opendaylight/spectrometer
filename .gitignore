@@ -4,5 +4,10 @@
 # Python3
 __pycache__/
 
+# setuptools
+.eggs/
+*.egg-info/
+
 # Testing
+.cache/
 .tox/

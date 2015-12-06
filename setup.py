@@ -44,4 +44,7 @@ setup(
         '*.tests.*',
         'tests.*',
         'tests'
-    ]))
+    ]),
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+)
