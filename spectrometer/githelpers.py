@@ -21,10 +21,12 @@ githelpers.py: Git Helper
 
 """
 
-from git import Repo
 import time
 import yaml
-from dashboard import app
+
+from git import Repo
+
+from spectrometer.dashboard import app
 
 
 class GitHandler:

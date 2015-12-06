@@ -22,6 +22,7 @@ views.py: Web App
 """
 
 from flask import jsonify
+
 from spectrometer.githelpers import GitHandler
 from spectrometer.dashboard import app
 
