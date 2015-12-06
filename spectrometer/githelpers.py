@@ -24,9 +24,9 @@ githelpers.py: Git Helper
 import time
 import yaml
 
-from git import Repo
+from flask import current_app as app
 
-from spectrometer.dashboard import app
+from git import Repo
 
 
 class GitHandler:

@@ -24,17 +24,14 @@ views.py: Web App
 from flask import jsonify
 
 from spectrometer.githelpers import GitHandler
-from spectrometer.dashboard import app
 
 # todo: http://flask.pocoo.org/snippets/83/
 
 
-@app.route('/')
 def hello_world():
     return 'Hello World!'
 
 
-@app.route('/git/<module_name>')
 def git_stat(module_name):
     git_handle = GitHandler(module_name)
     stats = git_handle.get_commits_stat()
@@ -43,6 +40,5 @@ def git_stat(module_name):
     return jsonify(stats)
 
 
-@app.route('/gerrit/<module_name>')
 def gerrit_stat(moduel_name):
     return "Not implemented"

@@ -11,5 +11,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-from spectrometer.dashboard import app
+from spectrometer.dashboard import create_dashboard
+
+app = create_dashboard('config')
 app.run(debug=True)

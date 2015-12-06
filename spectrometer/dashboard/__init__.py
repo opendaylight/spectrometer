@@ -23,7 +23,17 @@ __init__.py: init
 
 from flask import Flask
 
-app = Flask(__name__)
-app.config.from_object('config')
+from spectrometer.dashboard.views import gerrit_stat
+from spectrometer.dashboard.views import git_stat
+from spectrometer.dashboard.views import hello_world
 
-import spectrometer.dashboard.views  # noqa
+
+def create_dashboard(config):
+    app = Flask(__name__)
+    app.config.from_object(config)
+
+    app.route('/')(hello_world)
+    app.route('/git/<module_name>')(git_stat)
+    app.route('/gerrit/<module_name>')(gerrit_stat)
+
+    return app
