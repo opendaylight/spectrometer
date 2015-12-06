@@ -11,6 +11,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+import os
+
 import pytest
 
 from spectrometer.dashboard import create_dashboard
@@ -18,5 +20,6 @@ from spectrometer.dashboard import create_dashboard
 
 @pytest.fixture
 def app():
-    app = create_dashboard('config')
+    config = os.path.join(os.getcwd(), 'config.py')
+    app = create_dashboard(config)
     return app

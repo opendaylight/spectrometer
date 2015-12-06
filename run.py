@@ -11,7 +11,11 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+import os
+
 from spectrometer.dashboard import create_dashboard
 
-app = create_dashboard('config')
+config = os.path.join(os.getcwd(), 'config.py')
+
+app = create_dashboard(config)
 app.run(debug=True)

@@ -30,7 +30,7 @@ from spectrometer.dashboard.views import hello_world
 
 def create_dashboard(config):
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_pyfile(config)
 
     app.route('/')(hello_world)
     app.route('/git/<module_name>')(git_stat)
