@@ -2,9 +2,9 @@
 
 ### Installation
 ```
-$ cd spectrometer/
+$ cd spectrometer_server/
 $ pip install -r requirements.txt
-$ python spectrometer-dashboard
+$ python spectrometer-server
 ```
 
 open a browswer

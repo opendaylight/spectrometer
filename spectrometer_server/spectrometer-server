@@ -10,3 +10,20 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
+
+import argparse
+import os
+
+from spectrometer_api import create_dashboard
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-c", "--conf", help="Config file")
+args = parser.parse_args()
+
+config = os.path.join(os.getcwd(), 'config.py')
+print(config)
+if args.conf:
+    config = args.conf
+
+app = create_dashboard(config)
+app.run(debug=True)

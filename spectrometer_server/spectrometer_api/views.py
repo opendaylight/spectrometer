@@ -17,23 +17,28 @@
 @status: Development
 @version: 1.0
 
-__init__.py: init
+views.py: Web App
 
 """
 
-from flask import Flask
+from flask import jsonify
 
-from spectrometer.dashboard.views import gerrit_stat
-from spectrometer.dashboard.views import git_stat
-from spectrometer.dashboard.views import hello_world
+from spectrometer_api.githelpers import GitHandler
+
+# todo: http://flask.pocoo.org/snippets/83/
 
 
-def create_dashboard(config):
-    app = Flask(__name__)
-    app.config.from_pyfile(config)
+def hello_world():
+    return 'Hello World!'
 
-    app.route('/')(hello_world)
-    app.route('/git/<module_name>')(git_stat)
-    app.route('/gerrit/<module_name>')(gerrit_stat)
 
-    return app
+def git_stat(module_name):
+    git_handle = GitHandler(module_name)
+    stats = git_handle.get_commits_stat()
+    # return Response(response=json.dumps(stats,indent=2,
+    #  separators=(',', ': ')), status=200, mimetype='application/json')
+    return jsonify(stats)
+
+
+def gerrit_stat(moduel_name):
+    return "Not implemented"

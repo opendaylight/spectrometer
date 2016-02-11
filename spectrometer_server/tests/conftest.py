@@ -3,7 +3,7 @@
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
 ##############################################################################
-# Copyright (c) 2015 Mohammed Hassan Zahraee and others.
+# Copyright (c) 2015 The Linux Foundation and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -11,18 +11,15 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-import argparse
 import os
 
-from spectrometer.dashboard import create_dashboard
+import pytest
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--conf", help="Config file")
-args = parser.parse_args()
+from spectrometer_api import create_dashboard
 
-config = os.path.join(os.getcwd(), 'config.py')
-if args.conf:
-    config = args.conf
 
-app = create_dashboard(config)
-app.run(debug=True)
+@pytest.fixture
+def app():
+    config = os.path.join(os.getcwd(), 'config.py')
+    app = create_dashboard(config)
+    return app
