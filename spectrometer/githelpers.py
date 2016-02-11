@@ -40,14 +40,10 @@ class GitHandler:
             @:param module's name
             @:return repository object for the module
         """
-        bare = True
-        # todo: remove test and bare
-        if moduel_name == 'test':
-            bare = False
         with open(app.config['REPOSITORY_ADDRESSES']) as file:
             repositories = yaml.load(file)
         repo_address = repositories[moduel_name]['repo']
-        return Repo.init(repo_address, bare=bare)
+        return Repo(repo_address)
 
     def get_commits_stat(self):
         # todo: removing merging commits (more than 1 parent)
