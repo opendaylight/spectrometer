@@ -21,7 +21,6 @@ parser.add_argument("-c", "--conf", help="Config file")
 args = parser.parse_args()
 
 config = os.path.join(os.getcwd(), 'config.py')
-print(config)
 if args.conf:
     config = args.conf
 

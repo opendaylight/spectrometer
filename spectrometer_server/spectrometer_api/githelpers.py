@@ -23,6 +23,7 @@ githelpers.py: Git Helper
 
 import time
 import yaml
+import itertools
 
 from flask import current_app as app
 
@@ -45,10 +46,22 @@ class GitHandler:
         repo_address = repositories[moduel_name]['repo']
         return Repo(repo_address)
 
-    def get_commits_stat(self):
+    def get_commits_stat(self, branch_name):
         # todo: removing merging commits (more than 1 parent)
+        # todo: breaking method into smaller ones
         stats = {'commits': []}
-        for commit in self.repo.head.commit.iter_parents():
+        last_commit = None
+        for branch in self.repo.branches:
+            if branch.name == branch_name:
+                last_commit = branch.commit
+                break
+        if not last_commit:
+            return False
+        commits_in_master = list(self.repo.iter_commits('master'))
+        for commit in itertools.chain([last_commit], last_commit.iter_parents()):
+            if branch_name != 'master' \
+                    and commit in commits_in_master:
+                break
             commit_dic = {
                 'hash': commit.hexsha,
                 'lines': commit.stats.total,

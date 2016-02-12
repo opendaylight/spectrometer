@@ -34,6 +34,7 @@ def create_dashboard(config):
 
     app.route('/')(hello_world)
     app.route('/git/<module_name>')(git_stat)
+    app.route('/git/<module_name>/<path:branch_name>')(git_stat)
     app.route('/gerrit/<module_name>')(gerrit_stat)
 
     return app

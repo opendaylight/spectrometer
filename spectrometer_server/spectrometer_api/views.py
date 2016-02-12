@@ -32,9 +32,9 @@ def hello_world():
     return 'Hello World!'
 
 
-def git_stat(module_name):
+def git_stat(module_name, branch_name='master'):
     git_handle = GitHandler(module_name)
-    stats = git_handle.get_commits_stat()
+    stats = git_handle.get_commits_stat(branch_name)
     # return Response(response=json.dumps(stats,indent=2,
     #  separators=(',', ': ')), status=200, mimetype='application/json')
     return jsonify(stats)

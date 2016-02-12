@@ -20,9 +20,11 @@ modulename:
 ```
 Now the flask application must be up and serve requests:
 ```
-$ python dashboard/webapp.py
+$ python spectrometer-server
 ```
 Now `http://127.0.0.1:5000/git/modulename` will return repository log of added repository address in *yaml* file.
+`http://127.0.0.1:5000/git/modulename/branchname` will return commits on that branch and parents commits to them that
+are not in `master` branch. An example can be `http://127.0.0.1:5000/git/aaa/stable/lithium`
 
 ### Contribuition
 Style guide:
