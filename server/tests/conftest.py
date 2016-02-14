@@ -15,11 +15,11 @@ import os
 
 import pytest
 
-from spectrometer_api import create_dashboard
+from spectrometer import create_app
 
 
 @pytest.fixture
 def app():
     config = os.path.join(os.getcwd(), 'config.py')
-    app = create_dashboard(config)
+    app = create_app(config)
     return app

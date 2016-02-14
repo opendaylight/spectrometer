@@ -14,7 +14,7 @@
 import argparse
 import os
 
-from spectrometer_api import create_dashboard
+from spectrometer_api import create_app
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--conf", help="Config file")
@@ -24,5 +24,5 @@ config = os.path.join(os.getcwd(), 'config.py')
 if args.conf:
     config = args.conf
 
-app = create_dashboard(config)
+app = create_app(config)
 app.run(debug=True)
