@@ -34,6 +34,17 @@ class GitHandler:
     def __init__(self, moduel_name):
         self.repo = self.get_modules_repo(moduel_name)
 
+    def format_commit_info(self, commit):
+        return {
+                'hash': commit.hexsha,
+                'lines': commit.stats.total,
+                # UTC time
+                'time': time.strftime("%d %b %Y %H:%M",
+                                      time.gmtime(commit.committed_date)),
+                'commiter': commit.author.name,
+                'email': commit.author.email
+            }
+
     def get_modules_repo(self, moduel_name):
         """
             finds a modules repository address from repositories.json file
@@ -48,28 +59,21 @@ class GitHandler:
 
     def get_commits_stat(self, branch_name):
         # todo: removing merging commits (more than 1 parent)
-        # todo: breaking method into smaller ones
         stats = {'commits': []}
         last_commit = None
         for branch in self.repo.branches:
             if branch.name == branch_name:
                 last_commit = branch.commit
                 break
-        if not last_commit:
-            return False
-        commits_in_master = list(self.repo.iter_commits('master'))
-        for commit in itertools.chain([last_commit], last_commit.iter_parents()):
-            if branch_name != 'master' \
-                    and commit in commits_in_master:
-                break
-            commit_dic = {
-                'hash': commit.hexsha,
-                'lines': commit.stats.total,
-                # UTC time
-                'time': time.strftime("%d %b %Y %H:%M",
-                                      time.gmtime(commit.committed_date)),
-                'commiter': commit.author.name,
-                'email': commit.author.email
-            }
-            stats['commits'].append(commit_dic)
+        if last_commit:
+            commits_in_master = list(self.repo.iter_commits('master'))
+            for commit in itertools.chain([last_commit], last_commit.iter_parents()):
+                if branch_name != 'master' \
+                        and commit in commits_in_master:
+                    break
+                commit_dic = self.format_commit_info(commit)
+                stats['commits'].append(commit_dic)
+
+        else:
+            stats['message'] = "branch was not found!"
         return stats
