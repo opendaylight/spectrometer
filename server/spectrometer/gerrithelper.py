@@ -17,24 +17,25 @@
 @status: Development
 @version: 1.0
 
-__init__.py: init
+githelpers.py: Gerrit Helper
 
 """
 
-from flask import Flask
+import requests
+import json
 
-import spectrometer.views as views
+from urlparse import urljoin
 
 
-def create_app(config):
-    app = Flask(__name__)
-    app.config.from_pyfile(config)
+class Gerrit():
+    GERRIT_MAGIC_STRING = ")]}'"
 
-    app.route('/')(views.hello_world)
-    app.route('/git/commits/<module_name>')(views.git_stat)
-    app.route('/git/commits/<module_name>/<path:branch_name>')(views.git_stat)
-    app.route('/git/branches/<module_name>/')(views.list_branches)
-    app.route('/gerrit/projects/')(views.list_projects)
-    app.route('/gerrit/<module_name>/')(views.gerrit_stat)
+    def __init__(self, base_url):
+        self.BASE_URL = base_url
 
-    return app
+    def projects_list(self):
+        url = urljoin(self.BASE_URL, './projects/')
+        response = requests.get(url).text
+        return json.loads(
+            response.lstrip(self.GERRIT_MAGIC_STRING)
+        ).keys()

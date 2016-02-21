@@ -22,8 +22,10 @@ views.py: Web App
 """
 
 from flask import jsonify
+from flask import current_app as app
 
 from spectrometer.githelpers import GitHandler
+from spectrometer.gerrithelper import Gerrit
 
 # todo: http://flask.pocoo.org/snippets/83/
 
@@ -44,6 +46,11 @@ def list_branches(module_name):
     git_handle = GitHandler(module_name)
     branches = git_handle.get_branches_names()
     return jsonify(branches)
+
+
+def list_projects():
+    gerrit = Gerrit(app.config['BASE_GERRIT_URL'])
+    return jsonify({'projects': gerrit.projects_list()})
 
 
 def gerrit_stat(moduel_name):

@@ -45,3 +45,4 @@ $ python setup.py test
 GET /git/commits/:modulename
 GET /git/commits/:modulename/:branchname
 GET /git/branches/:modulename
+GET /gerrit/projects
