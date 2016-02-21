@@ -8,7 +8,7 @@ $ python spectrometer-server
 ```
 
 open a browswer
-`http://127.0.0.1:5000/git/test`
+`http://127.0.0.1:5000/git/commits/test`
 must show commits log from local directory of spectrometer2.
 
 ### Usage
@@ -22,9 +22,9 @@ Now the flask application must be up and serve requests:
 ```
 $ python spectrometer-server
 ```
-Now `http://127.0.0.1:5000/git/:modulename` will return repository log of added repository address in *yaml* file.
-`http://127.0.0.1:5000/git/:modulename/:branchname` will return commits on that branch and parents commits to them that
-are not in `master` branch. An example can be `http://127.0.0.1:5000/git/aaa/stable/lithium`
+Now `http://127.0.0.1:5000/git/commits/:modulename` will return repository log of added repository address in *yaml* file.
+`http://127.0.0.1:5000/git/commits/:modulename/:branchname` will return commits on that branch and parents commits to them that
+are not in `master` branch. An example can be `http://127.0.0.1:5000/git/commits/aaa/stable/lithium`
 
 ### Contribuition
 Style guide:
@@ -40,3 +40,8 @@ $ cd spectrometer/
 $ pip install -r test-requirements.txt
 $ python setup.py test
 ```
+
+### REST API
+GET /git/commits/:modulename
+GET /git/commits/:modulename/:branchname
+GET /git/branches/:modulename

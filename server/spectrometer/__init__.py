@@ -26,6 +26,7 @@ from flask import Flask
 from spectrometer.views import gerrit_stat
 from spectrometer.views import git_stat
 from spectrometer.views import hello_world
+from spectrometer.views import list_branches
 
 
 def create_app(config):
@@ -33,8 +34,9 @@ def create_app(config):
     app.config.from_pyfile(config)
 
     app.route('/')(hello_world)
-    app.route('/git/<module_name>')(git_stat)
-    app.route('/git/<module_name>/<path:branch_name>')(git_stat)
-    app.route('/gerrit/<module_name>')(gerrit_stat)
+    app.route('/git/commits/<module_name>')(git_stat)
+    app.route('/git/commits/<module_name>/<path:branch_name>')(git_stat)
+    app.route('/git/branches/<module_name>/')(list_branches)
+    app.route('/gerrit/<module_name>/')(gerrit_stat)
 
     return app

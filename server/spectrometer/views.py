@@ -40,5 +40,11 @@ def git_stat(module_name, branch_name='master'):
     return jsonify(stats)
 
 
+def list_branches(module_name):
+    git_handle = GitHandler(module_name)
+    branches = git_handle.get_branches_names()
+    return jsonify(branches)
+
+
 def gerrit_stat(moduel_name):
     return "Not implemented"

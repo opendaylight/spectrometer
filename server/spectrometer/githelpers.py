@@ -73,7 +73,10 @@ class GitHandler:
                     break
                 commit_dic = self.format_commit_info(commit)
                 stats['commits'].append(commit_dic)
-
         else:
-            stats['message'] = "branch was not found!"
+            stats['message'] = "branch {0} was not found!".format(branch_name)
         return stats
+
+    def get_branches_names(self):
+        branches = [b.name for b in self.repo.branches]
+        return {'names': branches}
