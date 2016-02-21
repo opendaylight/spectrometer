@@ -1,1 +1,1 @@
-REPOSITORY_ADDRESSES = './spectrometer_api/etc/repositories.yaml'
+REPOSITORY_ADDRESSES = './spectrometer/etc/repositories.yaml'
