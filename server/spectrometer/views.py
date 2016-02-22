@@ -36,16 +36,20 @@ def hello_world():
 
 def git_stat(module_name, branch_name='master'):
     git_handle = GitHandler(module_name)
-    stats = git_handle.get_commits_stat(branch_name)
+    stat = git_handle.get_commits_stat(branch_name)
+    if stat == -1:
+        result = {'error': 'Branch {0} was not found!'.format(branch_name)}
+    else:
+        result = {'commits': stat}
     # return Response(response=json.dumps(stats,indent=2,
     #  separators=(',', ': ')), status=200, mimetype='application/json')
-    return jsonify(stats)
+    return jsonify(result)
 
 
 def list_branches(module_name):
     git_handle = GitHandler(module_name)
     branches = git_handle.get_branches_names()
-    return jsonify(branches)
+    return jsonify({'names': branches})
 
 
 def list_projects():

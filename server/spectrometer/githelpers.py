@@ -59,7 +59,7 @@ class GitHandler:
 
     def get_commits_stat(self, branch_name):
         # todo: removing merging commits (more than 1 parent)
-        stats = {'commits': []}
+        stat = []
         last_commit = None
         for branch in self.repo.branches:
             if branch.name == branch_name:
@@ -72,11 +72,12 @@ class GitHandler:
                         and commit in commits_in_master:
                     break
                 commit_dic = self.format_commit_info(commit)
-                stats['commits'].append(commit_dic)
+                stat.append(commit_dic)
         else:
-            stats['message'] = "branch {0} was not found!".format(branch_name)
-        return stats
+            # branch was not found
+            stat = -1
+        return stat
 
     def get_branches_names(self):
         branches = [b.name for b in self.repo.branches]
-        return {'names': branches}
+        return branches
