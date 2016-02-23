@@ -120,6 +120,29 @@ GET /git/author/loc/:author_email/:module_name/:branch_name
 
 Name of the author, total lines of code contributed, and total number of commits on a certain branch.
 
+
+```
+GET /git/authors/:module_name
+GET /git/authors/:module_name/:branch_name
+```
+
+List of authors.
+
+```
+{
+  "authors": [
+    [
+      "Ryan Goulding",
+      "...@gmail.com"
+    ],
+    [
+      "Sai MarapaReddy",
+      "...@brocade.com"
+    ]
+  ]
+}
+```
+
 ```
 GET /gerrit/projects
 ```

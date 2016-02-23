@@ -61,6 +61,12 @@ def loc_stat(author_email, module_name, branch_name='master'):
                    )
 
 
+def list_authors(module_name, branch_name='master'):
+    git_handle = GitHandler(module_name)
+    authors = git_handle.get_commiters(branch_name)
+    return jsonify({'authors': authors})
+
+
 def list_projects():
     gerrit = Gerrit(app.config['BASE_GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})

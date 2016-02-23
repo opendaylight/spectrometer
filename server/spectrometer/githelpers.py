@@ -25,6 +25,8 @@ import time
 import yaml
 import itertools
 
+from operator import itemgetter
+
 from flask import current_app as app
 
 from git import Repo
@@ -94,3 +96,14 @@ class GitHandler:
                 if not name:
                     name = c['commiter']
         return name, loc, commit_count
+
+    def get_commiters(self, branch_name):
+        '''
+        :param branch_name:
+        :return: sorted list of (email, name) pairs of contributers
+        '''
+        authors = set()
+        commits = self.get_commits_stat(branch_name)
+        for c in commits:
+            authors.add((c['commiter'], c['email']))
+        return sorted(authors, key=itemgetter(0))
