@@ -81,3 +81,16 @@ class GitHandler:
     def get_branches_names(self):
         branches = [b.name for b in self.repo.branches]
         return branches
+
+    def get_loc_stat(self, email, branch_name):
+        loc = 0
+        commit_count = 0
+        name = None
+        commits = self.get_commits_stat(branch_name)
+        for c in commits:
+            if c['email'] == email:
+                loc += c['lines']['lines']
+                commit_count += 1
+                if not name:
+                    name = c['commiter']
+        return name, loc, commit_count

@@ -52,6 +52,15 @@ def list_branches(module_name):
     return jsonify({'names': branches})
 
 
+def loc_stat(author_email, module_name, branch_name='master'):
+    git_handle = GitHandler(module_name)
+    stat = git_handle.get_loc_stat(author_email, branch_name)
+    return jsonify({'name': stat[0],
+                    'loc': stat[1],
+                    'commit_count': stat[2]}
+                   )
+
+
 def list_projects():
     gerrit = Gerrit(app.config['BASE_GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
