@@ -24,7 +24,7 @@ githelpers.py: Gerrit Helper
 import requests
 import json
 
-from urlparse import urljoin
+from six.moves.urllib.parse import urljoin
 
 
 class Gerrit():

@@ -2,3 +2,4 @@ GitPython>=1.0.1
 Flask>=0.10.1
 PyYAML>=3.11
 requests>=2.9.1
+six>=1.10.0
