@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import Picker from './picker';
 import GitStatsCharts from './git-stats-charts';
 
-// import { SimpleSelect } from 'react-selectize';
-import Select from 'react-select'
-
 const REPOS = require('../../config.json').repos
 const BRANCHES = ['master'];
 
@@ -54,27 +51,6 @@ class GitStats extends Component {
 
   render () {
     const { selectedOdlRepo, selectedBranchName, gitCommits, branches, isFetching, lastUpdated, error } = this.props;
-    // console.log("isFetching:", isFetching);
-    // const renderSelectRepo = () => {
-    //   let options = REPOS.map( (x) => {return { label:x, value: x} });
-    //   return (
-    //     <SimpleSelect
-    //       ref="selectOdlRepo" placeholder="Select Repo" theme="material"
-    //       options={options} value={selectedOdlRepo} onValueChange={this.handleRepoChange}>
-    //       defaultValue={{label: 'toolkit', value: 'toolkit'}}
-    //     </SimpleSelect>
-    //   )
-    // };
-
-    const renderSelectRepo = () => {
-      let options = REPOS.map( (x) => {return { label:x, value: x} });
-      return (
-        <Select
-          ref="selectOdlRepo" placeholder="Select Repo"
-          options={options} value={selectedOdlRepo} onChange={this.handleRepoChange}>
-        </Select>
-      )
-    }
 
     return (
       <div>

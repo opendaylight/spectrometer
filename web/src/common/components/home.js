@@ -12,6 +12,9 @@ class Home extends Component {
             <li>Statistics based on Git and Gerrit API</li>
             <li>Modern Mobile Friendly User Interface</li>
             <li>Pre-defined Charts, Timelines</li>
+          </ul>
+          <h3>Ideas</h3>
+          <ul>
             <li>Dynamic Visualization</li>
           </ul>
         </div>

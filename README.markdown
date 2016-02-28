@@ -262,6 +262,22 @@ Unit Tests are executed using Mocha and Chai assert libraries.
 npm test
 ```
 
+### Troubleshooting
+
+#### Adding new repository
+
+In order to add a new repository to collect statistics, you must make the following changes:
+
+1. Create a soft link in ~/odl-spectrometer to the new repository
+1. Edit the server/spectrometer/etc/repositories.yaml and specify the key and path to ~/odl-spectrometer/$repo
+1. Edit the web/src/config.json add the project name in the list (this makes it appear in the dropdown)
+1. Reload the web page
+1. If reload web page does not work, restart python ```python spectrometer-server``` and web ```npm start```)
+
+### Roadmap
+
+1. Dynamic loading of repositories as opposed to loading via config.json
+
 ## Credit
 
 App template was based on [Lanyon Theme](https://github.com/poole/lanyon) by [mdo](https://github.com/mdo)

@@ -33,12 +33,12 @@ def create_app(config):
     app.route('/')(views.hello_world)
     app.route('/git/commits/<module_name>')(views.git_stat)
     app.route('/git/commits/<module_name>/<path:branch_name>')(views.git_stat)
-    app.route('/git/branches/<module_name>/')(views.list_branches)
+    app.route('/git/branches/<module_name>')(views.list_branches)
     app.route('/git/author/loc/<author_email>/<module_name>')(views.loc_stat)
     app.route('/git/author/loc/<author_email>/<module_name>/<path:branch_name>')(views.loc_stat)
     app.route('/git/authors/<module_name>')(views.list_authors)
     app.route('/git/authors/<module_name>/<path:branch_name>')(views.list_authors)
-    app.route('/gerrit/projects/')(views.list_projects)
-    app.route('/gerrit/<module_name>/')(views.gerrit_stat)
+    app.route('/gerrit/projects')(views.list_projects)
+    app.route('/gerrit/<module_name>')(views.gerrit_stat)
 
     return app
