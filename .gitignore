@@ -12,3 +12,12 @@ dist/
 # Testing
 .cache/
 .tox/
+
+# Web
+web/node_modules
+web/npm-debug.log
+web/lib
+.DS_Store
+web/dist
+web/target
+web/.idea

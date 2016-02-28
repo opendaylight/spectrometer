@@ -1,5 +1,37 @@
-# spectrometer2
+# OpenDaylight Spectrometer
 
+The Spectrometer project consists of two sub-projects, the ```server``` and ```web```.
+
+Server side is Python driven and provides the API to collect Git and Gerrit statistics for various OpenDaylight projects.
+
+The web project is NodeJS/React based and provides the visualization by using the APIs provided by the server side.
+
+In order to run the application, you need to install both ```server``` and ```web``` sub-projects.
+
+## Quick Getting Started Guide
+
+The Quick Getting Started Guide assumes you have Python 2.7 (or Python3 ) and NodeJS 4.3 installed. To install NodeJS using NVM, see Web > Installation section below.
+
+The Spectrometer project collects data from repositories located locally in your system.
+Create a directory called ~/odl-spectrometer (mandatory) and within that create softlinks to all your local ODL repos.
+The Spectrometer server loads data from the softlinks located in ~/odl-spectrometer.
+
+```
+$ mkdir ~/odl-spectrometer
+$ ln -sf <location-of-opendaylight-project> <project-name>  # eg. ln -sf ~/odl-git-repos/aaa aaa
+$ cd ~    # or any folder where you want to checkout spectrometer
+$ git clone ssh://<user>@git.opendaylight.org:29418/spectrometer.git
+$ cd spectrometer/server
+$ pip install -r requirements.txt
+$ python spectrometer-server
+$ cd ../web
+$ npm i
+$ npm start
+```
+
+Goto ```http://localhost:8000```
+
+## Server
 ### Installation
 ```
 $ cd server/
@@ -162,3 +194,74 @@ List of projects in Gerrit.
     ]
 }
 ```
+
+## Web
+
+### Installation
+
+To install NodeJS in your system, use the Node Version Manager (NVM), which allows to co-exist multiple
+NodeJS versions in the same system.
+
+If you already have NodeJS older versions (<= 0.12), it is strongly recommended to completely remove them and reinstall using NVM.
+
+For Linux systems, you can do the following to remove NodeJS:
+
+```
+$ which node # Note down the path
+$ sudo rm -r /path/bin/node /path/bin/npm /path/include/node /path/lib/node_modules ~/.npm
+```
+
+Install NVM, NodeJS 4.3.x and NPM
+
+```
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+$ nvm install 4.3.1  # By default this installs npm 2.14.x
+$ npm install npm -g # This will upgrade npm to 3.7.x
+```
+
+### Run
+
+```
+$ cd ~/spectrometer/web
+$ npm install
+$ npm start
+```
+
+Goto  ```http://localhost:8000```
+
+The web project is configured to hot-reload when any changes are made to the code. Most of the time the web browser should auto refresh, if not simply refresh the page.
+
+### UI Technology Stack
+
+* NodeJS 4.3 - Bootstrapping and Universal (isomorphic) Javascript execution
+* ExpressJS - Web-server-side bootstrap for UI
+* ReactJS 0.14 - View Layer
+* Redux - Data and State management (Flux pattern)
+* Webpack - Build tool
+* Babel - Asset compilation, ES6 Transpiler
+* FormidableLabs VictoryChart - D3-based React components
+* Redux Dev Tools - Tool that allows to track state management
+
+
+### Production
+
+Production build does not have Devtools and hot reloading middleware. It also minifies scripts and css.
+
+For Production build, execute the following commands:
+
+```
+$ npm run build
+$ npm run start-prod
+```
+
+### Run Test
+
+Unit Tests are executed using Mocha and Chai assert libraries.
+
+```
+npm test
+```
+
+## Credit
+
+App template was based on [Lanyon Theme](https://github.com/poole/lanyon) by [mdo](https://github.com/mdo)
