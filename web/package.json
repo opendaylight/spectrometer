@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://opendaylight.git"
   },
-  "license": "Eclipse",
+  "license": "EPL-1.0",
   "dependencies": {
     "axios": "0.7.0",
     "classnames": "^2.1.5",
