@@ -21,13 +21,30 @@ views.py: Web App
 
 """
 
+import yaml
+
 from flask import jsonify
+from flask import request
 from flask import current_app as app
 
 from spectrometer.githelpers import GitHandler
 from spectrometer.gerrithelper import Gerrit
+from spectrometer.datacollector import get_commits_stat_db
 
 # todo: http://flask.pocoo.org/snippets/83/
+
+
+def get_repo_address(module_name):
+    with open(app.config['REPOSITORY_ADDRESSES']) as file:
+        repositories = yaml.load(file)
+    repo_address = repositories[module_name]['repo']
+    return repo_address
+
+
+def create_handler(module_name):
+    return GitHandler(module_name,
+                      get_repo_address(module_name)
+                      )
 
 
 def hello_world():
@@ -35,8 +52,12 @@ def hello_world():
 
 
 def git_stat(module_name, branch_name='master'):
-    git_handle = GitHandler(module_name)
-    stat = git_handle.get_commits_stat(branch_name)
+    if request.args.get('db', False):
+        stat = get_commits_stat_db(module_name, branch_name)
+    else:
+        git_handle = create_handler(module_name)
+        stat = git_handle.get_commits_stat(branch_name)
+
     if stat == -1:
         result = {'error': 'Branch {0} was not found!'.format(branch_name)}
     else:
@@ -47,13 +68,13 @@ def git_stat(module_name, branch_name='master'):
 
 
 def list_branches(module_name):
-    git_handle = GitHandler(module_name)
+    git_handle = create_handler(module_name)
     branches = git_handle.get_branches_names()
     return jsonify({'names': branches})
 
 
 def loc_stat(author_email, module_name, branch_name='master'):
-    git_handle = GitHandler(module_name)
+    git_handle = create_handler(module_name)
     stat = git_handle.get_loc_stat(author_email, branch_name)
     return jsonify({'name': stat[0],
                     'loc': stat[1],
@@ -62,7 +83,7 @@ def loc_stat(author_email, module_name, branch_name='master'):
 
 
 def list_authors(module_name, branch_name='master'):
-    git_handle = GitHandler(module_name)
+    git_handle = create_handler(module_name)
     authors = git_handle.get_commiters(branch_name)
     return jsonify({'authors': authors})
 

@@ -11,6 +11,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+from spectrometer.datacollector import collect_n_store
+import multiprocessing
 import argparse
 import os
 
@@ -25,4 +27,9 @@ if args.conf:
     config = args.conf
 
 app = create_app(config)
+p = multiprocessing.Process(target=collect_n_store,
+                            args=(app.config['REPOSITORY_ADDRESSES'],)
+                            )
+p.start()
+
 app.run(debug=True)

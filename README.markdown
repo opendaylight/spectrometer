@@ -21,6 +21,7 @@ $ mkdir ~/odl-spectrometer
 $ ln -sf <location-of-opendaylight-project> <project-name>  # eg. ln -sf ~/odl-git-repos/aaa aaa
 $ cd ~    # or any folder where you want to checkout spectrometer
 $ git clone ssh://<user>@git.opendaylight.org:29418/spectrometer.git
+$ mongod &
 $ cd spectrometer/server
 $ pip install -r requirements.txt
 $ python spectrometer-server
@@ -33,6 +34,9 @@ Goto ```http://localhost:8000```
 
 ## Server
 ### Installation
+
+Install MongoDB and make sure mongod is running and listening on default port.
+
 ```
 $ cd server/
 $ pip install -r requirements.txt
@@ -77,16 +81,18 @@ $ python setup.py test
 
 ### REST API
 ```
-GET /git/commits/:modulename
+GET /git/commits/:modulename?db=
 ```
 
 List of commits in *master* branch.
+If arg *db* is passed, query will be done over database, rather than Git repository.
 
 ```
-GET /git/commits/:modulename/:branchname
+GET /git/commits/:modulename/:branchname?db=
 ```
 
 List of commits in *branchname* and their ancestors excluding those in *master* branch.
+If arg *db* is passed, query will be done over database, rather than Git repository.
 
 ```
 {

@@ -22,19 +22,17 @@ githelpers.py: Git Helper
 """
 
 import time
-import yaml
 import itertools
 
 from operator import itemgetter
-
-from flask import current_app as app
 
 from git import Repo
 
 
 class GitHandler:
-    def __init__(self, moduel_name):
-        self.repo = self.get_modules_repo(moduel_name)
+    def __init__(self, moduel_name, repo_address):
+        self.name = moduel_name
+        self.repo = Repo(repo_address)
 
     def format_commit_info(self, commit):
         return {
@@ -47,18 +45,6 @@ class GitHandler:
                 'email': commit.author.email
             }
 
-    def get_modules_repo(self, moduel_name):
-        """
-            finds a modules repository address from repositories.json file
-            and returns a Repo object for the repository
-            @:param module's name
-            @:return repository object for the module
-        """
-        with open(app.config['REPOSITORY_ADDRESSES']) as file:
-            repositories = yaml.load(file)
-        repo_address = repositories[moduel_name]['repo']
-        return Repo(repo_address)
-
     def get_commits_stat(self, branch_name):
         # todo: removing merging commits (more than 1 parent)
         stat = []
@@ -68,10 +54,11 @@ class GitHandler:
                 last_commit = branch.commit
                 break
         if last_commit:
-            commits_in_master = list(self.repo.iter_commits('master'))
+            is_master = branch_name == 'master'
+            if not is_master:
+                commits_in_master = list(self.repo.iter_commits('master'))
             for commit in itertools.chain([last_commit], last_commit.iter_parents()):
-                if branch_name != 'master' \
-                        and commit in commits_in_master:
+                if not is_master and commit in commits_in_master:
                     break
                 commit_dic = self.format_commit_info(commit)
                 stat.append(commit_dic)
