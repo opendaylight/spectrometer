@@ -11,16 +11,6 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-"""
-
-@authors: Mohammed Hassan Zahraee
-@status: Development
-@version: 1.0
-
-__init__.py: init
-
-"""
-
 from flask import Flask
 
 import spectrometer.views as views

@@ -11,16 +11,6 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-"""
-
-@authors: Mohammed Hassan Zahraee
-@status: Development
-@version: 1.0
-
-githelpers.py: Git Helper
-
-"""
-
 import time
 import itertools
 

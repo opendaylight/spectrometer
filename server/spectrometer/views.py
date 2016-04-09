@@ -11,16 +11,6 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-"""
-
-@authors: Mohammed Hassan Zahraee
-@status: Development
-@version: 1.0
-
-views.py: Web App
-
-"""
-
 import yaml
 
 from flask import jsonify
@@ -52,6 +42,38 @@ def hello_world():
 
 
 def git_stat(module_name, branch_name='master'):
+    """Returns a list of commit messages in a repository
+
+    GET /git/commits/:modulename?db=true
+
+    List of commits in *master* branch.
+
+    GET /git/commits/:modulename/:branchname?db=true
+
+    List of commits in *branchname* and their ancestors excluding those in
+    *master* branch.
+
+    If arg *db* is passed, query will be done over database, rather than Git
+    repository.
+
+    {
+      "commits": [
+        {
+          "commiter": "Ryan Goulding",
+          "email": "@gmail.com",
+          "hash": "f6c87f3cd7eaa6ffc32625546828a2b6cd42722e",
+          "lines": {
+            "deletions": 0,
+            "files": 4,
+            "insertions": 275,
+            "lines": 275
+          },
+          "time": "05 Feb 2016 23:27"
+        },
+        ...
+        ]
+    }
+    """
     if request.args.get('db', False):
         stat = get_commits_stat_db(module_name, branch_name)
     else:
@@ -68,12 +90,37 @@ def git_stat(module_name, branch_name='master'):
 
 
 def list_branches(module_name):
+    """Returns a list of branches in a given repository
+
+    GET /git/branches/:modulename
+
+    {
+      "names": [
+        "master",
+        "pre-boron",
+        "stable/beryllium",
+        "stable/helium",
+        "stable/lithium"
+      ]
+    }
+    """
     git_handle = create_handler(module_name)
     branches = git_handle.get_branches_names()
     return jsonify({'names': branches})
 
 
 def loc_stat(author_email, module_name, branch_name='master'):
+    """Returns the total commit and lines of code contributed by an author
+
+    GET /git/author/loc/:author_email/:module_name/
+    GET /git/author/loc/:author_email/:module_name/:branch_name
+
+    {
+      "commit_count": 28,
+      "loc": 1304,
+      "name": "Thanh Ha"
+    }
+    """
     git_handle = create_handler(module_name)
     stat = git_handle.get_loc_stat(author_email, branch_name)
     return jsonify({'name': stat[0],
@@ -83,12 +130,46 @@ def loc_stat(author_email, module_name, branch_name='master'):
 
 
 def list_authors(module_name, branch_name='master'):
+    """Returns a list of authors in a given repository
+
+    GET /git/authors/:module_name
+    GET /git/authors/:module_name/:branch_name
+
+    {
+      "authors": [
+        [
+          "Ryan Goulding",
+          "...@gmail.com"
+        ],
+        [
+          "Sai MarapaReddy",
+          "...@brocade.com"
+        ]
+      ]
+    }
+    """
     git_handle = create_handler(module_name)
     authors = git_handle.get_commiters(branch_name)
     return jsonify({'authors': authors})
 
 
 def list_projects():
+    """Returns a list of projects by querying Gerrit
+
+    GET /gerrit/projects
+
+    {
+      "projects": [
+        "groupbasedpolicy",
+        "spectrometer",
+        "releng/autorelease",
+        "snmp4sdn",
+        "ovsdb",
+        "nemo",
+        ...
+        ]
+    }
+    """
     gerrit = Gerrit(app.config['BASE_GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
 
