@@ -26,6 +26,7 @@ Testing Code
 ^^^^^^^^^^^^
 
 .. code-block:: bash
+
     cd server/  # From spectrometer repo root
     pip install -r test-requirements.txt
     python setup.py test
