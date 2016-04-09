@@ -11,11 +11,11 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-from spectrometer.datacollector import collect_n_store
-import multiprocessing
 import argparse
+import multiprocessing
 import os
 
+from spectrometer.datacollector import collect_n_store
 from spectrometer import create_app
 
 parser = argparse.ArgumentParser()

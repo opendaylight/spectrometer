@@ -11,10 +11,12 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-from spectrometer.githelpers import GitHandler
-from pymongo import MongoClient
 import time
+
+from pymongo import MongoClient
 import yaml
+
+from spectrometer.githelpers import GitHandler
 
 
 client = MongoClient('localhost', 27017)
