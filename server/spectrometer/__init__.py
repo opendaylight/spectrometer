@@ -12,6 +12,7 @@
 ##############################################################################
 
 from flask import Flask
+from flask.ext.pymongo import PyMongo
 
 import spectrometer.views as views
 
@@ -19,6 +20,8 @@ import spectrometer.views as views
 def create_app(config):
     app = Flask(__name__)
     app.config.from_pyfile(config)
+
+    app.mongo = PyMongo(app)
 
     app.route('/')(views.hello_world)
     app.route('/git/commits/<module_name>')(views.git_stat)

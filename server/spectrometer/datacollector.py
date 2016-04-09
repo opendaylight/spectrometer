@@ -16,12 +16,9 @@ import time
 from pymongo import MongoClient
 import yaml
 
+from flask import current_app as app
+
 from spectrometer.githelpers import GitHandler
-
-
-client = MongoClient('localhost', 27017)
-db = client.spectrometer
-collection = db.commits
 
 
 def list_modules(repositories_yaml):
@@ -65,6 +62,7 @@ def collect_n_store(repositories_yaml):
 
 
 def get_commits_stat_db(module, branch_name):
+    collection = app.mongo.db.commits
     pipeline = [{'$match': {'branch': branch_name, 'module': module}},
                 {'$project': {'_id': 0,
                               'commiter': 1,
