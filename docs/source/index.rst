@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    quickstart
+   developer
    spectrometer-server-apidocs
 
 Indices and tables
