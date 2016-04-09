@@ -1,76 +1,8 @@
 # OpenDaylight Spectrometer
 
-The Spectrometer project consists of two sub-projects, the ```server``` and ```web```.
+Please refer to https://opendaylight-spectrometer.readthedocs.org
 
-Server side is Python driven and provides the API to collect Git and Gerrit statistics for various OpenDaylight projects.
 
-The web project is NodeJS/React based and provides the visualization by using the APIs provided by the server side.
-
-In order to run the application, you need to install both ```server``` and ```web``` sub-projects.
-
-## Quick Getting Started Guide
-
-The Quick Getting Started Guide assumes you have Python 2.7 (or Python3 ) and NodeJS 4.3 installed. To install NodeJS using NVM, see Web > Installation section below.
-
-The Spectrometer project collects data from repositories located locally in your system.
-Create a directory called ~/odl-spectrometer (mandatory) and within that create softlinks to all your local ODL repos.
-The Spectrometer server loads data from the softlinks located in ~/odl-spectrometer.
-
-```
-$ mkdir ~/odl-spectrometer
-$ ln -sf <location-of-opendaylight-project> <project-name>  # eg. ln -sf ~/odl-git-repos/aaa aaa
-$ cd ~    # or any folder where you want to checkout spectrometer
-$ git clone ssh://<user>@git.opendaylight.org:29418/spectrometer.git
-$ mongod &
-$ cd spectrometer/server
-$ pip install -r requirements.txt
-$ python spectrometer-server
-$ cd ../web
-$ npm i
-$ npm start
-```
-
-Goto ```http://localhost:8000```
-
-## Server
-### Installation
-
-Install MongoDB and make sure mongod is running and listening on default port.
-
-```
-$ cd server/
-$ pip install -r requirements.txt
-$ python spectrometer-server
-```
-
-open a browswer
-`http://127.0.0.1:5000/git/commits/test`
-must show commits log from local directory of spectrometer2.
-
-### Usage
-Add a repository address to etc/repositories.yaml
-with the following format:
-```
-modulename:
-  repo: path/to/bare_repo/directory
-```
-Now the flask application must be up and serve requests:
-```
-$ python spectrometer-server
-```
-Now `http://127.0.0.1:5000/git/commits/:modulename` will return repository log of added repository address in *yaml*
-file.
-
-`http://127.0.0.1:5000/git/commits/:modulename/:branchname` will return commits on that branch and parents commits to
-them that are not in `master` branch. An example can be `http://127.0.0.1:5000/git/commits/aaa/stable/lithium`
-
-### Contribuition
-Style guide:
-PEP8
-https://code.google.com/p/soc/wiki/PythonStyleGuide
-http://www.pocoo.org/internal/styleguide/#styleguide
-
-Add new files to list of files checked for PEP8 conformance in test/test_pep8.py in the list variable 'files_to_check'
 
 ### Test
 ```
