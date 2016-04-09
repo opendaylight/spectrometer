@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Spectrometer'
-copyright = '2016, Tom Nadeau, Mohammad Hassan Zahraee, Thanh Ha, Vasu Srinivasan, An Ho'
+copyright = '2016, OpenDaylight, A Linux Foundation Collaborative Project.'
 author = 'Tom Nadeau, Mohammad Hassan Zahraee, Thanh Ha, Vasu Srinivasan, An Ho'
 
 # The version info for the project you're documenting, acts as replacement for
