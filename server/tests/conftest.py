@@ -20,6 +20,6 @@ from spectrometer import create_app
 
 @pytest.fixture
 def app():
-    config = os.path.join(os.getcwd(), 'config.py')
+    config = os.path.join(os.getcwd(), 'example-config', 'config.py')
     app = create_app(config)
     return app
