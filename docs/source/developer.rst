@@ -25,11 +25,14 @@ Spectrometer Server
 Testing Code
 ^^^^^^^^^^^^
 
+We use tox to manage and run our unit tests. Simply run **tox** in the server
+directory to initiate the tests. If you don't have tox installed typically it
+is packaged as **python-tox** in most distros.
+
 .. code-block:: bash
 
     cd server/  # From spectrometer repo root
-    pip install -r test-requirements.txt
-    python setup.py test
+    tox
 
 Spectrometer Web
 ----------------
