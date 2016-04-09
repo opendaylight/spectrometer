@@ -22,7 +22,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--conf", help="Config file")
 args = parser.parse_args()
 
-config = os.path.join(os.getcwd(), 'config.py')
+# Config search priorities
+# 1. User provided via --conf parameter
+# 2. /etc/spectrometer/config.py
+config = '/etc/spectrometer/config.py'
 if args.conf:
     config = os.path.realpath(args.conf)
 
