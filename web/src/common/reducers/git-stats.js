@@ -69,7 +69,7 @@ function updateBranches(state = {
   }
 }
 
-export function selectedOdlRepo(state = 'aaa', action) {
+export function selectedOdlRepo(state = 'spectrometer', action) {
   switch (action.type) {
   case SELECT_ODLREPO:
     return action.odlRepo //+ ':' + (action.branchName || 'master');
