@@ -24,7 +24,7 @@ args = parser.parse_args()
 
 config = os.path.join(os.getcwd(), 'config.py')
 if args.conf:
-    config = args.conf
+    config = os.path.realpath(args.conf)
 
 app = create_app(config)
 p = multiprocessing.Process(target=collect_n_store,
