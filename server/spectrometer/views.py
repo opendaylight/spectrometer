@@ -172,7 +172,3 @@ def list_projects():
     """
     gerrit = GerritHandler(app.config['GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
-
-
-def gerrit_stat(moduel_name):
-    return "Not implemented"
