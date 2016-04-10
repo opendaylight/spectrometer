@@ -14,7 +14,8 @@
 from flask import Flask
 from flask.ext.pymongo import PyMongo
 
-import spectrometer.views as views
+from spectrometer import views
+from spectrometer.api.gerrit import gerritapi
 
 
 def create_app(config):
@@ -31,6 +32,7 @@ def create_app(config):
     app.route('/git/author/loc/<author_email>/<module_name>/<path:branch_name>')(views.loc_stat)
     app.route('/git/authors/<module_name>')(views.list_authors)
     app.route('/git/authors/<module_name>/<path:branch_name>')(views.list_authors)
-    app.route('/gerrit/projects')(views.list_projects)
+
+    app.register_blueprint(gerritapi, url_prefix='/gerrit')
 
     return app

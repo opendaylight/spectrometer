@@ -18,8 +18,8 @@ from flask import request
 from flask import current_app as app
 
 from spectrometer.githelpers import GitHandler
-from spectrometer.gerrithelper import GerritHandler
 from spectrometer.datacollector import get_commits_stat_db
+
 
 # todo: http://flask.pocoo.org/snippets/83/
 
@@ -151,24 +151,3 @@ def list_authors(module_name, branch_name='master'):
     git_handle = create_handler(module_name)
     authors = git_handle.get_commiters(branch_name)
     return jsonify({'authors': authors})
-
-
-def list_projects():
-    """Returns a list of projects by querying Gerrit
-
-    GET /gerrit/projects
-
-    {
-      "projects": [
-        "groupbasedpolicy",
-        "spectrometer",
-        "releng/autorelease",
-        "snmp4sdn",
-        "ovsdb",
-        "nemo",
-        ...
-        ]
-    }
-    """
-    gerrit = GerritHandler(app.config['GERRIT_URL'])
-    return jsonify({'projects': gerrit.projects_list()})
