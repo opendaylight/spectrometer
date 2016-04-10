@@ -43,5 +43,7 @@ p.start()
 
 app.run(
     debug=True,
+    threaded=True,
     host=app.config['LISTEN_HOST'],
-    port=app.config['LISTEN_PORT'])
+    port=app.config['LISTEN_PORT'],
+)
