@@ -11,8 +11,10 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-import time
+from __future__ import absolute_import
+
 import itertools
+import time
 
 from operator import itemgetter
 
@@ -20,8 +22,8 @@ from git import Repo
 
 
 class GitHandler:
-    def __init__(self, moduel_name, repo_address):
-        self.name = moduel_name
+    def __init__(self, project, repo_address):
+        self.name = project
         self.repo = Repo(repo_address)
 
     def format_commit_info(self, commit):
@@ -31,20 +33,25 @@ class GitHandler:
                 # UTC time
                 'time': time.strftime("%d %b %Y %H:%M",
                                       time.gmtime(commit.committed_date)),
-                'commiter': commit.author.name,
+                'committer': commit.author.name,
                 'email': commit.author.email
             }
 
-    def get_commits_stat(self, branch_name):
+    def commits(self, branch):
+        """Returns a list of commit data from a repository.
+
+        Keyword arguments:
+        branch -- Branch of repo to pull data from.
+        """
         # todo: removing merging commits (more than 1 parent)
         stat = []
         last_commit = None
-        for branch in self.repo.branches:
-            if branch.name == branch_name:
-                last_commit = branch.commit
+        for b in self.repo.branches:
+            if b.name == branch:
+                last_commit = b.commit
                 break
         if last_commit:
-            is_master = branch_name == 'master'
+            is_master = branch == 'master'
             if not is_master:
                 commits_in_master = list(self.repo.iter_commits('master'))
             for commit in itertools.chain([last_commit], last_commit.iter_parents()):
@@ -57,30 +64,42 @@ class GitHandler:
             stat = -1
         return stat
 
-    def get_branches_names(self):
+    def branches(self):
+        """Returns a list of branches in the repo."""
         branches = [b.name for b in self.repo.branches]
         return branches
 
-    def get_loc_stat(self, email, branch_name):
+    def author_loc(self, email, branch):
+        """Returns the commit statistics for an author.
+
+        Stats include:
+        - lines of code
+        - number of commits
+
+        Keyword arguments:
+        branch -- Branch of repo to pull data from.
+        email -- Author's email address to get stats against.
+        """
         loc = 0
         commit_count = 0
         name = None
-        commits = self.get_commits_stat(branch_name)
+        commits = self.commits(branch)
         for c in commits:
             if c['email'] == email:
                 loc += c['lines']['lines']
                 commit_count += 1
                 if not name:
-                    name = c['commiter']
+                    name = c['committer']
         return name, loc, commit_count
 
-    def get_commiters(self, branch_name):
-        '''
-        :param branch_name:
-        :return: sorted list of (email, name) pairs of contributers
-        '''
+    def authors(self, branch):
+        """Returns a list of authors that contributed to a branch.
+
+        Keyword arguments:
+        branch -- Branch of repo to pull data from.
+        """
         authors = set()
-        commits = self.get_commits_stat(branch_name)
+        commits = self.commits(branch)
         for c in commits:
-            authors.add((c['commiter'], c['email']))
+            authors.add((c['committer'], c['email']))
         return sorted(authors, key=itemgetter(0))

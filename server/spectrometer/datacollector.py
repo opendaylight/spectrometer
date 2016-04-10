@@ -18,7 +18,7 @@ import yaml
 
 from flask import current_app as app
 
-from spectrometer.githelpers import GitHandler
+from spectrometer.handlers.git import GitHandler
 
 
 def list_modules(repositories_yaml):
@@ -43,13 +43,11 @@ def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017)
     while True:
         try:
             for handle in git_handlers:
-                branches = handle.get_branches_names()
-                for branch_name in branches:
-                    stat = handle.get_commits_stat(branch_name)
-                    for commit in stat:
+                for branch in handle.branches():
+                    for commit in handle.commits(branch):
                         commit['_id'] = commit['hash']
                         del commit['hash']
-                        commit['branch'] = branch_name
+                        commit['branch'] = branch
                         commit['module'] = handle.name
                         collection.replace_one(
                             {'_id': commit['_id']},
@@ -61,11 +59,11 @@ def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017)
             pass
 
 
-def get_commits_stat_db(module, branch_name):
+def get_commits_stat_db(module, branch):
     collection = app.mongo.db.commits
-    pipeline = [{'$match': {'branch': branch_name, 'module': module}},
+    pipeline = [{'$match': {'branch': branch, 'module': module}},
                 {'$project': {'_id': 0,
-                              'commiter': 1,
+                              'committer': 1,
                               'email': 1,
                               'hash': '$_id',
                               'lines': 1,
