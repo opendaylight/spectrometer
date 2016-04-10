@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='spectrometer',
-    version='0.0.1',
+    version='0.1.0',
     author='OpenDaylight Spectrometer Project',
     author_email='spectrometer-dev@lists.opendaylight.org',
     url='https://wiki.opendaylight.org/view/Spectrometer',
