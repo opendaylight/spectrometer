@@ -17,7 +17,7 @@ import json
 from six.moves.urllib.parse import urljoin
 
 
-class Gerrit():
+class GerritHandler():
     GERRIT_MAGIC_STRING = ")]}'"
 
     def __init__(self, base_url):

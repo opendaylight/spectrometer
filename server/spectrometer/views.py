@@ -18,7 +18,7 @@ from flask import request
 from flask import current_app as app
 
 from spectrometer.githelpers import GitHandler
-from spectrometer.gerrithelper import Gerrit
+from spectrometer.gerrithelper import GerritHandler
 from spectrometer.datacollector import get_commits_stat_db
 
 # todo: http://flask.pocoo.org/snippets/83/
@@ -170,7 +170,7 @@ def list_projects():
         ]
     }
     """
-    gerrit = Gerrit(app.config['BASE_GERRIT_URL'])
+    gerrit = GerritHandler(app.config['BASE_GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
 
 
