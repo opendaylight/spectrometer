@@ -24,8 +24,8 @@ class GerritHandler():
         self.BASE_URL = base_url
 
     def projects_list(self):
-        url = urljoin(self.BASE_URL, './projects/')
-        response = requests.get(url).text
-        return json.loads(
-            response.lstrip(self.GERRIT_MAGIC_STRING)
-        ).keys()
+        """Returns a list of projects as reported by Gerrit."""
+        url = urljoin(self.BASE_URL, 'projects/')
+        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
+        projects = json.loads(response.lstrip(self.GERRIT_MAGIC_STRING))
+        return list(projects.keys())
