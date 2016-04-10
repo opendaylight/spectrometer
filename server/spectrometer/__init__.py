@@ -25,7 +25,7 @@ def create_app(config):
 
     app.mongo = PyMongo(app)
 
-    app.route('/')(views.hello_world)
+    app.route('/')(views.status)
 
     app.register_blueprint(gitapi, url_prefix='/git')
     app.register_blueprint(gerritapi, url_prefix='/gerrit')

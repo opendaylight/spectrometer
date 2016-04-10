@@ -14,5 +14,11 @@
 # todo: http://flask.pocoo.org/snippets/83/
 
 
-def hello_world():
-    return 'Hello World!'
+def status():
+    """Returns a status page
+
+    The purpose of this page is to allow the administrator to know that
+    spectrometer-web is operating correctly.
+    """
+    html = "Spectrometer status page"
+    return html
