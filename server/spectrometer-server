@@ -30,9 +30,18 @@ if args.conf:
     config = os.path.realpath(args.conf)
 
 app = create_app(config)
-p = multiprocessing.Process(target=collect_n_store,
-                            args=(app.config['REPOSITORY_ADDRESSES'],)
-                            )
+
+# Setup cache system
+cache_config = {
+    'repositories_yaml' : app.config['REPOSITORY_ADDRESSES'],
+    'mongo_host' : app.config['MONGO_HOST'],
+    'mongo_port' :  app.config['MONGO_PORT']}
+p = multiprocessing.Process(
+    target=collect_n_store,
+    kwargs=cache_config)
 p.start()
 
-app.run(debug=True)
+app.run(
+    debug=True,
+    host=app.config['LISTEN_HOST'],
+    port=app.config['LISTEN_PORT'])

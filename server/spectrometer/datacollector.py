@@ -28,9 +28,9 @@ def list_modules(repositories_yaml):
     return repositories.keys()
 
 
-def collect_n_store(repositories_yaml):
+def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017):
     # http://api.mongodb.org/python/current/faq.html#using-pymongo-with-multiprocessing
-    client = MongoClient('localhost', 27017)
+    client = MongoClient(mongo_host, mongo_port)
     db = client.spectrometer
     collection = db.commits
 
