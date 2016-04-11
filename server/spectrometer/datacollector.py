@@ -21,13 +21,6 @@ from flask import current_app as app
 from spectrometer.githelpers import GitHandler
 
 
-def list_modules(repositories_yaml):
-    # todo: move this method and get_modules_repo in githelper to a yaml handler class
-    with open(repositories_yaml) as file:
-        repositories = yaml.load(file)
-    return repositories.keys()
-
-
 def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017):
     # http://api.mongodb.org/python/current/faq.html#using-pymongo-with-multiprocessing
     client = MongoClient(mongo_host, mongo_port)
@@ -36,7 +29,7 @@ def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017)
 
     with open(repositories_yaml) as file:
         repositories = yaml.load(file)
-    modules = list_modules(repositories_yaml)
+    modules = repositories.keys()
 
     git_handlers = [GitHandler(module_name, repositories[module_name]['repo'])
                     for module_name in modules]
