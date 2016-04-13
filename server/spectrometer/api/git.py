@@ -18,7 +18,7 @@ from flask import current_app as app
 from flask import jsonify
 from flask import request
 
-from spectrometer.datacollector import get_commits_stat_db
+from spectrometer.datacollector import commits_stat_db
 from spectrometer.handlers.git import GitHandler
 
 gitapi = Blueprint('git', __name__)
@@ -143,7 +143,7 @@ def commits(project, branch='master'):
     git = create_handler(project)
 
     if request.args.get('db', False):
-        commits = get_commits_stat_db(project, branch)
+        commits = commits_stat_db(project, branch)
     else:
         commits = git.commits(branch)
 

@@ -14,7 +14,6 @@
 from __future__ import absolute_import
 
 import itertools
-import time
 
 from operator import itemgetter
 
@@ -30,9 +29,8 @@ class GitHandler:
         return {
                 'hash': commit.hexsha,
                 'lines': commit.stats.total,
-                # UTC time
-                'time': time.strftime("%d %b %Y %H:%M",
-                                      time.gmtime(commit.committed_date)),
+                # since epoch time in milliseconds
+                'time': commit.committed_date * 1000,
                 'committer': commit.author.name,
                 'email': commit.author.email
             }

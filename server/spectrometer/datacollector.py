@@ -52,9 +52,10 @@ def collect_n_store(repositories_yaml, mongo_host='127.0.0.1', mongo_port=27017)
             pass
 
 
-def get_commits_stat_db(module, branch):
+def commits_stat_db(module, branch):
     collection = app.mongo.db.commits
     pipeline = [{'$match': {'branch': branch, 'module': module}},
+                {'$sort': {'time': -1}},
                 {'$project': {'_id': 0,
                               'committer': 1,
                               'email': 1,
