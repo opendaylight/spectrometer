@@ -41,3 +41,30 @@ def projects():
     """
     gerrit = GerritHandler(app.config['GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
+
+
+@gerritapi.route('/project/tags/<string:project>')
+def project_tags(project):
+    """Returns a list of project tags for a project by querying Gerrit.
+
+    GET /gerrit/projects/{project_id}/tags
+
+    {
+      "tags": [
+        {
+          "ref": "refs/tags/stable/beryllium",
+          "revision": "49ce77fdcfd3398dc0dedbe016d1a425fd52d666",
+          "object": "1624f5af8ae89148d1a3730df8c290413e3dcf30",
+          "message": "Tag Message",
+          "tagger": {
+            "name": "Name",
+            "email": "email@email.com",
+            "date": "2000-01-01 01:00:00.000000000"
+          }
+        },
+        ...
+        ]
+    }
+    """
+    gerrit = GerritHandler(app.config['GERRIT_URL'])
+    return jsonify({'tags': gerrit.project_tags_list(project)})

@@ -29,3 +29,10 @@ class GerritHandler():
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         projects = json.loads(response.lstrip(self.GERRIT_MAGIC_STRING))
         return list(projects.keys())
+
+    def project_tags_list(self, project):
+        """Returns a list of project tags as reported by Gerrit."""
+        url = urljoin(self.BASE_URL, 'projects/%s/tags/' % project)
+        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
+        project_tags = json.loads(response)
+        return list(project_tags)
