@@ -20,6 +20,7 @@ from flask import request
 
 from spectrometer.datacollector import commits_stat_db
 from spectrometer.handlers.git import GitHandler
+from spectrometer.utils import check_parameters
 
 gitapi = Blueprint('git', __name__)
 
@@ -153,4 +154,58 @@ def commits(project, branch='master'):
         result = {'commits': commits}
     # return Response(response=json.dumps(stats,indent=2,
     #  separators=(',', ': ')), status=200, mimetype='application/json')
+    return jsonify(result)
+
+
+@gitapi.route('/commits_since_ref')
+def commits_since_ref():
+    """Returns a list of commits in branch until common parent of ref.
+
+    Searches Git for a common_parent between *branch* and *ref* and returns
+    a the commit log of all the commits until the common parent excluding
+    the common_parent commit itself.
+
+    GET /git/commits_since_ref?param=<value>
+
+    :arg str project: Project to query commits from. (required)
+    :arg str branch: Branch to pull commits from. (required)
+    :arg str ref: To pull cached data or not. (required)
+
+    JSON::
+
+        {
+          "commits": [
+            {
+              "committer": "Thanh Ha",
+              "email": "thanh.ha@linuxfoundation.org",
+              "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
+              "lines": {
+                "deletions": 55,
+                "files": 7,
+                "insertions": 103,
+                "lines": 158
+              },
+              "time": "10 Apr 2016 15:26"
+            },
+            ...
+          ]
+        }
+    """
+    mapping = {
+        'project': request.args.get('project', None),
+        'branch': request.args.get('branch', None),
+        'ref': request.args.get('ref', None),
+    }
+
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
+        commits = git.commits_since_ref(mapping['branch'], mapping['ref'])
+
+        if not commits:
+            result = {'error': 'Unable to compare {branch} to {ref}.'.format(
+                branch=mapping['branch'], ref=mapping['ref'])}
+        else:
+            result = {'commits': commits}
+
     return jsonify(result)

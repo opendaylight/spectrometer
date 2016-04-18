@@ -99,3 +99,29 @@ class GitHandler:
         for c in commits:
             authors.add((c['committer'], c['email']))
         return sorted(authors, key=itemgetter(0))
+
+    def commits_since_ref(self, branch, ref):
+        """Returns a list of commits in branch until common parent of ref
+
+        Searches Git for a common_parent between *branch* and *ref* and returns
+        a the commit log of all the commits until the common parent excluding
+        the common_parent commit itself.
+
+        Arguments:
+            branch -- Branch which we want to gather commit logs from
+            ref -- Reference point in which to get commits from
+        """
+        commits = []
+        common_parent = self.repo.merge_base(branch, ref)[0]
+
+        # Order is important here. A..B will show you all commits that B has
+        # excluding A. Spectrometer is interested in finding all commits since
+        # the common branch
+        for commit in self.repo.iter_commits(
+            "{parent}..{branch}".format(
+                branch=branch,
+                parent=common_parent.hexsha)):
+            commit_dic = self.format_commit_info(commit)
+            commits.append(commit_dic)
+
+        return commits
