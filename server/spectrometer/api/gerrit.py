@@ -47,7 +47,7 @@ def projects():
 def project_tags(project):
     """Returns a list of project tags for a project by querying Gerrit.
 
-    GET /gerrit/projects/{project_id}/tags
+    GET /gerrit/project/tags/{project}
 
     {
       "tags": [

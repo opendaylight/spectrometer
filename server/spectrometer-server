@@ -3,7 +3,7 @@
 
 # @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
 ##############################################################################
-# Copyright (c) 2015 Mohammed Hassan Zahraee and others.
+# Copyright (c) 2015, 2016 Mohammed Hassan Zahraee and others.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -11,39 +11,13 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-import argparse
-import multiprocessing
-import os
+from spectrometer import run_app
 
-from spectrometer.datacollector import collect_n_store
-from spectrometer import create_app
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--conf", help="Config file")
-args = parser.parse_args()
-
-# Config search priorities
-# 1. User provided via --conf parameter
-# 2. /etc/spectrometer/config.py
-config = '/etc/spectrometer/config.py'
-if args.conf:
-    config = os.path.realpath(args.conf)
-
-app = create_app(config)
-
-# Setup cache system
-cache_config = {
-    'repositories_yaml' : app.config['REPOSITORY_ADDRESSES'],
-    'mongo_host' : app.config['MONGO_HOST'],
-    'mongo_port' :  app.config['MONGO_PORT']}
-p = multiprocessing.Process(
-    target=collect_n_store,
-    kwargs=cache_config)
-p.start()
-
-app.run(
-    debug=True,
-    threaded=True,
-    host=app.config['LISTEN_HOST'],
-    port=app.config['LISTEN_PORT'],
-)
+if __name__ == "__main__":
+    app = run_app(cli=True)
+    app.run(
+        debug=True,
+        threaded=True,
+        host=app.config['LISTEN_HOST'],
+        port=app.config['LISTEN_PORT'],
+    )
