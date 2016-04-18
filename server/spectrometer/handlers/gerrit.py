@@ -24,11 +24,11 @@ class GerritHandler():
         self.BASE_URL = base_url
 
     def projects_list(self):
-        """Returns a list of projects as reported by Gerrit."""
+        """Returns an alphabetically ordered list of projects as reported by Gerrit."""
         url = urljoin(self.BASE_URL, 'projects/')
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
-        projects = json.loads(response.lstrip(self.GERRIT_MAGIC_STRING))
-        return list(projects.keys())
+        projects = json.loads(response)
+        return sorted(list(projects))
 
     def project_tags_list(self, project):
         """Returns a list of project tags as reported by Gerrit."""
