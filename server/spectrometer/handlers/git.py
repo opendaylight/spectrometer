@@ -42,7 +42,7 @@ class GitHandler:
         branch -- Branch of repo to pull data from.
         """
         # todo: removing merging commits (more than 1 parent)
-        stat = []
+        commits = []
         last_commit = None
         for b in self.repo.branches:
             if b.name == branch:
@@ -56,11 +56,9 @@ class GitHandler:
                 if not is_master and commit in commits_in_master:
                     break
                 commit_dic = self.format_commit_info(commit)
-                stat.append(commit_dic)
-        else:
-            # branch was not found
-            stat = -1
-        return stat
+                commits.append(commit_dic)
+
+        return commits
 
     def branches(self):
         """Returns a list of branches in the repo."""

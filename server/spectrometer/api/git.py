@@ -147,7 +147,7 @@ def commits(project, branch='master'):
     else:
         commits = git.commits(branch)
 
-    if commits == -1:
+    if not commits:
         result = {'error': 'Branch {0} was not found!'.format(branch)}
     else:
         result = {'commits': commits}
