@@ -60,30 +60,48 @@ def author_loc(email, project, branch='master'):
                    )
 
 
-@gitapi.route('/authors/<project>')
-@gitapi.route('/authors/<project>/<path:branch>')
-def authors(project, branch='master'):
+@gitapi.route('/authors')
+def authors():
     """Returns a list of authors in a given repository.
 
-    GET /git/authors/:project
-    GET /git/authors/:project/:branch
+    GET /git/authors?param=<value>
 
-    {
-      "authors": [
-        [
-          "Ryan Goulding",
-          "...@gmail.com"
-        ],
-        [
-          "Sai MarapaReddy",
-          "...@brocade.com"
-        ]
-      ]
-    }
+    :arg str project: Project to query commits from. (required)
+    :arg str branch: Branch to pull commits from. (default: master)
+
+    JSON::
+
+        {
+          "authors": [
+            [
+              "Mohammad Hassan Zahraee",
+              "moh_zahraee@yahoo.com"
+            ],
+            [
+              "Thanh Ha",
+              "thanh.ha@linuxfoundation.org"
+            ],
+            ...
+          ]
+        }
     """
-    git = create_handler(project)
-    authors = git.authors(branch)
-    return jsonify({'authors': authors})
+    mapping = {
+        'project': request.args.get('project', None),
+        'branch': request.args.get('branch', 'master'),
+    }
+
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
+        authors = git.authors(mapping['branch'])
+
+        if not authors:
+            result = {'error': 'No authors found for {0} branch {1}.'.format(
+                mapping['project'], mapping['branch'])}
+        else:
+            result = {'authors': authors}
+
+    return jsonify(result)
 
 
 @gitapi.route('/branches')
