@@ -38,26 +38,46 @@ def create_handler(project):
     return GitHandler(project, get_repo_address(project))
 
 
-@gitapi.route('/author/loc/<email>/<project>')
-@gitapi.route('/author/loc/<email>/<project>/<path:branch>')
+@gitapi.route('/author/loc')
 def author_loc(email, project, branch='master'):
-    """Returns the total commit and lines of code contributed by an author
+    """Returns the total commit and lines of code contributed by an author.
 
-    GET /git/author/loc/:email/:project/
-    GET /git/author/loc/:email/:project/:branch
+    GET /git/author/loc?param=<value>
 
-    {
-      "commit_count": 28,
-      "loc": 1304,
-      "name": "Thanh Ha"
-    }
+    :arg str email: Email of author to search. (required)
+    :arg str project: Project to query commits from. (required)
+    :arg str branch: Branch to pull commits from. (default: master)
+
+    JSON::
+
+        {
+          "commit_count": 28,
+          "loc": 1304,
+          "name": "Thanh Ha"
+        }
     """
-    git = create_handler(project)
-    stat = git.author_loc(email, branch)
-    return jsonify({'name': stat[0],
-                    'loc': stat[1],
-                    'commit_count': stat[2]}
-                   )
+    mapping = {
+        'email': request.args.get('email', None),
+        'project': request.args.get('project', None),
+        'branch': request.args.get('branch', 'master'),
+    }
+
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
+        author_loc = git.author_loc(mapping['email'], mapping['branch'])
+
+        if not author_loc:
+            result = {'error': 'No results found for {0.'.format(
+                mapping['email'])}
+        else:
+            result = {
+                'name': author_loc[0],
+                'loc': author_loc[1],
+                'commit_count': author_loc[2]
+            }
+
+    return jsonify(result)
 
 
 @gitapi.route('/authors')
