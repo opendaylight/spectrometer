@@ -86,24 +86,42 @@ def authors(project, branch='master'):
     return jsonify({'authors': authors})
 
 
-@gitapi.route('/branches/<project>')
-def branches(project):
+@gitapi.route('/branches')
+def branches():
     """Returns a list of branches in a given repository.
 
-    GET /git/branches/:project
+    GET /git/branches?param=<value>
 
-    {
-      "branches": [
-        "master",
-        "stable/beryllium",
-        "stable/helium",
-        "stable/lithium"
-      ]
-    }
+    :arg str project: Project to query commits from. (required)
+
+    JSON::
+
+        {
+          "branches": [
+            "master",
+            "stable/beryllium",
+            "stable/helium",
+            "stable/lithium",
+            ...
+          ]
+        }
     """
-    git = create_handler(project)
-    branches = git.branches()
-    return jsonify({'branches': branches})
+    mapping = {
+        'project': request.args.get('project', None),
+    }
+
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
+        branches = git.branches()
+
+        if not branches:
+            result = {'error': 'No branches found for {0}.'.format(
+                mapping['project'])}
+        else:
+            result = {'branches': branches}
+
+    return jsonify(result)
 
 
 @gitapi.route('/commits')
