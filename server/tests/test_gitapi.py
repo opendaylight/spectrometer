@@ -18,7 +18,7 @@ from flask import url_for
 
 def test_commits(client):
     """Test the git.commits api"""
-    resp = client.get(url_for('git.commits', project='spectrometer'))
+    resp = client.get(url_for('git.commits', project='spectrometer', no_cache='true'))
     data = json.loads(resp.get_data(as_text=True))
     assert data['commits']
 

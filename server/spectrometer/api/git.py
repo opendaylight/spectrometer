@@ -106,54 +106,56 @@ def branches(project):
     return jsonify({'branches': branches})
 
 
-@gitapi.route('/commits/<project>')
-@gitapi.route('/commits/<project>/<path:branch>')
-def commits(project, branch='master'):
+@gitapi.route('/commits')
+def commits():
     """Returns a list of commit messages in a repository.
 
-    GET /git/commits/:project?db=true
+    GET /git/commits?param=<value>
 
-    List of commits in *master* branch.
+    :arg str project: Project to query commits from. (required)
+    :arg str branch: Branch to pull commits from. (default: master)
+    :arg bool db: To pull cached data or not. (default: false)
 
-    GET /git/commits/:project/:branch?db=true
+    JSON::
 
-    List of commits in *branchname* and their ancestors excluding those in
-    *master* branch.
-
-    If arg *db* is passed, query will be done over database, rather than Git
-    repository.
-
-    {
-      "commits": [
         {
-          "committer": "Ryan Goulding",
-          "email": "@gmail.com",
-          "hash": "f6c87f3cd7eaa6ffc32625546828a2b6cd42722e",
-          "lines": {
-            "deletions": 0,
-            "files": 4,
-            "insertions": 275,
-            "lines": 275
-          },
-          "time": "05 Feb 2016 23:27"
-        },
-        ...
-        ]
-    }
+          "commits": [
+            {
+              "committer": "Thanh Ha",
+              "email": "thanh.ha@linuxfoundation.org",
+              "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
+              "lines": {
+                "deletions": 55,
+                "files": 7,
+                "insertions": 103,
+                "lines": 158
+              },
+              "time": "10 Apr 2016 15:26"
+            },
+            ...
+          ]
+        }
     """
-    git = create_handler(project)
+    mapping = {
+        'project': request.args.get('project', None),
+        'branch': request.args.get('branch', 'master'),
+        'no_cache': request.args.get('no_cache', False),
+    }
 
-    if request.args.get('db', False):
-        commits = commits_stat_db(project, branch)
-    else:
-        commits = git.commits(branch)
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
 
-    if not commits:
-        result = {'error': 'Branch {0} was not found!'.format(branch)}
-    else:
-        result = {'commits': commits}
-    # return Response(response=json.dumps(stats,indent=2,
-    #  separators=(',', ': ')), status=200, mimetype='application/json')
+        if mapping['no_cache']:
+            commits = git.commits(mapping['branch'])
+        else:
+            commits = commits_stat_db(mapping['project'], mapping['branch'])
+
+        if not commits:
+            result = {'error': 'Unable to lookup commits, branch {0} was not found!'.format(mapping['branch'])}
+        else:
+            result = {'commits': commits}
+
     return jsonify(result)
 
 
