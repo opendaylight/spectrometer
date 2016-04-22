@@ -18,6 +18,7 @@ import itertools
 from operator import itemgetter
 
 from git import Repo
+from git.exc import GitCommandError
 
 
 class GitHandler:
@@ -112,7 +113,12 @@ class GitHandler:
             ref -- Reference point in which to get commits from
         """
         commits = []
-        common_parent = self.repo.merge_base(branch, ref)[0]
+        try:
+            common_parent = self.repo.merge_base(branch, ref)[0]
+        except GitCommandError:
+            # If we fail to get the merge base simply return empty list as we
+            # can no longer proceed any further.
+            return commits
 
         # Order is important here. A..B will show you all commits that B has
         # excluding A. Spectrometer is interested in finding all commits since
