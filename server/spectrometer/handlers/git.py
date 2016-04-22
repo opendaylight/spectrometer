@@ -31,7 +31,7 @@ class GitHandler:
                 'lines': commit.stats.total,
                 # since epoch time in milliseconds
                 'time': commit.committed_date * 1000,
-                'committer': commit.author.name,
+                'author': commit.author.name,
                 'email': commit.author.email
             }
 
@@ -85,7 +85,7 @@ class GitHandler:
                 loc += c['lines']['lines']
                 commit_count += 1
                 if not name:
-                    name = c['committer']
+                    name = c['author']
         return name, loc, commit_count
 
     def authors(self, branch):
@@ -97,7 +97,7 @@ class GitHandler:
         authors = set()
         commits = self.commits(branch)
         for c in commits:
-            authors.add((c['committer'], c['email']))
+            authors.add((c['author'], c['email']))
         return sorted(authors, key=itemgetter(0))
 
     def commits_since_ref(self, branch, ref):

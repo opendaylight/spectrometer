@@ -177,7 +177,7 @@ def commits():
         {
           "commits": [
             {
-              "committer": "Thanh Ha",
+              "author": "Thanh Ha",
               "email": "thanh.ha@linuxfoundation.org",
               "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
               "lines": {
@@ -234,7 +234,7 @@ def commits_since_ref():
         {
           "commits": [
             {
-              "committer": "Thanh Ha",
+              "author": "Thanh Ha",
               "email": "thanh.ha@linuxfoundation.org",
               "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
               "lines": {

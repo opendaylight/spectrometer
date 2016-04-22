@@ -29,6 +29,6 @@ def test_commits(client):
     # Test Committer data. Using the 2nd commit pushed into spectrometer repo
     # as the test data.
     commits = data['commits']
-    assert (commits[-2].get('committer') == 'Thanh Ha')
+    assert (commits[-2].get('author') == 'Thanh Ha')
     assert (commits[-2].get('email') == 'thanh.ha@linuxfoundation.org')
     assert (commits[-2].get('hash') == 'f3d7296885386ca68b074c0fe21b42c8d799f818')

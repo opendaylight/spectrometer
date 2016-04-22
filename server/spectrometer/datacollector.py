@@ -51,7 +51,7 @@ def commits_stat_db(module, branch):
     pipeline = [{'$match': {'branch': branch, 'module': module}},
                 {'$sort': {'time': -1}},
                 {'$project': {'_id': 0,
-                              'committer': 1,
+                              'author': 1,
                               'email': 1,
                               'hash': '$_id',
                               'lines': 1,
