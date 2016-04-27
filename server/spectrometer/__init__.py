@@ -21,7 +21,6 @@ from flask.ext.pymongo import PyMongo
 from spectrometer import views
 from spectrometer.api.gerrit import gerritapi
 from spectrometer.api.git import gitapi
-from spectrometer.datacollector import collect_n_store
 
 
 def create_app(config):
@@ -43,13 +42,6 @@ def run_scheduler(config):
     """Runs a APScheduler instance to handle tasks"""
     apsched = BackgroundScheduler()
     apsched.start()
-
-    cache_config = {
-        'repositories_yaml': config['REPOSITORY_ADDRESSES'],
-        'mongo_host': config['MONGO_HOST'],
-        'mongo_port': config['MONGO_PORT'],
-    }
-    apsched.add_job(collect_n_store, 'interval', seconds=300, kwargs=cache_config)
 
 
 def run_app(cli=False):

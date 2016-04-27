@@ -11,6 +11,8 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+import time
+
 
 def check_parameters(mapping):
     """Returns error message if a required parameter is missing.
@@ -36,3 +38,46 @@ def check_parameters(mapping):
             error = {'error': 'Missing parameter {parameter}.'.format(
                 parameter=key)}
             return error
+
+
+def get_cache(collection, data_id, no_cache, func, func_args):
+    """Retrieves data from function unless no_cache is set
+
+    Cache is skipped if no_cache is True, or cached data does not exist or
+    cache_age (seconds) is too old.
+
+    :arg str collection: Mongo collection to search. (required)
+    :arg str data_id: Cache ID of data. (required)
+    :arg bool no_cache: Whether or not to skip cache. (required)
+    :arg func func: Function to retrieve data from if cache is skipped. (required)
+    :arg list func_args: Arguments to pass to func. (required)
+    """
+    cache = collection.find_one({'_id': data_id})
+    cache_age = 0
+    data = None
+
+    if cache:
+        cache_age = time.time() - cache.get('age', time.mktime(time.gmtime(0)))
+        data = cache['data']
+
+    if not data or no_cache or cache_age > 300:  # Default cache_age to 5 minutes
+        print("Caching {0} {1}".format(func.__name__, data_id))  # This should be a log
+        data = func(*func_args)
+        set_cache(collection, data_id, data)
+
+    return data
+
+
+def set_cache(collection, data_id, data):
+    """Set cache data
+
+    :arg str collection: Mongo collection to save into cache. (required)
+    :arg str data_id: Cache ID of data. (required)
+    :arg str data: Data to save into cache. (required)
+    """
+    document = {
+        '_id': data_id,
+        'age': time.time(),
+        'data': data,
+    }
+    collection.replace_one({'_id': data_id}, document, upsert=True)

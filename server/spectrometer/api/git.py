@@ -18,9 +18,9 @@ from flask import current_app as app
 from flask import jsonify
 from flask import request
 
-from spectrometer.datacollector import commits_stat_db
 from spectrometer.handlers.git import GitHandler
 from spectrometer.utils import check_parameters
+from spectrometer.utils import get_cache
 
 gitapi = Blueprint('git', __name__)
 
@@ -144,20 +144,25 @@ def branches():
           ]
         }
     """
+
     mapping = {
         'project': request.args.get('project', None),
+        'no_cache': request.args.get('no_cache', False),
     }
 
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
-        branches = git.branches()
+        collection = app.mongo.db.branches
+        data_id = '{0}'.format(mapping['project'])
 
-        if not branches:
-            result = {'error': 'No branches found for {0}.'.format(
-                mapping['project'])}
-        else:
+        args = []
+        branches = get_cache(collection, data_id, mapping['no_cache'], git.branches, args)
+
+        if branches:
             result = {'branches': branches}
+        else:
+            result = {'error': 'No branches found for {0}.'.format(mapping['project'])}
 
     return jsonify(result)
 
@@ -201,16 +206,16 @@ def commits():
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
+        collection = app.mongo.db.commits
+        data_id = '{0}:{1}'.format(mapping['project'], mapping['branch'])
 
-        if mapping['no_cache']:
-            commits = git.commits(mapping['branch'])
-        else:
-            commits = commits_stat_db(mapping['project'], mapping['branch'])
+        args = [mapping['branch']]
+        commits = get_cache(collection, data_id, mapping['no_cache'], git.commits, args)
 
-        if not commits:
-            result = {'error': 'Unable to lookup commits, branch {0} was not found!'.format(mapping['branch'])}
-        else:
+        if commits:
             result = {'commits': commits}
+        else:
+            result = {'error': 'Unable to lookup commits, branch {0} was not found!'.format(mapping['branch'])}
 
     return jsonify(result)
 
@@ -253,17 +258,22 @@ def commits_since_ref():
         'project': request.args.get('project', None),
         'branch': request.args.get('branch', None),
         'ref': request.args.get('ref', None),
+        'no_cache': request.args.get('no_cache', False),
     }
 
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
-        commits = git.commits_since_ref(mapping['branch'], mapping['ref'])
+        collection = app.mongo.db.commits
+        data_id = '{0}:{1}:{2}'.format(mapping['project'], mapping['branch'], mapping['ref'])
 
-        if not commits:
+        args = [mapping['branch'], mapping['ref']]
+        commits = get_cache(collection, data_id, mapping['no_cache'], git.commits_since_ref, args)
+
+        if commits:
+            result = {'commits': commits}
+        else:
             result = {'error': 'Unable to compare {branch} to {ref}.'.format(
                 branch=mapping['branch'], ref=mapping['ref'])}
-        else:
-            result = {'commits': commits}
 
     return jsonify(result)
