@@ -15,8 +15,6 @@ from __future__ import absolute_import
 
 import itertools
 
-from operator import itemgetter
-
 from git import Repo
 from git.exc import GitCommandError
 
@@ -35,6 +33,11 @@ class GitHandler:
                 'author': commit.author.name,
                 'email': commit.author.email
             }
+
+    def branches(self):
+        """Returns a list of branches in the repo."""
+        branches = [b.name for b in self.repo.branches]
+        return branches
 
     def commits(self, branch):
         """Returns a list of commit data from a repository.
@@ -60,46 +63,6 @@ class GitHandler:
                 commits.append(commit_dic)
 
         return commits
-
-    def branches(self):
-        """Returns a list of branches in the repo."""
-        branches = [b.name for b in self.repo.branches]
-        return branches
-
-    def author_loc(self, email, branch):
-        """Returns the commit statistics for an author.
-
-        Stats include:
-        - lines of code
-        - number of commits
-
-        Keyword arguments:
-        branch -- Branch of repo to pull data from.
-        email -- Author's email address to get stats against.
-        """
-        loc = 0
-        commit_count = 0
-        name = None
-        commits = self.commits(branch)
-        for c in commits:
-            if c['email'] == email:
-                loc += c['lines']['lines']
-                commit_count += 1
-                if not name:
-                    name = c['author']
-        return name, loc, commit_count
-
-    def authors(self, branch):
-        """Returns a list of authors that contributed to a branch.
-
-        Keyword arguments:
-        branch -- Branch of repo to pull data from.
-        """
-        authors = set()
-        commits = self.commits(branch)
-        for c in commits:
-            authors.add((c['author'], c['email']))
-        return sorted(authors, key=itemgetter(0))
 
     def commits_since_ref(self, branch, ref):
         """Returns a list of commits in branch until common parent of ref
