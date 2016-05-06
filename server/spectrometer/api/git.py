@@ -11,7 +11,7 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-import yaml
+import os
 
 from flask import Blueprint
 from flask import current_app as app
@@ -25,17 +25,11 @@ from spectrometer.utils import get_cache
 gitapi = Blueprint('git', __name__)
 
 
-def get_repo_address(project):
-    """Retrieves the repo_url for a project."""
-    with open(app.config['REPOSITORY_ADDRESSES']) as file:
-        repositories = yaml.load(file)
-    repo_address = repositories[project]['repo']
-    return repo_address
-
-
 def create_handler(project):
     """Convenience function for creating GitHandlers"""
-    return GitHandler(project, get_repo_address(project))
+    mirror_dir = app.config['MIRROR_DIR']
+    project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
+    return GitHandler(project, project_dir)
 
 
 @gitapi.route('/author/loc')

@@ -17,18 +17,24 @@ import os
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 from flask.ext.pymongo import PyMongo
+from git.cmd import Git
 
 from spectrometer import views
 from spectrometer.api.gerrit import gerritapi
 from spectrometer.api.git import gitapi
+from spectrometer.handlers.gerrit import GerritHandler
 
 
 def create_app(config):
     app = Flask(__name__)
     app.config.from_pyfile(config)
+    app.debug = app.config.get('DEBUG', False)
 
     app.mongo = PyMongo(app)
-    run_scheduler(app.config)
+
+    # Stop Flask debug mode from running the scheduler twice
+    if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+        run_scheduler(app)
 
     app.route('/')(views.status)
 
@@ -38,10 +44,45 @@ def create_app(config):
     return app
 
 
-def run_scheduler(config):
+def mirror_repos(mirror_dir, gerrit_url):
+    """Updates repository mirrors
+
+    Arguments:
+
+        :arg str mirror_dir: Path to directory containing repos.
+        :arg str gerrit_url: URL to the Gerrit server. Used for cloning repos.
+    """
+    gerrit = GerritHandler(gerrit_url)
+    projects = gerrit.projects_list()
+
+    for project in projects:
+        print("Updating repo for {0}".format(project))  # Should use a logger
+        project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
+
+        if os.path.exists(project_dir):
+            args = ['git', 'fetch']
+        else:
+            os.makedirs(project_dir)
+            args = ['git', 'clone', '--mirror',
+                    '{0}/{1}'.format(gerrit_url, project), '.']
+
+        project_repo = Git(project_dir)
+        project_repo.execute(args)
+
+
+def run_scheduler(app):
     """Runs a APScheduler instance to handle tasks"""
+    mirror_interval = app.config.get('MIRROR_INTERVAL', 300)
+
     apsched = BackgroundScheduler()
     apsched.start()
+
+    # Update git mirrored repos every 5 minutes
+    args = {
+        'mirror_dir': app.config['MIRROR_DIR'],
+        'gerrit_url': app.config['GERRIT_URL'],
+    }
+    apsched.add_job(mirror_repos, 'interval', seconds=mirror_interval, kwargs=args)
 
 
 def run_app(cli=False):

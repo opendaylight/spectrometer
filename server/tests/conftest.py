@@ -28,8 +28,8 @@ LISTEN_PORT = 5000
 MONGO_HOST = '127.0.0.1'
 MONGO_PORT = 27017
 
-REPOSITORY_ADDRESSES = '{tmpdir}/repositories.yaml'
 GERRIT_URL = 'https://git.opendaylight.org/gerrit/'
+MIRROR_DIR = '{tmpdir}/git'
 """.format(tmpdir=str(tmpdir))
         f.write(contents)
 

@@ -16,7 +16,6 @@ from spectrometer import run_app
 if __name__ == "__main__":
     app = run_app(cli=True)
     app.run(
-        debug=True,
         threaded=True,
         host=app.config['LISTEN_HOST'],
         port=app.config['LISTEN_PORT'],
