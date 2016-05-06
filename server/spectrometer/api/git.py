@@ -183,7 +183,13 @@ def commits():
           "commits": [
             {
               "author": "Thanh Ha",
-              "email": "thanh.ha@linuxfoundation.org",
+              "author_email": "thanh.ha@linuxfoundation.org",
+              "author_tz_offset": 14400,
+              "authored_date": 1460316386,
+              "committed_date": 1460392605,
+              "committer": "Thanh Ha",
+              "committer_email": "thanh.ha@linuxfoundation.org",
+              "committer_tz_offset": 14400,
               "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
               "lines": {
                 "deletions": 55,
@@ -191,7 +197,7 @@ def commits():
                 "insertions": 103,
                 "lines": 158
               },
-              "time": "10 Apr 2016 15:26"
+              "message": "Refactor Gerrit API into a Flask Blueprint..."
             },
             ...
           ]
@@ -240,7 +246,13 @@ def commits_since_ref():
           "commits": [
             {
               "author": "Thanh Ha",
-              "email": "thanh.ha@linuxfoundation.org",
+              "author_email": "thanh.ha@linuxfoundation.org",
+              "author_tz_offset": 14400,
+              "authored_date": 1460316386,
+              "committed_date": 1460392605,
+              "committer": "Thanh Ha",
+              "committer_email": "thanh.ha@linuxfoundation.org",
+              "committer_tz_offset": 14400,
               "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
               "lines": {
                 "deletions": 55,
@@ -248,7 +260,7 @@ def commits_since_ref():
                 "insertions": 103,
                 "lines": 158
               },
-              "time": "10 Apr 2016 15:26"
+              "message": "Refactor Gerrit API into a Flask Blueprint..."
             },
             ...
           ]
