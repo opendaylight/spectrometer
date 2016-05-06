@@ -106,7 +106,7 @@ class GitHandler:
             authors.add((c['author'], c['email']))
         return sorted(authors, key=itemgetter(0))
 
-    def commits_since_ref(self, branch, ref):
+    def commits_since_ref(self, ref1, ref2):
         """Returns a list of commits in branch until common parent of ref
 
         Searches Git for a common_parent between *branch* and *ref* and returns
@@ -114,12 +114,12 @@ class GitHandler:
         the common_parent commit itself.
 
         Arguments:
-            branch -- Branch which we want to gather commit logs from
-            ref -- Reference point in which to get commits from
+            ref1 -- The main reference point to query data from
+            ref2 -- Reference point in which to compare ref1 from
         """
         commits = []
         try:
-            common_parent = self.repo.merge_base(branch, ref)[0]
+            common_parent = self.repo.merge_base(ref1, ref2)[0]
         except GitCommandError:
             # If we fail to get the merge base simply return empty list as we
             # can no longer proceed any further.
@@ -127,10 +127,10 @@ class GitHandler:
 
         # Order is important here. A..B will show you all commits that B has
         # excluding A. Spectrometer is interested in finding all commits since
-        # the common branch
+        # the common parent of ref1 and ref2
         for commit in self.repo.iter_commits(
-            "{parent}..{branch}".format(
-                branch=branch,
+            "{parent}..{ref1}".format(
+                ref1=ref1,
                 parent=common_parent.hexsha)):
             commit_dic = self.format_commit_info(commit)
             commits.append(commit_dic)

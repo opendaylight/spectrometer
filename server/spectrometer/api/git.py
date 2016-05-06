@@ -262,8 +262,8 @@ def commits_since_ref():
     """
     mapping = {
         'project': request.args.get('project', None),
-        'branch': request.args.get('branch', None),
-        'ref': request.args.get('ref', None),
+        'ref1': request.args.get('ref1', None),
+        'ref2': request.args.get('ref2', None),
         'no_cache': request.args.get('no_cache', False),
     }
 
@@ -271,15 +271,15 @@ def commits_since_ref():
     if not result:
         git = create_handler(mapping['project'])
         collection = app.mongo.db.commits
-        data_id = '{0}:{1}:{2}'.format(mapping['project'], mapping['branch'], mapping['ref'])
+        data_id = '{0}:{1}:{2}'.format(mapping['project'], mapping['ref1'], mapping['ref2'])
 
-        args = [mapping['branch'], mapping['ref']]
+        args = [mapping['ref1'], mapping['ref2']]
         commits = get_cache(collection, data_id, mapping['no_cache'], git.commits_since_ref, args)
 
         if commits:
             result = {'commits': commits}
         else:
-            result = {'error': 'Unable to compare {branch} to {ref}.'.format(
-                branch=mapping['branch'], ref=mapping['ref'])}
+            result = {'error': 'Unable to compare {ref1} to {ref2}.'.format(
+                ref1=mapping['ref1'], ref2=mapping['ref2'])}
 
     return jsonify(result)
