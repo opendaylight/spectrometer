@@ -30,8 +30,8 @@ class GerritHandler():
         project_branches = json.loads(response)
         return project_branches
 
-    def project_changes_list(self, project, branch):
-        """Returns a list of project changes as reported by Gerrit."""
+    def project_merged_changes_list(self, project, branch):
+        """Returns a list of project merged changes as reported by Gerrit."""
         url = urljoin(self.BASE_URL, 'changes/?q=status:merged+project:' + project + '+branch:' + branch)
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         project_changes = json.loads(response)

@@ -122,9 +122,9 @@ def branches():
     return jsonify(result)
 
 
-@gerritapi.route('/changes')
-def changes():
-    """Returns a list of changes in a given repository by querying Gerrit.
+@gerritapi.route('/merged_changes')
+def merged_changes():
+    """Returns a list of merged changes in a given repository by querying Gerrit.
 
     GET /gerrit/changes?param=<value>
 
@@ -165,7 +165,7 @@ def changes():
     result = check_parameters(mapping)
     if not result:
         gerrit = GerritHandler(app.config['GERRIT_URL'])
-        changes = gerrit.project_changes_list(mapping['project'], mapping['branch'])
+        changes = gerrit.project_merged_changes_list(mapping['project'], mapping['branch'])
         if not changes:
             result = {'error': 'No changes found for {0}.'.format(mapping['project'])}
         else:
