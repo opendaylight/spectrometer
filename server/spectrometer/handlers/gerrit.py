@@ -25,21 +25,21 @@ class GerritHandler():
 
     def project_branches_list(self, project):
         """Returns a list of project branches as reported by Gerrit."""
-        url = urljoin(self.BASE_URL, 'projects/%s/branches/' % project)
+        url = urljoin(self.BASE_URL, 'projects/{0}/branches/'.format(project))
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         project_branches = json.loads(response)
         return project_branches
 
     def project_merged_changes_list(self, project, branch):
         """Returns a list of project merged changes as reported by Gerrit."""
-        url = urljoin(self.BASE_URL, 'changes/?q=status:merged+project:' + project + '+branch:' + branch)
+        url = urljoin(self.BASE_URL, 'changes/?q=status:merged+project:{0}+branch:{1}'.format(project, branch))
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         project_changes = json.loads(response)
         return project_changes
 
     def project_tags_list(self, project):
         """Returns a list of project tags as reported by Gerrit."""
-        url = urljoin(self.BASE_URL, 'projects/%s/tags/' % project)
+        url = urljoin(self.BASE_URL, 'projects/{0}/tags/'.format(project))
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         project_tags = json.loads(response)
         return project_tags
