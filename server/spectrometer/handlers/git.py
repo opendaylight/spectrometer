@@ -13,8 +13,6 @@
 
 from __future__ import absolute_import
 
-import itertools
-
 from git import Repo
 from git.exc import GitCommandError
 
@@ -50,22 +48,11 @@ class GitHandler:
         Keyword arguments:
         branch -- Branch of repo to pull data from.
         """
-        # todo: removing merging commits (more than 1 parent)
         commits = []
-        last_commit = None
-        for b in self.repo.branches:
-            if b.name == branch:
-                last_commit = b.commit
-                break
-        if last_commit:
-            is_master = branch == 'master'
-            if not is_master:
-                commits_in_master = list(self.repo.iter_commits('master'))
-            for commit in itertools.chain([last_commit], last_commit.iter_parents()):
-                if not is_master and commit in commits_in_master:
-                    break
-                commit_dic = self.format_commit_info(commit)
-                commits.append(commit_dic)
+
+        for commit in self.repo.iter_commits(rev=branch):
+            commit_dic = self.format_commit_info(commit)
+            commits.append(commit_dic)
 
         return commits
 
