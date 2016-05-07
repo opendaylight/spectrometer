@@ -23,20 +23,6 @@ class GerritHandler():
     def __init__(self, base_url):
         self.BASE_URL = base_url
 
-    def projects_list(self):
-        """Returns an alphabetically ordered list of projects as reported by Gerrit."""
-        url = urljoin(self.BASE_URL, 'projects/')
-        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
-        projects = json.loads(response)
-        return sorted(list(projects))
-
-    def project_tags_list(self, project):
-        """Returns a list of project tags as reported by Gerrit."""
-        url = urljoin(self.BASE_URL, 'projects/%s/tags/' % project)
-        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
-        project_tags = json.loads(response)
-        return project_tags
-
     def project_branches_list(self, project):
         """Returns a list of project branches as reported by Gerrit."""
         url = urljoin(self.BASE_URL, 'projects/%s/branches/' % project)
@@ -50,3 +36,17 @@ class GerritHandler():
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         project_changes = json.loads(response)
         return project_changes
+
+    def project_tags_list(self, project):
+        """Returns a list of project tags as reported by Gerrit."""
+        url = urljoin(self.BASE_URL, 'projects/%s/tags/' % project)
+        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
+        project_tags = json.loads(response)
+        return project_tags
+
+    def projects_list(self):
+        """Returns an alphabetically ordered list of projects as reported by Gerrit."""
+        url = urljoin(self.BASE_URL, 'projects/')
+        response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
+        projects = json.loads(response)
+        return sorted(list(projects))
