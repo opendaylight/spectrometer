@@ -12,6 +12,8 @@
 ##############################################################################
 
 import argparse
+import logging
+from logging.handlers import RotatingFileHandler
 import os
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -24,11 +26,33 @@ from spectrometer.api.gerrit import gerritapi
 from spectrometer.api.git import gitapi
 from spectrometer.handlers.gerrit import GerritHandler
 
+log = logging.getLogger(__name__)
+
 
 def create_app(config):
     app = Flask(__name__)
     app.config.from_pyfile(config)
     app.debug = app.config.get('DEBUG', False)
+
+    if not app.debug:
+        # Setup Logger
+        logdir = app.config.get('LOG_DIR', '/var/log/spectrometer')
+        logfile = os.path.join(logdir, 'spectrometer.log')
+
+        logging.getLogger().setLevel(logging.NOTSET)
+        formatter = logging.Formatter('%(asctime)s (%(levelname)8s) %(name)-40s: %(message)s')
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        logging.getLogger().addHandler(console_handler)
+
+        try:
+            file_handler = RotatingFileHandler(logfile, maxBytes=20000000, backupCount=20)
+            file_handler.setFormatter(formatter)
+            logging.getLogger().addHandler(file_handler)
+            log.info('File logger activated.')
+        except IOError:
+            log.warn('Unable to activate File logger. Please ensure that the '
+                     'log directory ({0}) is writable by the spectrometer user.'.format(logdir))
 
     app.mongo = PyMongo(app)
 
@@ -52,11 +76,12 @@ def mirror_repos(mirror_dir, gerrit_url):
         :arg str mirror_dir: Path to directory containing repos.
         :arg str gerrit_url: URL to the Gerrit server. Used for cloning repos.
     """
+    log.info('Updating git mirrors.')
     gerrit = GerritHandler(gerrit_url)
     projects = gerrit.projects_list()
 
     for project in projects:
-        print("Updating repo for {0}".format(project))  # Should use a logger
+        log.debug("Updating repo for {0}".format(project))
         project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
 
         if os.path.exists(project_dir):

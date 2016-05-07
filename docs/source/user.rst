@@ -24,3 +24,20 @@ example-nginx::
         proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
         proxy_set_header   SCRIPT_NAME      /api;
     }
+
+Logging
+-------
+
+Spectrometer logs to /var/log/spectrometer by default but that directory must
+be writeable by the spectrometer user.
+
+.. code-block:: bash
+
+    sudo chown spectrometer /var/log/spectrometer
+
+It is possible to override the default log directory by configuring the LOG_DIR
+parameter in config.py.
+
+.. code-block:: python
+
+    LOG_DIR = '/path/to/log/directory'

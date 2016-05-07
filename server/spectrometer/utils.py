@@ -11,7 +11,10 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
+import logging
 import time
+
+log = logging.getLogger(__name__)
 
 
 def check_parameters(mapping):
@@ -61,7 +64,7 @@ def get_cache(collection, data_id, no_cache, func, func_args):
         data = cache['data']
 
     if not data or no_cache or cache_age > 300:  # Default cache_age to 5 minutes
-        print("Caching {0} {1}".format(func.__name__, data_id))  # This should be a log
+        log.debug("Caching {0} {1}".format(func.__name__, data_id))
         data = func(*func_args)
         set_cache(collection, data_id, data)
 
