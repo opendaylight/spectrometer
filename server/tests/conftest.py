@@ -15,6 +15,7 @@ import os
 
 import pytest
 from git import Repo
+import mongomock
 
 from spectrometer import create_app
 
@@ -43,7 +44,7 @@ spectrometer:
 
     # Clone a repo for testing
     clone_from = os.path.join(os.getcwd(), '..')
-    clone_to = os.path.join(str(tmpdir), 'git')
+    clone_to = os.path.join(str(tmpdir), 'git', 'spectrometer.git')
     repo = Repo.clone_from(clone_from, clone_to)
     # Need to checkout a branch for the unit tests to work
     branch = repo.create_head('master', 'HEAD')
@@ -51,4 +52,5 @@ spectrometer:
 
     config = os.path.join(str(tmpdir), 'config.py')
     app = create_app(config)
+    app.mongo = mongomock.MongoClient()  # Setup mongomock to fake a mongodb in test
     return app

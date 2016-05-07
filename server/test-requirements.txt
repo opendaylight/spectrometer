@@ -1,5 +1,6 @@
 -r requirements.txt
 tox
 flake8
+mongomock
 pytest
 pytest-flask
