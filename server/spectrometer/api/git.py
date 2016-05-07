@@ -110,6 +110,11 @@ def commits():
             ...
           ]
         }
+
+    .. note::
+
+        :date: The date represented in seconds since epoch
+        :tz_offset: The seconds offset west of UTC.
     """
     mapping = {
         'project': request.args.get('project', None),

@@ -28,17 +28,19 @@ def projects():
 
     GET /gerrit/projects
 
-    {
-      "projects": [
-        "groupbasedpolicy",
-        "spectrometer",
-        "releng/autorelease",
-        "snmp4sdn",
-        "ovsdb",
-        "nemo",
-        ...
-        ]
-    }
+    JSON::
+
+        {
+          "projects": [
+            "groupbasedpolicy",
+            "spectrometer",
+            "releng/autorelease",
+            "snmp4sdn",
+            "ovsdb",
+            "nemo",
+            ...
+            ]
+        }
     """
     gerrit = GerritHandler(app.config['GERRIT_URL'])
     return jsonify({'projects': gerrit.projects_list()})
