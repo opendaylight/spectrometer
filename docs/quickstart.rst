@@ -35,11 +35,15 @@ Setup spectrometer-server
 -------------------------
 
 Installing spectrometer from pypi is simple and will get you the latest version
-that is released.
+that is released. Then create a config.py file in /etc/spectrometer/config.py
+(Example file can be found `here <https://git.opendaylight.org/gerrit/gitweb?p=spectrometer.git;a=blob_plain;f=server/example-config/config.py;hb=HEAD>`_)
 
 .. code-block:: bash
 
     pip install spectrometer
+    sudo mkdir /etc/spectrometer
+    sudo vi /etc/spectrometer/config.py
+    spectrometer server start
 
 Verify that spectrometer-server is running by going to
 **http://localhost:5000**. You should see a Hello World page.

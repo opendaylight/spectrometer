@@ -1,8 +1,20 @@
 User Guide
 ==========
 
+Spectrometer consists of 3 components:
+
+- Spectrometer API Server (backend)
+- Spectrometer Web Server (frontend)
+- Spectrometer Report Tool
+
+This guide will describe the uses of the 3 systems.
+
+
+Spectrometer API Server
+-----------------------
+
 Production Deployment
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 When running in production the recommended way is to deploy with gunicorn.
 
@@ -26,7 +38,7 @@ example-nginx::
     }
 
 Logging
--------
+^^^^^^^
 
 Spectrometer logs to /var/log/spectrometer by default but that directory must
 be writeable by the spectrometer user.
@@ -41,3 +53,23 @@ parameter in config.py.
 .. code-block:: python
 
     LOG_DIR = '/path/to/log/directory'
+
+
+Spectrometer Web Server
+-----------------------
+
+TODO
+
+
+Spectrometer Report Tool
+------------------------
+
+The Spectrometer Report Tool can be used to generate reports between 2
+reference points in time. Reference points are git commit hashs, branches, or
+tags. A project like OpenDaylight that tags projects with the same tag name for
+every release can use this tool to Generate release reports.
+
+.. code-block:: bash
+
+    # spectrometer reporttool full <ref1> <ref2>
+    spectrometer reporttool --server-url=https://spectrometer.opendaylight.org/api full release/beryllium-sr2 release/beryllium-sr1
