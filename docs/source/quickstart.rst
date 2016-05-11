@@ -4,7 +4,8 @@ Quick Start Guide
 The Spectrometer project consists of two sub-projects, the ```server``` and
 ```web```.
 
-Server side is Python driven and provides the API to collect Git and Gerrit statistics for various OpenDaylight projects.
+Server side is Python driven and provides the API to collect Git and Gerrit
+statistics for various OpenDaylight projects.
 
 The web project is NodeJS/React based and provides the visualization by using
 the APIs provided by the server side.
@@ -60,26 +61,22 @@ Setup spectrometer-web
 
 Goto **http://localhost:8000**
 
+Testing the setup
+-----------------
 
-Adding additional repositories
-------------------------------
+By default the OpenDaylight project repositories will be mirrored every
+5 minutes (300s), so if this is the first time starting you may have to
+wait until all repos are mirrored before you can exercise some of the
+apis.
 
-Add a repository address to repositories.yaml with the following format:
+Once the repos are mirrored you can try a few basic examples to make sure
+things are working properly:
 
+Examples::
 
-.. code-block:: yaml
+    http://127.0.0.1:5000/gerrit/branches?project=controller
+    http://127.0.0.1:5000/gerrit/projects
+    http://127.0.0.1:5000/git/commits?project=integration/packaging
 
-    modulename:
-        repo: path/to/bare_repo/directory
-
-Where **modulename** is the name of the project and **repo** is the path to
-the repository of the project.
-
-Now http://127.0.0.1:5000/git/commits/:modulename will return repository log of
-added repository address in *yaml* file.
-
-http://127.0.0.1:5000/git/commits/:modulename/:branchname will return commits
-on that branch and parents commits to them that are not in `master` branch. An
-example can be `http://127.0.0.1:5000/git/commits/aaa/stable/lithium`
-
-
+The full  Rest APIs are documented here:
+https://opendaylight-spectrometer.readthedocs.io/en/latest/restapi.html
