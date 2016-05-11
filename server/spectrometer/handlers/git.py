@@ -29,11 +29,11 @@ class GitHandler:
                 'hash': commit.hexsha,
                 'lines': commit.stats.total,
                 'author': commit.author.name,
-                'author_email': commit.author.email,
+                'author_email': commit.author.email.lower(),
                 'authored_date': commit.authored_date,  # seconds since epoch
                 'author_tz_offset': commit.author_tz_offset,  # seconds west of utc
                 'committer': commit.committer.name,
-                'committer_email': commit.committer.email,
+                'committer_email': commit.committer.email.lower(),
                 'committed_date': commit.committed_date,  # seconds since epoch
                 'committer_tz_offset': commit.committer_tz_offset,  # seconds west of utc
                 'message': commit.message,
