@@ -13,6 +13,7 @@
 
 from __future__ import absolute_import
 
+from git import GitCmdObjectDB
 from git import Repo
 from git.exc import GitCommandError
 
@@ -20,7 +21,7 @@ from git.exc import GitCommandError
 class GitHandler:
     def __init__(self, project, repo_address):
         self.name = project
-        self.repo = Repo(repo_address)
+        self.repo = Repo(repo_address, odbt=GitCmdObjectDB)
 
     def format_commit_info(self, commit):
         return {
