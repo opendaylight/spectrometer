@@ -83,7 +83,7 @@ def commits():
 
     :arg str project: Project to query commits from. (required)
     :arg str branch: Branch to pull commits from. (default: master)
-    :arg bool db: To pull cached data or not. (default: false)
+    :arg bool no_cache: To skip cached data or not. (default: false)
 
     JSON::
 
