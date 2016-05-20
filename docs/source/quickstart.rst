@@ -20,12 +20,6 @@ The Spectrometer project collects data from repositories located locally in
 your system.
 
 
-Clone spectrometer
-------------------
-
-git clone ssh://<user>@git.opendaylight.org:29418/spectrometer.git
-
-
 Setup mongodb
 -------------
 
@@ -40,11 +34,12 @@ use Docker to spin up a MongoDB instance.
 Setup spectrometer-server
 -------------------------
 
+Installing spectrometer from pypi is simple and will get you the latest version
+that is released.
+
 .. code-block:: bash
 
-    cd server  # From spectrometer repo root
-    pip install -r requirements.txt
-    python spectrometer-server -c example-config/config.py
+    pip install spectrometer
 
 Verify that spectrometer-server is running by going to
 **http://localhost:5000**. You should see a Hello World page.
@@ -53,9 +48,13 @@ Verify that spectrometer-server is running by going to
 Setup spectrometer-web
 ----------------------
 
+Spectrometer Web is still in development so you will need to install it from
+Git at the time being as there is no package for it yet.
+
 .. code-block:: bash
 
-    cd web  # From spectrometer repo root
+    git clone https://git.opendaylight.org/gerrit/spectrometer.git
+    cd spectrometer/web
     npm install
     npm start
 

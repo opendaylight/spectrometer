@@ -14,10 +14,12 @@
 from setuptools import find_packages
 from setuptools import setup
 
+with open('requirements.txt') as f:
+    install_reqs = f.read().splitlines()
 
 setup(
     name='spectrometer',
-    version='0.1.0',
+    version='0.0.1',
     author='OpenDaylight Spectrometer Project',
     author_email='spectrometer-dev@lists.opendaylight.org',
     url='https://wiki.opendaylight.org/view/Spectrometer',
@@ -34,10 +36,9 @@ setup(
         'Development Status :: 1 - Planning',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
-
     ],
+    install_requires=install_reqs,
     packages=find_packages(exclude=[
         '*.tests',
         '*.tests.*',
@@ -46,5 +47,8 @@ setup(
     ]),
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
-    scripts=['spectrometer-server'],
+    entry_points='''
+        [console_scripts]
+        spectrometer=spectrometer.server:cli
+    ''',
 )

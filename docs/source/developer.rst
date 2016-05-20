@@ -22,6 +22,19 @@ https://docs.python.org/devguide/documenting.html
 Spectrometer Server
 -------------------
 
+Installing in Dev Mode
+^^^^^^^^^^^^^^^^^^^^^^
+
+In development we want to install spectrometer so that we can modify the code
+and use it as if in production with changes taking effect immediately. We can
+achieve this using pip's editable install mode.
+
+.. code-block:: bash
+
+    cd server  # From spectrometer repo root
+    pip install -e .
+    spectrometer start -c example-config/config.py
+
 Testing Code
 ^^^^^^^^^^^^
 

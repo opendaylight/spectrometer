@@ -11,7 +11,6 @@
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
 
-import argparse
 import logging
 from logging.handlers import RotatingFileHandler
 import os
@@ -110,24 +109,12 @@ def run_scheduler(app):
     apsched.add_job(mirror_repos, 'interval', seconds=mirror_interval, kwargs=args)
 
 
-def run_app(cli=False):
+def run_app(config='/etc/spectrometer/config.py'):
     """Runs the spectrometer app
 
     This function is effectively the spectrometer main() function and is the
     entry point for spectrometer.
     """
-    if cli:
-        parser = argparse.ArgumentParser()
-        parser.add_argument("-c", "--conf", help="Config file")
-        args = parser.parse_args()
-
-    # Config search priorities
-    # 1. User provided via --conf parameter
-    # 2. /etc/spectrometer/config.py
-    config = '/etc/spectrometer/config.py'
-    if cli and args.conf:  # If initiated by gunicorn don't parse cli
-        config = os.path.realpath(args.conf)
-
     app = create_app(config)
 
     return app
