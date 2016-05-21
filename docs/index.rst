@@ -13,6 +13,7 @@ Contents:
 
    quickstart
    user
+   documentation
    developer
    restapi
 
