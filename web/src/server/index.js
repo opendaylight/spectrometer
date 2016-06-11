@@ -1,4 +1,7 @@
-require('babel-core/register')({
-    presets: ['es2015', 'stage-2', 'react']
+require('babel-register')({
+  ignore: function(filename) {
+    return filename.indexOf('/node_modules/') >= 0;
+  }
 });
+require('babel-polyfill')
 require('./server');

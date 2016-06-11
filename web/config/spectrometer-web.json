@@ -1,0 +1,4 @@
+{
+  "apiServer": "http://localhost:5000",
+  "httpPort": 8000
+}

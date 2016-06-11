@@ -1,26 +1,31 @@
-import 'babel-core/register';
-import ReactDOM from 'react-dom';
+// import 'babel-register';
+
 import React from 'react';
-import { Router } from 'react-router';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ReduxRouter } from 'redux-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { Router, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
-import configureStore from '../common/store/configureStore';
-import routes from '../common/routes';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import "../../styles/index.css";
+import configureStore from '../server/store';
+import routes from '../server/routes';
 
-const history = createBrowserHistory();
-const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState);
-const rootElement = document.getElementById('root');
+import "../../assets/styles/index.css";
+
+console.log("starting OpenDaylight Spectrometer client")
+injectTapEventPlugin()
+
+const initialState = window.__INITIAL_STATE__
+const store = configureStore(initialState)
+const history = syncHistoryWithStore(browserHistory,store)
+const rootElement = document.getElementById('root')
 
 ReactDOM.render(
   <Provider store={store}>
-        <ReduxRouter>
-          <Router children={routes} history={history} />
-        </ReduxRouter>
+    <Router history={history}>
+      { routes }
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
@@ -34,7 +39,7 @@ if (process.env.NODE_ENV !== 'production') {
   // Don't change this to an import, it needs to be in the
   // conditional as a require so it gets stripped out of
   // production builds by webpack
-  const DevTools = require('../common/utils/DevTools').default;
+  const DevTools = require('../server/utils/devtools').default;
   const devNode = document.createElement('div');
   document.body.appendChild(devNode);
   ReactDOM.render(<DevTools store={store} />,devNode);

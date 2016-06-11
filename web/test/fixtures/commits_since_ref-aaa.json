@@ -1,0 +1,418 @@
+{
+  "commits": [
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1438283615,
+      "committed_date": 1438288501,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "81648ec8ef7ebc50ad27cc4cb9d8bc24869fd7a3",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 0,
+        "lines": 2
+      },
+      "message": "Revert disabling yangtools features-test\n\nThis patch is part 2 of 2 patches:\n\n* Re-enables the feature tests for features-authz.\n\nChange-Id: Ifd6cd98305fedd40a025240bc7ade88617a87915\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1438283535,
+      "committed_date": 1438288499,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "49b4ccad2d6c1a87cfd71525a098f5fae6e5080b",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 49,
+        "lines": 96
+      },
+      "message": "Bumping versions by 0.0.1 after the Helium SR4 release\n\nThis patch is part 1 of 2 patches.\n\n* To break the cyclic dependency, this patch temporarily stops running\n  the authz feature tests.\n\nChange-Id: Id1555b5bf5446786f026deccdb49fdd4ff0fc10f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1438283530,
+      "committed_date": 1438283530,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "061f4a8571d2b030accef607e987c3e7c5151a12",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Applying the Helium SR4 release patch\n\nChange-Id: I8859cd309f8b99fe7468ecde9b62de7248c3ac16\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Wojciech Dec",
+      "author_email": "wdec@cisco.com",
+      "author_tz_offset": 0,
+      "authored_date": 1438204137,
+      "committed_date": 1438204137,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "0df2af1ff37ca75fa895d1ea569cbb282ace652d",
+      "lines": {
+        "deletions": 3,
+        "files": 1,
+        "insertions": 1,
+        "lines": 4
+      },
+      "message": "Merge \"Bug 4054 Federation RuleProcessor utilizes System.out which interferes with karaf\" into stable/helium"
+    },
+    {
+      "author": "Ryan Goulding",
+      "author_email": "ryandgoulding@gmail.com",
+      "author_tz_offset": 14400,
+      "authored_date": 1437756532,
+      "committed_date": 1437756587,
+      "committer": "Ryan Goulding",
+      "committer_email": "ryandgoulding@gmail.com",
+      "committer_tz_offset": 14400,
+      "hash": "aade4d1bc20035963ed73c41a0a8d59da1541bb1",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Bug 4038 Grant Creation is Broken\n\nThis patch correctly increments consecutive calls to\nPreparedStatement.setInt().\n\nChange-Id: I698fa6761d2b8aef26ecf2929d3c5f7718eaf0a7\nSigned-off-by: Ryan Goulding <ryandgoulding@gmail.com>\n(cherry picked from commit 789bf629686a2f711b6742bb779f0284348983ea)\n"
+    },
+    {
+      "author": "Ryan Goulding",
+      "author_email": "ryandgoulding@gmail.com",
+      "author_tz_offset": 14400,
+      "authored_date": 1437754609,
+      "committed_date": 1437754942,
+      "committer": "Ryan Goulding",
+      "committer_email": "ryandgoulding@gmail.com",
+      "committer_tz_offset": 0,
+      "hash": "76daf3fdf7248973bfe1401d170e9970a7969aae",
+      "lines": {
+        "deletions": 3,
+        "files": 1,
+        "insertions": 1,
+        "lines": 4
+      },
+      "message": "Bug 4054 Federation RuleProcessor utilizes System.out which interferes with karaf\n\nChanges System.out calls to logger.info().\n\nChange-Id: I20ef61d59e2a310de8705e165b881659063d6b32\nSigned-off-by: Ryan Goulding <ryandgoulding@gmail.com>\n"
+    },
+    {
+      "author": "Ryan Goulding",
+      "author_email": "ryandgoulding@gmail.com",
+      "author_tz_offset": 14400,
+      "authored_date": 1435251352,
+      "committed_date": 1435251412,
+      "committer": "Ryan Goulding",
+      "committer_email": "ryandgoulding@gmail.com",
+      "committer_tz_offset": 14400,
+      "hash": "bd56e31894210e8543fae1bfad46fde79a2ff4f8",
+      "lines": {
+        "deletions": 196,
+        "files": 6,
+        "insertions": 224,
+        "lines": 420
+      },
+      "message": "BUG 3323 - Changing sql queries to prepared statements in idmlite\n\nBy-hand cherry-pick of https://git.opendaylight.org/gerrit/#/c/22051/2.\n\nChange-Id: Ie0d116571defc54df192dcc98ef8c41a872750b3\nSigned-off-by: Ryan Goulding <ryandgoulding@gmail.com>\n"
+    },
+    {
+      "author": "Ryan Goulding",
+      "author_email": "ryandgoulding@gmail.com",
+      "author_tz_offset": 14400,
+      "authored_date": 1435150589,
+      "committed_date": 1435173960,
+      "committer": "Ryan Goulding",
+      "committer_email": "ryandgoulding@gmail.com",
+      "committer_tz_offset": 0,
+      "hash": "17f513e954112af5643336dcd6f9daa73db75a88",
+      "lines": {
+        "deletions": 2,
+        "files": 2,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Upgrade sqlite version for the aaa data store\n\nUpgrade the sqlite version for the aaa data store to 3.8.10.1.\n\nChange-Id: I6c36dc6cceaa5bf288c975b1ba709ba010df07bc\nSigned-off-by: Ryan Goulding <ryandgoulding@gmail.com>"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1427125200,
+      "committed_date": 1427125484,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "97250fdce233ce1afe68f5aae7853f86ebb2bcfd",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 0,
+        "lines": 2
+      },
+      "message": "Revert disabling yangtools features-test\n\nThis patch is part 2 of 2 patches:\n\n* Re-enables the feature tests for features-authz.\n\nChange-Id: Iea81d1be468cd2c4584260c01da22ae9b78cebfe\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1426809135,
+      "committed_date": 1427125415,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "eb4c7afdde9bb0f123bf7094a7ac2126545fda35",
+      "lines": {
+        "deletions": 50,
+        "files": 23,
+        "insertions": 52,
+        "lines": 102
+      },
+      "message": "Bumping versions by 0.0.1 after the Helium SR3 release\n\nThis patch is part 1 of 2 patches.\n\n* To break the cyclic dependency, this patch temporarily stops running\n  the authz feature tests.\n\nChange-Id: I5a5b65ac9a2e6fe14348ff4c722898a86f54acf4\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1426809132,
+      "committed_date": 1426809132,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "d5a40eea1b85cc00cfe4411a6954bbd1f52de317",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Applying the Helium SR3 release patch\n\nChange-Id: I91307e45db95a694318e2c82feafd78332ab882e\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Liem Nguyen",
+      "author_email": "liem_m_nguyen@hp.com",
+      "author_tz_offset": 0,
+      "authored_date": 1423175389,
+      "committed_date": 1423175389,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "15adc24a231429ee57d7af61a65fd424ae34eb60",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Merge \"Set root pom.xml <name> for Sonar\" into stable/helium"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1422941072,
+      "committed_date": 1422941072,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "1f1ef023b020ddc08b59691750cb4325a5ab2f4f",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Bumping versions by 0.0.1 after the Helium SR2 release\n\nChange-Id: I816c9afed72097fe15c7716e83f6816e812f7bc1\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1422941072,
+      "committed_date": 1422941072,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "180b3c16c34bce1ad9caff28551c4a606dccb162",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Applying the Helium SR2 release patch\n\nChange-Id: I74ff535f8fe48a03ea73173cdd1a2ff4f61cff59\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1420841136,
+      "committed_date": 1420841176,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "a48eee391755e663c7c07244cddf660af6e87ad0",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Set root pom.xml <name> for Sonar\n\nAs mentioned on the mailing list Sonar uses the <name> field of the\npom.xml that is passed to the mvn command as the name of the project in\nSonar. In most cases this is the root pom.xml file in a project. This\npatch sets the name to the project shortname.\n\nhttps://lists.opendaylight.org/pipermail/discuss/2014-November/004024.html\n\nChange-Id: I47a2d8812d4a3f22c1c17d353caa56a41809e8de\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Maros Marsalek",
+      "author_email": "mmarsale@cisco.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1417095797,
+      "committed_date": 1417100312,
+      "committer": "Maros Marsalek",
+      "committer_email": "mmarsale@cisco.com",
+      "committer_tz_offset": -3600,
+      "hash": "44438f80a19cd4610411ce75e28dfacd8476c6bb",
+      "lines": {
+        "deletions": 11,
+        "files": 3,
+        "insertions": 19,
+        "lines": 30
+      },
+      "message": "Change ENUMS used in config yangs for Strings\n\nENUMs are not properly serialzied in config/netconf and it causes failure when reading/writing data using RESTCONF + Loopback connection\n\nChange-Id: I8f9da4d009cdd3a432dd031ecc3a7cb551454d3d\nSigned-off-by: Maros Marsalek <mmarsale@cisco.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1415677493,
+      "committed_date": 1415677493,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "f67a039775b73e80f76dfb021453e8890068af55",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Bumping versions by 0.0.1 after the Helium.1 release\n\nChange-Id: I01bf78e3a27dea262e9982cc9c2b277845d94cc5\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1415677442,
+      "committed_date": 1415677473,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "ca47362f504c3c7d6aa7733bf280021d180b4af8",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Applying the Helium.1 release patch\n\nChange-Id: I88b1f69f881ad4dbdcd9e51b1cc33e675a055c78\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Harman Singh",
+      "author_email": "harmasin@cisco.com",
+      "author_tz_offset": 25200,
+      "authored_date": 1414803394,
+      "committed_date": 1415230953,
+      "committer": "Liem Nguyen",
+      "committer_email": "liem_m_nguyen@hp.com",
+      "committer_tz_offset": 0,
+      "hash": "2c53a63e1075d57833c77788699a5f5b76cb65d3",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 32,
+        "lines": 32
+      },
+      "message": "Bug 2292 : CORS access control fix\n\nwhen browser sends cross-origin request, it first sends the OPTIONS method\n     with a list of access control request headers, which has a list of custom headers and access control method\n     such as GET. POST etc. You custom header \"Authorization will not be present in request header, instead it\n     will be present as a value inside Access-Control-Request-Headers.\n     We should not do any authorization against such request.\n\nChange-Id: I290f409a4685ed10685249b8514621ecb2159176\nSigned-off-by: Harman Singh <harmasin@cisco.com>\n(cherry picked from commit e8cd14ee78c627ab9cd02178e42f7459ba7cc1c9)"
+    },
+    {
+      "author": "Colin Dixon",
+      "author_email": "colin@colindixon.com",
+      "author_tz_offset": 18000,
+      "authored_date": 1412539892,
+      "committed_date": 1412540381,
+      "committer": "Colin Dixon",
+      "committer_email": "colin@colindixon.com",
+      "committer_tz_offset": 18000,
+      "hash": "ba1c7bc00bad750eb593147b0ffac0457230b7bf",
+      "lines": {
+        "deletions": 47,
+        "files": 24,
+        "insertions": 48,
+        "lines": 95
+      },
+      "message": "Incrementing versions by 0.0.1 for post-Helium stability branch\n\nAlso adding a dependency on the features-aaa features repository in the\nfeatures.xml in the authz features project.\n\nChange-Id: I45ab91ecd0645d2775807f313159addced51d1c3\nSigned-off-by: Colin Dixon <colin@colindixon.com>\n"
+    },
+    {
+      "author": "Colin Dixon",
+      "author_email": "colin@colindixon.com",
+      "author_tz_offset": 18000,
+      "authored_date": 1412539079,
+      "committed_date": 1412539246,
+      "committer": "Colin Dixon",
+      "committer_email": "colin@colindixon.com",
+      "committer_tz_offset": 18000,
+      "hash": "205da0625988970919c6961dc1f1f11142fb0669",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Adjusting the .gitreview file to go to stable/helium by default\n\nChange-Id: I6f5ed325e412c13303503e76f92d0aa8165b0ae1\nSigned-off-by: Colin Dixon <colin@colindixon.com>\n"
+    },
+    {
+      "author": "Colin Dixon",
+      "author_email": "colin@colindixon.com",
+      "author_tz_offset": 18000,
+      "authored_date": 1412538965,
+      "committed_date": 1412539233,
+      "committer": "Colin Dixon",
+      "committer_email": "colin@colindixon.com",
+      "committer_tz_offset": 18000,
+      "hash": "2a229a7201d86e225e121a622b62e69de9098e05",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 6,
+        "lines": 6
+      },
+      "message": "Adding a depenency on sal-common-impl\n\nThis was necesary for the authz features test to work locally on my Mac.\n\nChange-Id: Ib7e07a817856fd311c7f5886f610f006ee9689a1\nSigned-off-by: Colin Dixon <colin@colindixon.com>\n"
+    },
+    {
+      "author": "Liem Nguyen",
+      "author_email": "liem_m_nguyen@hp.com",
+      "author_tz_offset": 25200,
+      "authored_date": 1412364585,
+      "committed_date": 1412364609,
+      "committer": "Liem Nguyen",
+      "committer_email": "liem_m_nguyen@hp.com",
+      "committer_tz_offset": 25200,
+      "hash": "5c8bba09b0dee035b4f712bff2d621d756f7ce96",
+      "lines": {
+        "deletions": 47,
+        "files": 23,
+        "insertions": 47,
+        "lines": 94
+      },
+      "message": "Applying the Helium release patch for aaa\n\nChange-Id: I270bc2d0f8bb025e150a0ddf1154c206001dfa6d\nSigned-off-by: Liem Nguyen <liem_m_nguyen@hp.com>\n"
+    }
+  ]
+}

@@ -14,6 +14,7 @@ dist/
 .tox/
 
 # Web
+npm-debug.log
 web/node_modules
 web/npm-debug.log
 web/lib
