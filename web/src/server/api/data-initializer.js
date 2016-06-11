@@ -1,7 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
 
-// const PROJECTS_LIMIT = 82
 let projects = []
 
 export function mapProjectCommits(commits) {
@@ -25,8 +24,8 @@ export function loadProjectNames(url) {
     axios.get(`${url}/gerrit/projects`)
       .then((res) => {
         console.info("data-initializer:loaded ", res.data.projects.length, " project names")
-        //const p0 = _(res.data.projects).reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,PROJECTS_LIMIT).valueOf()
-        resolve(res.data.projects.slice(1))
+        // resolve(_(res.data.projects).sortBy().reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,10).valueOf())
+        resolve(res.data.projects.slice(1)) //remove All-Users projects
       })
     })
 }

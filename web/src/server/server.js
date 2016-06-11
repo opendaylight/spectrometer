@@ -22,24 +22,28 @@ import configureStore from './store';
 import routes from './routes';
 import { loadProjectNames, loadBranches, loadCommits, mapProjectCommits } from './api/data-initializer'
 
+console.log(`starting OpenDaylight Spectrometer web app in ${process.env.NODE_ENV} mode`)
+
 const APP_CONFIG_FILE = './config/spectrometer-web.json'
-const appConfig = JSON.parse(fs.readFileSync(path.resolve(APP_CONFIG_FILE), 'utf8'))
-const url = apiConfig ? apiConfig.apiServer : 'http://localhost:5000'
+const webAppConfig = JSON.parse(fs.readFileSync(path.resolve(APP_CONFIG_FILE), 'utf8'))
+
+console.log("using configuration", webAppConfig)
+
+const apiServerUrl = webAppConfig ? webAppConfig.apiServerUrl : 'http://localhost:5000'
 
 global.navigator = { navigator: 'all' };
 injectTapEventPlugin()
 
-console.info(`starting OpenDaylight Spectrometer web app in ${process.env.NODE_ENV} mode`)
 
-const app = express();
+const app = express()
 
 const startTime = moment()
 let allProjects = []
-loadProjectNames(url).then((names) => {
+loadProjectNames(apiServerUrl).then((names) => {
   console.info("server: project names loaded:", names.length )
-  loadBranches(url, names).then((projectsWithBranches) => {
+  loadBranches(apiServerUrl, names).then((projectsWithBranches) => {
     console.info("server: project branches loaded:", projectsWithBranches.length)
-    loadCommits(url, names).then((projectsWithCommits) => {
+    loadCommits(apiServerUrl, names).then((projectsWithCommits) => {
       allProjects = _.merge(projectsWithBranches, projectsWithCommits)
       console.log("server: it took ", moment().diff(startTime, 'seconds'), "seconds to load", allProjects.length, "projects")
       console.log("server: all projects loaded into store, Spectrometer is READY for browsing")
@@ -87,7 +91,7 @@ if (process.env.NODE_ENV !== 'production') {
 // handle all spectrometer-api requests
 app.get('/spectrometer-api/*', function(req, res) {
   console.info('serving spectrometer-api url', req.url)
-  const url = appConfig.apiServer + req.url.replace('spectrometer-api/', '')
+  const url = apiServerUrl + req.url.replace('spectrometer-api/', '')
   axios.get(url)
     .then(response => {
       req.url.indexOf('/git/commits') >= 0 ?
@@ -130,7 +134,7 @@ app.get('/*', function(req, res, next) {
   })
 })
 
-const server = app.listen(appConfig['httpPort'], function() {
+const server = app.listen(webAppConfig['httpPort'], function() {
   const host = server.address().address;
   const port = server.address().port;
   console.log(`OpenDaylight Spectrometer web app listening at http://${host}:${port}`);
