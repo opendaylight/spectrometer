@@ -1,0 +1,1912 @@
+{
+  "commits": [
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462661049,
+      "committed_date": 1462661113,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "0dfa62e4d2ae3b372c40471a3779a81513df3467",
+      "lines": {
+        "deletions": 3,
+        "files": 1,
+        "insertions": 3,
+        "lines": 6
+      },
+      "message": "Switch to using str.format()\n\nUsing the str.format() is a bit nicer and generally recommended in\npython.\n\nChange-Id: I011d109bd18ece80c02d9e9aca6778c7d89dcf4b\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462660034,
+      "committed_date": 1462660091,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "70cfd703a0ae1aca5d9aec4f69dbbcb4404e43fe",
+      "lines": {
+        "deletions": 66,
+        "files": 1,
+        "insertions": 66,
+        "lines": 132
+      },
+      "message": "Reorganize functions alphabetically\n\nChange-Id: Ica37e3b8c839e17db515af8b8ff7b879ec520fb9\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462659901,
+      "committed_date": 1462660091,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "2149c8f018aaed185c6e6daf44ccc431f2debc53",
+      "lines": {
+        "deletions": 6,
+        "files": 2,
+        "insertions": 6,
+        "lines": 12
+      },
+      "message": "Rename changes to merged_changes\n\nThe changes API actually queries only merged changes so rename the api\nas appropriate.\n\nChange-Id: I3d0919c76141a7cad809c1e76b02c1be358eaca0\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462659709,
+      "committed_date": 1462660091,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "c6c27d2eb228ecd1ffc50cf40b5490dfefeae631",
+      "lines": {
+        "deletions": 14,
+        "files": 1,
+        "insertions": 14,
+        "lines": 28
+      },
+      "message": "Reorganize functions alphabetically\n\nChange-Id: Ia83543dce7c717654f4c3200da48264c3100f85c\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1462654337,
+      "committed_date": 1462654337,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "1f693985508cdcd96bc013ceed20492c39c87b3d",
+      "lines": {
+        "deletions": 2,
+        "files": 4,
+        "insertions": 48,
+        "lines": 50
+      },
+      "message": "Merge \"Add logging support\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462594406,
+      "committed_date": 1462654116,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "6bf77f5ef0e6453fc10250d15fd50ee3c962ce0c",
+      "lines": {
+        "deletions": 2,
+        "files": 4,
+        "insertions": 48,
+        "lines": 50
+      },
+      "message": "Add logging support\n\nUse the Python logging module to log to console and file as appropriate\nwhen run in production mode. Also convert all print statements over to\nlogger.\n\nChange-Id: I0e0f76687a48b2f3679e92e4a52ca776ae376850\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462597857,
+      "committed_date": 1462599247,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "7d9459bcd2f23b40f1050eaef17d9c29021f8025",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 46,
+        "lines": 48
+      },
+      "message": "Add unittests for all git apis\n\n- Add unittest for git.branches api\n- Add unittest for git.commits_since_ref api\n- Update git.commits tests to test new available data\n\nChange-Id: I1978c23c552c825f10cdfac12a56ce85e36287cf\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462596739,
+      "committed_date": 1462596908,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "dfd1369bf8c8f6cce6cad6f1945a99752652aacc",
+      "lines": {
+        "deletions": 19,
+        "files": 3,
+        "insertions": 20,
+        "lines": 39
+      },
+      "message": "Fix spectrometer unittests\n\n- Use mongomock as our mock interface for testing without a real\n  mongodb instance in test mode.\n- Restore git.commits test\n\nChange-Id: Ic2920f681a40656c4cac5474380224a8cdc9f668\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462595066,
+      "committed_date": 1462595066,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "4a87b816ff7cd4d7ab1924491d44ccf85000b315",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Add .gitignore to ignore the docs build directory\n\nChange-Id: Ia1fc1b64849cf715b9dcbb4c4396c23f2e99979f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462582915,
+      "committed_date": 1462582926,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "24c6896427bf9f8025884d70f4ced144c3c8944c",
+      "lines": {
+        "deletions": 11,
+        "files": 2,
+        "insertions": 18,
+        "lines": 29
+      },
+      "message": "Improve documentation\n\n- Add date and tz_offset details as a note.\n- Fix projects JSON example formatting.\n\nChange-Id: Iacd4d69650352f6ee1c9acfbccdae78937ea9dd2\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1462582487,
+      "committed_date": 1462582487,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "7aa6c44ac39833025e5b6ed163b25ac02b560eeb",
+      "lines": {
+        "deletions": 128,
+        "files": 2,
+        "insertions": 5,
+        "lines": 133
+      },
+      "message": "Merge \"Remove authors and authors_loc APIs\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462548936,
+      "committed_date": 1462549131,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "7e68aba8b00b122c105d7c7570e71493ae3e5d02",
+      "lines": {
+        "deletions": 13,
+        "files": 2,
+        "insertions": 13,
+        "lines": 26
+      },
+      "message": "Rename branch&ref to ref1&ref2\n\nMake API more appropriately named since branch isn't what we're actually\nasking for as input.\n\nChange-Id: Icf79785ed1ff26fc8f24121b3c8d9d5b5eae3aba\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462504978,
+      "committed_date": 1462506710,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "106f71a6184a405e5088740f4adb65a88f0f4daf",
+      "lines": {
+        "deletions": 17,
+        "files": 6,
+        "insertions": 51,
+        "lines": 68
+      },
+      "message": "Add periodic job to mirror repos\n\nDefault mirror_repos() task to run every 5 minutes but is configurable\nvia MIRROR_INTERVAL in seconds.\n\nRework create_handler() to create repos without requiring\nrepositories.yaml\n\nMake debug mode configurable via config.py configuration, default to\ndisabled but enable it in example configuration as that is what devs use\nfor testing.\n\nChange-Id: Ia22b57489bb2b30f086c7b741c91d2d9be017642\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462495773,
+      "committed_date": 1462497802,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "9acc1bded18a68375148730530d7087219427398",
+      "lines": {
+        "deletions": 7,
+        "files": 2,
+        "insertions": 24,
+        "lines": 31
+      },
+      "message": "Add missing commit details\n\nFixes author and committer data and splits them appropriately. Author is\nthe change owner and creater while committer is the change merger.\nTypically the committer is the person who approved a patch. Also return\nboth the author&committer email, date, and tz data.\n\nChange date to reflect seconds since epoch. Most consumer hardware are\nonly accurate to the second unless using a realtime system. This is why\ngit stores seconds since epoch so just return what Git returns rather\nthan doing additional math that provides no more benefit.\n\nAlso provide commit message data in the object too. In the future we'll\nwant to parse the message for \"Also-By\" and \"Co-Authored-By\" fields to\npull in additional authors for patches that have multiple people working\non them.\n\nChange-Id: I933fd9da6e19d5a64ccd5567d495b8d22603d77d\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461791372,
+      "committed_date": 1462497802,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "5ec372d1b4f1ef91a8589f56aef9562c16767def",
+      "lines": {
+        "deletions": 102,
+        "files": 5,
+        "insertions": 90,
+        "lines": 192
+      },
+      "message": "Cache data on demand\n\nThere are situations where we cannot predict what to cache due to it\nrequiring user input such as commits_since_ref api. This patch adds a\nfunction that allows us to cache data when the api is called and checks\nthe cache_age before determining if we should provide the user with the\ncache version or we need to update the cache.\n\nTwo new functions are introduced via this patch:\n\nget_cache(): This function tries to query the database for our cached\n    document if possible. Otherwise it will query the API for fresh data\n    and calls set_cache() in order to set cached data.\n\nset_cache(): This function is a simple function that is used to store a\n    document into cache.\n\nAlso updates 3 Git APIs with the ability to cache.\n\n    git.branches\n    git.commits\n    git.commits_since_ref\n\nChange-Id: I2f62424ab9e255b50434a315eab7695ff4741803\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1462298908,
+      "committed_date": 1462298910,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "759aac6bc17a640d6ea9d2fa56aeef0255e2fd6b",
+      "lines": {
+        "deletions": 128,
+        "files": 2,
+        "insertions": 5,
+        "lines": 133
+      },
+      "message": "Remove authors and authors_loc APIs\n\nThese APIs provide redundant information that's already provided in the\ncommits API.\n\nChange-Id: Ic5717b27eb935dffffea9753346c199da1001a81\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1461352154,
+      "committed_date": 1461352154,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "f381f88232461532636805c25e167f0dfb217ea6",
+      "lines": {
+        "deletions": 0,
+        "files": 3,
+        "insertions": 70,
+        "lines": 70
+      },
+      "message": "Merge \"Add Vagrantfile\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1461351080,
+      "committed_date": 1461351080,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "42e84bd158d61ea20ccccc13b4a76051386ab769",
+      "lines": {
+        "deletions": 22,
+        "files": 2,
+        "insertions": 137,
+        "lines": 159
+      },
+      "message": "Merge \"Add gerrit branches and commits api.\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461299554,
+      "committed_date": 1461350594,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "d37e06e6bc7d936304a250187d40eb18c35c205c",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 7,
+        "lines": 8
+      },
+      "message": "Catch exception when merge_base fails\n\nIf merge_base fails that means the repo likely doesn't contain the\nreferences passed. Return a blank commits list and exit.\n\nChange-Id: I1f97a3225813b8172178e87215699b8d0b23993f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461292132,
+      "committed_date": 1461350594,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "0d9e41115518040ae78e49e96e7194e088cb743e",
+      "lines": {
+        "deletions": 7,
+        "files": 4,
+        "insertions": 7,
+        "lines": 14
+      },
+      "message": "Fix committer to author\n\nThe field was incorrectly called comitter when it really should have\nbeen named author as author represents the person who contributed the\ncode. Committer has a different meaning which we should parse in the\nfuture.\n\nChange-Id: I9769812f3899e3890329639c443502d813d4bf15\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461036374,
+      "committed_date": 1461350497,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "12bc0c398825e78de741cfcc53ff64a82de62953",
+      "lines": {
+        "deletions": 16,
+        "files": 1,
+        "insertions": 36,
+        "lines": 52
+      },
+      "message": "Convert author_loc API to using new format\n\nPer conversations in mailing list we decided to switch the API format.\nUpdating the API to use the new format.\n\nSee:\nhttps://lists.opendaylight.org/pipermail/spectrometer-dev/2016-April/000121.html\n\nChange-Id: I0ff13ca5d70c2ec3c77fb0fce4b84646eb2a568d\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461036030,
+      "committed_date": 1461350497,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "4703055df4624c99ab3a593b8e4a7988cc8bf8bf",
+      "lines": {
+        "deletions": 20,
+        "files": 1,
+        "insertions": 38,
+        "lines": 58
+      },
+      "message": "Convert authors API to using new format\n\nPer conversations in mailing list we decided to switch the API format.\nUpdating the API to use the new format.\n\nSee:\nhttps://lists.opendaylight.org/pipermail/spectrometer-dev/2016-April/000121.html\n\nChange-Id: I711ba25bc1131e6ffb9c9f1c071e658806e3ffe8\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461035134,
+      "committed_date": 1461350497,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "e36a38cfa2d6fe863d36fff2551deba8b5e72bcf",
+      "lines": {
+        "deletions": 14,
+        "files": 1,
+        "insertions": 32,
+        "lines": 46
+      },
+      "message": "Convert branches API to using new format\n\nPer conversations in mailing list we decided to switch the API format.\nUpdating the API to use the new format.\n\nSee:\nhttps://lists.opendaylight.org/pipermail/spectrometer-dev/2016-April/000121.html\n\nChange-Id: I1015e7bf36445459fa477eb8a09657d6c4839c11\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1461034380,
+      "committed_date": 1461350382,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "c68552de292f2d39db17ad232a4a6801cef61de7",
+      "lines": {
+        "deletions": 41,
+        "files": 2,
+        "insertions": 43,
+        "lines": 84
+      },
+      "message": "Convert commits API to using new format\n\nPer conversations in mailing list we decided to switch the API format.\nUpdating the API to use the new format.\n\nSee:\nhttps://lists.opendaylight.org/pipermail/spectrometer-dev/2016-April/000121.html\n\nChange-Id: I94cf9ddc0919e7b18adeecc833223088a4f105fc\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": 0,
+      "authored_date": 1461338680,
+      "committed_date": 1461338680,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "ef2e5dceace7c6ae0cb678ca1aaa64fb14cd09a7",
+      "lines": {
+        "deletions": 6,
+        "files": 3,
+        "insertions": 66,
+        "lines": 72
+      },
+      "message": "Merge \"Add unit test for git.commits api\""
+    },
+    {
+      "author": "A H",
+      "author_email": "an.ho@huawei.com",
+      "author_tz_offset": 25200,
+      "authored_date": 1461337234,
+      "committed_date": 1461337234,
+      "committer": "A H",
+      "committer_email": "an.ho@huawei.com",
+      "committer_tz_offset": 25200,
+      "hash": "9cdcd9aab908e93da02af7ae80abd18155a7bad5",
+      "lines": {
+        "deletions": 22,
+        "files": 2,
+        "insertions": 137,
+        "lines": 159
+      },
+      "message": "Add gerrit branches and commits api.\n\nProvide gerrit api for getting a project branches\nand commits. Also rework API to follow new format.\n\nChange-Id: Iff2f823f7fd9bf6e18e8a492da8e9b1c6a8a7033\nSigned-off-by: A H <an.ho@huawei.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460946438,
+      "committed_date": 1461035675,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "d803de485e68324338ab2367639b0a7dfb3c007f",
+      "lines": {
+        "deletions": 0,
+        "files": 3,
+        "insertions": 119,
+        "lines": 119
+      },
+      "message": "Add API to return commits since ref\n\n/git/commits_since_ref/\n\n    branch: branch to get commit log from\n    ref: reference point to search until. ref can be any commit hash as\n         well as branches and tags.\n\nSearches Git for a common_parent between *branch* and *ref* and returns\nthe commit log of all the commits until the common parent excluding the\ncommon_parent commit itself.\n\nAlso implement a utils function check_parameters(mapping) for finding\nmissing required parameters for the API.\n\nExample:\n\n    mapping = {\n        'project': request.args.get('project', None),\n        'branch': request.args.get('branch', 'master'),\n    }\n\nIn this example 'project' is a required parameter so the get() method\ndefaults to None indicating that it is a required parameter. On the other\nhand 'branch' is an optional parameter so we set a default value master in\nthe event that branch is not explicitly passed.\n\nChange-Id: I4168e023b77bfddbb6f72057e849925ba2dffa17\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": 0,
+      "authored_date": 1460997582,
+      "committed_date": 1460997582,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "2f40afd52efb4dde4843e3b6d6b6a9c680a9e359",
+      "lines": {
+        "deletions": 106,
+        "files": 9,
+        "insertions": 117,
+        "lines": 223
+      },
+      "message": "Merge \"Refactor initialization scripts\""
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": 0,
+      "authored_date": 1460973879,
+      "committed_date": 1460973879,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "ecfe160ac78b4f882b118593c520f76af43ca798",
+      "lines": {
+        "deletions": 7,
+        "files": 2,
+        "insertions": 5,
+        "lines": 12
+      },
+      "message": "Merge \"Simplify git.commits API failure detection\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460948582,
+      "committed_date": 1460948588,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "9a1c1a9b7258892a332f29f5308e6ec9b21c5bac",
+      "lines": {
+        "deletions": 7,
+        "files": 2,
+        "insertions": 5,
+        "lines": 12
+      },
+      "message": "Simplify git.commits API failure detection\n\nIn Python an empty list returns false so just check if the list is empty\nand return error.\n\nChange-Id: I7bdbbd3cb864f0fe2b1a9810fadc540485bb4622\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460789233,
+      "committed_date": 1460947435,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "96400326d0cc5135eb4dd30968394c2def0c5936",
+      "lines": {
+        "deletions": 106,
+        "files": 9,
+        "insertions": 117,
+        "lines": 223
+      },
+      "message": "Refactor initialization scripts\n\nSummary:\n- Fixes issue preventing auto reloader from reloading code in dev\n- Refactor multiprocessing into a task scheduler\n- Use APScheduler for task scheduling\n- Refactor init scripts to support gunicorn and cli startup modes\n- Fix Rest API docs linking\n\nThe Flask reloader problem was caused by the multiprocessing module\nholding it's own system process which Flask's reloader couldn't reload\nso was not able to automatically reload when it detected Spectrometer\ncode change.\n\nInstead implement APScheduler as a background task manager to run the\ndatabase collector. This will allow us to add additional interval tasks\nin the future as we need them. If we ever need a more complex scheduler\nwe could investigate Celery in the future.\n\nAlso refactor init scripts so that they support starting up in dev mode\nvia cli scripts as well as production mode using a WSGI system such as\ngunicorn.\n\nChange-Id: Ic98dc71f9db573b26916949e8ca277bac31746cd\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -7200,
+      "authored_date": 1460941423,
+      "committed_date": 1460941423,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -7200,
+      "hash": "224c9997cb8afbfb478813eb3ed3fafaacd1a8c7",
+      "lines": {
+        "deletions": 3,
+        "files": 1,
+        "insertions": 3,
+        "lines": 6
+      },
+      "message": "Sort return value of gerrit list_projects\n\nChange-Id: Id5e5d557706b22ae5073b1f229cf4e00e27ea9aa\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460309223,
+      "committed_date": 1460819437,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "e19aa1a2a9ba050e9ce19f32c3eb9356d704d345",
+      "lines": {
+        "deletions": 6,
+        "files": 3,
+        "insertions": 66,
+        "lines": 72
+      },
+      "message": "Add unit test for git.commits api\n\nAdd a test to validate the git.commits api. We use the first ever commit\ncontributed into the spectrometer repo as our test data and validate\nthat values returned are as expected.\n\nTests will now use a unique tmpdir and their own copies of config.py and\nrepositories.yaml and a local clone of the spectrometer git repo to run\nthe tests.\n\nAlso fix pytest to only run tests once.\n\nChange-Id: I9d0e1a9c899bfd192379f1bcf48dfb761a7a82a7\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "A H",
+      "author_email": "an.ho@huawei.com",
+      "author_tz_offset": 25200,
+      "authored_date": 1460730897,
+      "committed_date": 1460778893,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "9311eb75b03955b13d44cdad83ed8d84309d6377",
+      "lines": {
+        "deletions": 0,
+        "files": 2,
+        "insertions": 34,
+        "lines": 34
+      },
+      "message": "Add gerrit api for project tags\n\nProvide gerrit api and handler for listing the tags of a particular\nproject in the format\nhttp://localhost:5000/gerrit/project/tags/<project>\n\nChange-Id: Ia678ec11ef662f1c53bb0f71a41d9ac6399dc7d2\nSigned-off-by: A H <an.ho@huawei.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460666311,
+      "committed_date": 1460739268,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "09e539aa4542df7839b2602e0ebe8ff1ba43c6d8",
+      "lines": {
+        "deletions": 0,
+        "files": 3,
+        "insertions": 70,
+        "lines": 70
+      },
+      "message": "Add Vagrantfile\n\nAdd a Vagrantfile that spins up a VM capable of running spectrometer.\nDoes not yet install spectrometer itself so the user will need to\nperform the additional steps to get spectrometer installed via our git\nrepo.\n\nChange-Id: I7a786a81a70f8214f2c641eeec4c25edc7258aa8\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -7200,
+      "authored_date": 1460589524,
+      "committed_date": 1460591427,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -7200,
+      "hash": "1ba928d7a601e313d0f6b39abce8a766a68b2eb4",
+      "lines": {
+        "deletions": 7,
+        "files": 3,
+        "insertions": 6,
+        "lines": 13
+      },
+      "message": "Change time format\n\nHuman readable string is not convinient for sorting returned commits\nfrom database queries. Time of commits stored in milliseconds after\nepoch. Consumable for Javascript Date function.\n\nChange-Id: I51dd30531de5a9d1f8a8a2623fb161aa4fb8f6cc\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "A H",
+      "author_email": "an.ho@huawei.com",
+      "author_tz_offset": 0,
+      "authored_date": 1460484889,
+      "committed_date": 1460484889,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "a8e48350b312f0e2cd85e8698c9906c384d4d19e",
+      "lines": {
+        "deletions": 2,
+        "files": 2,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Merge \"Default example repos and settings to spectrometer\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460438473,
+      "committed_date": 1460438557,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "03588f295be664a4633ae5a129dbd4822f9db415",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Fix fetching commits via db\n\nThis was an oversight in the Git Blueprints patch breaking this feature.\nThis patch restores the functionality back to the way it was.\n\nChange-Id: I8bc37036119105573c7421b61e90a201ca705677\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460260823,
+      "committed_date": 1460425037,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "2193e11077dc17e1814a2b20385bec68f5d58fe3",
+      "lines": {
+        "deletions": 4,
+        "files": 3,
+        "insertions": 10,
+        "lines": 14
+      },
+      "message": "Refactor Hello World into Status page\n\nIn the future we should display some details that let the user know the\nstate of Spectrometer Server.\n\nChange-Id: Ifc217265fc645cf56aa30219b4d52de49517c1f3\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": 0,
+      "authored_date": 1460409032,
+      "committed_date": 1460409032,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "1302c046f48d4156217046e958c3bf7d76ab7f95",
+      "lines": {
+        "deletions": 237,
+        "files": 6,
+        "insertions": 270,
+        "lines": 507
+      },
+      "message": "Merge \"Refactor Git API into Flask Blueprint\""
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": 0,
+      "authored_date": 1460408604,
+      "committed_date": 1460408604,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "25b82343825e77155d4d64f39c38b3f469b45550",
+      "lines": {
+        "deletions": 8,
+        "files": 1,
+        "insertions": 1,
+        "lines": 9
+      },
+      "message": "Merge \"Remove redundant function\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460319283,
+      "committed_date": 1460404329,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "e0daf165d1ed6aecd87f5f9df1a15532cff2862c",
+      "lines": {
+        "deletions": 237,
+        "files": 6,
+        "insertions": 270,
+        "lines": 507
+      },
+      "message": "Refactor Git API into Flask Blueprint\n\nThis patch converts the Git API into a Flask Blueprint. Blueprints are\nhandy for making modular Flask applications and is the recommended way\nto create the kinds of things we want to do with the APIs.\n\nAdditional tweaks:\n- Rename module_name to projects\n- Rename branch_name to branch\n- Fix typo commiter -> committer\n\nSee:\nhttp://flask.pocoo.org/docs/0.10/blueprints/\n\nChange-Id: I483236529e41ee8ac06b3cfbd272406dd6c5937f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460260415,
+      "committed_date": 1460404007,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "ec1f3f2b17fffdcd2060bc30ca00e7b99f496e97",
+      "lines": {
+        "deletions": 8,
+        "files": 1,
+        "insertions": 1,
+        "lines": 9
+      },
+      "message": "Remove redundant function\n\nNo need for the function when we have a variable we just made that\ncontains the same .keys() function.\n\nChange-Id: Id1ad80bd617f6411f92e15bb9c4b773fa89447c3\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460316386,
+      "committed_date": 1460392605,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "1e409af62fd99413c5be86c5b43ad602a8cebc1e",
+      "lines": {
+        "deletions": 55,
+        "files": 7,
+        "insertions": 103,
+        "lines": 158
+      },
+      "message": "Refactor Gerrit API into a Flask Blueprint\n\nUsing Blueprints allows us to scale the application. Moving forward each\ndifferent api type we want to use should go into the api folder and\ncreated as a Flask Blueprint.\n\nAlso create a handlers folder to manage the various handlers.\n\nSee:\nhttp://flask.pocoo.org/docs/0.10/blueprints/\n\nChange-Id: I695515bb89eef20ec932d6c8321dcd24d442f388\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460255023,
+      "committed_date": 1460392277,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "8bedb853406b64162061d1bf43aba1a3d081ed2d",
+      "lines": {
+        "deletions": 5,
+        "files": 1,
+        "insertions": 5,
+        "lines": 10
+      },
+      "message": "Fix gerrit_projects() failure json not serializable\n\nMethod was throwing the following error:\nTypeError(repr(o) + \" is not JSON serializable\")\n\njsonify was not expecting a json.keys() response.\n\nAlso add docstring for method.\n\nChange-Id: I2b53d1ac43ea709d9ca1e911d40bb6e9703447b8\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460324106,
+      "committed_date": 1460391272,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "bbd158c838bf39233b83ddf92727d06fb49e0ae8",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 3,
+        "lines": 4
+      },
+      "message": "Make Flask run in multithreaded mode\n\nNeeded if we try to use requests library to query our own API. If it's\nnot threaded the entire app will hang.\n\nChange-Id: Iee917fb0c0beb94768db157b487af34acbdca96d\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460303363,
+      "committed_date": 1460385998,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "92bcf301b028c2be903c149998ec1d5a3822ca11",
+      "lines": {
+        "deletions": 6,
+        "files": 3,
+        "insertions": 20,
+        "lines": 26
+      },
+      "message": "Make server connections configurable\n\nEnable the user to configure the listen host and port via config\nfile setting as well as configure the MongoDB connection details.\n\nChange-Id: I6f034e14f563ba4c728772d8d5911dc64b1f8ff3\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460255181,
+      "committed_date": 1460384769,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "029311038cafdfeacd52642b5f2a63646d187737",
+      "lines": {
+        "deletions": 5,
+        "files": 2,
+        "insertions": 0,
+        "lines": 5
+      },
+      "message": "Remove unimplemented function call\n\nThe function should be resubmitted when it's actually implemented. Use\nBugzilla to track new features.\n\nChange-Id: Icd7008a2bf16339917414b976a957dee9aa31668\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460251876,
+      "committed_date": 1460384657,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "97632b7d45cd2b412472d5369ee2044f2a351548",
+      "lines": {
+        "deletions": 2,
+        "files": 2,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Rename GERRIT_URL config option\n\nGERRIT_URL is shorter and prefix BASE_ doesn't really add much value to\nthe option.\n\nChange-Id: I0e3dad521e63dbf16068583ae05b0b9d501eaa50\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460251747,
+      "committed_date": 1460384564,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "7b7bb9ca06316f0bd7b4102c175fab7cc3bb03dd",
+      "lines": {
+        "deletions": 3,
+        "files": 2,
+        "insertions": 3,
+        "lines": 6
+      },
+      "message": "Rename Gerrit to GerritHandler\n\nRename to remain consistent with the naming for GitHandler.\n\nChange-Id: I96477658290a4f83a849c8ece97f6247584069f8\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460250548,
+      "committed_date": 1460250548,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "63fe6db5ce57321767d44efb72c82a04f98cd6ed",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 1,
+        "lines": 2
+      },
+      "message": "Set version to 0.1.0\n\nChange-Id: I3bf810980e8d99d373d0b16a875b12ddf34e43d8\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460250174,
+      "committed_date": 1460250176,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "dbaa9004963b5cf55c256990ccca8e2e07fad4b2",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 0,
+        "lines": 1
+      },
+      "message": "Remove GPL classifier\n\nThis is an EPL project.\n\nChange-Id: I73c2ebb3b1aa495bdf03992311bf78103ead6034\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460225282,
+      "committed_date": 1460243963,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "8c62fedb756682de6dac4c77de133427d0902147",
+      "lines": {
+        "deletions": 6,
+        "files": 3,
+        "insertions": 8,
+        "lines": 14
+      },
+      "message": "Use Flask-PyMongo for MongoDB connection\n\nFlask has a Flask-PyMongo implementation for using MongoDB. Use it as\nit is integrated into Flask.\n\nSee:\nhttps://flask-pymongo.readthedocs.org/en/latest/\n\nChange-Id: I7671e8eef508808dd91328818eec6544d11c9724\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460224639,
+      "committed_date": 1460243963,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "ca50ca00ea0fafd25ce2c528eae2728a8dd945d0",
+      "lines": {
+        "deletions": 4,
+        "files": 2,
+        "insertions": 6,
+        "lines": 10
+      },
+      "message": "Organize imports by pep8\n\nChange-Id: I391baba5bdc7a135354088cfe11b3c58e782171e\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460223736,
+      "committed_date": 1460243852,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "dee2d697a3defb8db570476e57454ca6538c894c",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 4,
+        "lines": 5
+      },
+      "message": "Make config fallback location be /etc/spectrometer/config.py\n\nPriorities for config.py location:\n\n    1. User provided via --conf parameter\n    2. /etc/spectrometer/config.py\n\nChange-Id: I2a75109da85d877c3887513724404f2d163f851f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460219412,
+      "committed_date": 1460243852,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "a5d1a714c7486322b61720f58d1699dc05775a10",
+      "lines": {
+        "deletions": 41,
+        "files": 5,
+        "insertions": 5,
+        "lines": 46
+      },
+      "message": "Consolidate example configuration into a single directory\n\nChange-Id: Ib39ba8e12931374d48b5d569df5903ca8052621f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460223715,
+      "committed_date": 1460243852,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "5769caa7aa6c7d5772c1c408cebd4f9b7baeb800",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 1,
+        "lines": 2
+      },
+      "message": "Fix config passed via parameter path detection\n\nUse os.path.realpath() to determine the correct path based on user\ninput. This resolves issues for example if the user passed:\n\n    spectrometer-server -c example-config/config.py\n\nThe Flask is not able to determine the correct path to that file.\n\nChange-Id: Ie7f2b3cc42a8dc709f387570788bcc448b27fe18\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460243656,
+      "committed_date": 1460243656,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "3f71cac41912d8ab7fed44ef2d544965f4cc9d50",
+      "lines": {
+        "deletions": 2,
+        "files": 1,
+        "insertions": 5,
+        "lines": 7
+      },
+      "message": "Update Python test instructions\n\nChange-Id: I0298006105e9efcee8006e1691f68c98d61d46cd\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460243523,
+      "committed_date": 1460243523,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "d3db01e7616f06180f8160ce4dfa2d119f0e052d",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Fix syntax issue\n\nChange-Id: I106f34a25df849264597adfa79a757c4a1b0620f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460243443,
+      "committed_date": 1460243467,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "08173184f359d7e32a3530eb1399b0c40eb9d1a7",
+      "lines": {
+        "deletions": 97,
+        "files": 1,
+        "insertions": 0,
+        "lines": 97
+      },
+      "message": "Remove documentation from README\n\nThis was migrated already via commit:\n4783856a6a8f02c09fa90fd3cf48458e12307532\n\nChange-Id: I80d2ae8416cb677a008ad245de752146390ed212\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460242641,
+      "committed_date": 1460243047,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "4783856a6a8f02c09fa90fd3cf48458e12307532",
+      "lines": {
+        "deletions": 7,
+        "files": 3,
+        "insertions": 131,
+        "lines": 138
+      },
+      "message": "Add Developer Guide\n\nMigrate remaining README sections to Developer Guide.\n\nChange-Id: I09c5d4f87cdb5107c41e1c0f82cc2a6c1ac1e59d\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460241702,
+      "committed_date": 1460241705,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "dae827b05692cb1ee330468b6367cc9d91e43b6e",
+      "lines": {
+        "deletions": 173,
+        "files": 9,
+        "insertions": 139,
+        "lines": 312
+      },
+      "message": "Use sphinx to autogenerate apidocs for spectrometer-server\n\nMigrate apidocs from README into docstrings so that autogenerated docs\ncan be created from the code.\n\nChange-Id: I2a0617fccbf5144d6e2c78f660cbecab92821963\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460240035,
+      "committed_date": 1460240035,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "b9361ee777052a54b580a223f5ddcd65d3cc73b3",
+      "lines": {
+        "deletions": 69,
+        "files": 4,
+        "insertions": 94,
+        "lines": 163
+      },
+      "message": "Migrate documentation to Sphinx\n\nChange-Id: I2117e17e60802a0ad072158ed9ad367db03c0db0\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460236634,
+      "committed_date": 1460236634,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "768096497e004b7b68ab926de1c1924996278b41",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 1,
+        "lines": 2
+      },
+      "message": "Set copyright string to OpenDaylight\n\nChange-Id: I5a270d89962f25238811c657347f5e759c34fa10\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460235970,
+      "committed_date": 1460235970,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "4dd38c92475c34f2f6d5ac5c84d6ba19f79fa2f3",
+      "lines": {
+        "deletions": 0,
+        "files": 4,
+        "insertions": 809,
+        "lines": 809
+      },
+      "message": "Initialize Sphinx documentation\n\nChange-Id: I7d114551cecd6aabb461e7ce4d1b569698c50197\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460231196,
+      "committed_date": 1460235518,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "c81d5e25631d252405c4df25d0ab2a38ec39d4a2",
+      "lines": {
+        "deletions": 2,
+        "files": 2,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Default example repos and settings to spectrometer\n\nUsers should create their own /etc/spectrometer/repositories.yaml so our\nrepo configuration should provide just enough to get a working\nspectrometer without the user having to configure anything.\n\nChange-Id: Ic482e409707cdb5d2d754f92ca8f74573a53ff2d\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 14400,
+      "authored_date": 1460126522,
+      "committed_date": 1460126556,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "594321a4ce7ce38760c14f59bf4b566b42227b24",
+      "lines": {
+        "deletions": 1,
+        "files": 1,
+        "insertions": 1,
+        "lines": 2
+      },
+      "message": "Fix SPDX license warning\n\nFixes this warning:\nnpm WARN opendaylight-spectrometer-web@0.0.1 license should be a valid\nSPDX license expression\n\nChange-Id: Id11947bbbdec9876a7f319741f1ea5782cb6acbc\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -7200,
+      "authored_date": 1460103529,
+      "committed_date": 1460123942,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -7200,
+      "hash": "cafb2078997c5c072af88b7142186fb06dad6129",
+      "lines": {
+        "deletions": 27,
+        "files": 6,
+        "insertions": 134,
+        "lines": 161
+      },
+      "message": "Introduce MongoDB usage for repositories info.\n\nCommits info from all repositories is collected in a parrallel process\nand stored in \"spectrometer\" database in \"commits\" collection.\n\nREST API for querying commits accepts a \"db\" argument. If passed and\nevaluated to True, database will be queried resulting in a\nsignificantly faster response.\n\nChange-Id: I222bf7219dafe640209e8b124fce1b3fa71ad67d\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Vasu",
+      "author_email": "vasya10@gmail.com",
+      "author_tz_offset": 21600,
+      "authored_date": 1456679176,
+      "committed_date": 1458747151,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "359820ff8b7ad96bdd7e5b0e029f55b9abd945b4",
+      "lines": {
+        "deletions": 32,
+        "files": 8,
+        "insertions": 60,
+        "lines": 92
+      },
+      "message": "Add some odl repos to collect statistics\n\nChange-Id: Ic8744d91bb3dac6398eb780fe3cc281890010141\nSigned-off-by: Vasu <vasya10@gmail.com>\n"
+    },
+    {
+      "author": "Vasu",
+      "author_email": "vasya10@gmail.com",
+      "author_tz_offset": 21600,
+      "authored_date": 1456677900,
+      "committed_date": 1458746908,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 14400,
+      "hash": "39ad89bb5a431258dcd1321d2681acb18dfc9bcc",
+      "lines": {
+        "deletions": 2,
+        "files": 41,
+        "insertions": 2622,
+        "lines": 2624
+      },
+      "message": "Initial spectrometer-web checkin\n\nChange-Id: Ief0b0ab1ab0ccceda2e1f8676f608b125ccf573d\nSigned-off-by: Vasu <vasya10@gmail.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1456336391,
+      "committed_date": 1456336391,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "0f0d1af64b2b2bd0310595d1df16848776f0a129",
+      "lines": {
+        "deletions": 1,
+        "files": 2,
+        "insertions": 2,
+        "lines": 3
+      },
+      "message": "Use six library to support Python 2 & 3\n\nChange-Id: Ifdace3c6abb50924633b39cb0a5adc19bbb88756\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456246546,
+      "committed_date": 1456246859,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "e82ae95d270c5153ee6b0ebe0a795391986188e5",
+      "lines": {
+        "deletions": 0,
+        "files": 4,
+        "insertions": 44,
+        "lines": 44
+      },
+      "message": "Add API to get list of authors\n\nChange-Id: I175c12216e24744d1a22f802c76d343f503361b3\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456192706,
+      "committed_date": 1456226997,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "59ccb9f42ebdd225bc95e591f5786897a8dfc368",
+      "lines": {
+        "deletions": 5,
+        "files": 4,
+        "insertions": 122,
+        "lines": 127
+      },
+      "message": "Add API for LOC stat based on author's email\n\nChange-Id: I937c32459280bd4a0d9f21e08db0e902eafd561e\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456150533,
+      "committed_date": 1456187680,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 0,
+      "hash": "dd5b16608c3741d637857c0ad7a4f4637725a46a",
+      "lines": {
+        "deletions": 8,
+        "files": 2,
+        "insertions": 13,
+        "lines": 21
+      },
+      "message": "Remove JSON formating in GitHandler methods\n\nGitHandler methods return less verbose data structures. JSON formating of\nresults is done in views module instead.\n\nChange-Id: I25d0acce517e9ab1eff221ccd6afbf96df459bcf\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456088712,
+      "committed_date": 1456174840,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "70b49ee6918f776a9ef476294cb7e0ec933a460e",
+      "lines": {
+        "deletions": 9,
+        "files": 6,
+        "insertions": 58,
+        "lines": 67
+      },
+      "message": "Add API for getting projects list from Gerrit.\n\nChange-Id: I3450e427530abf25a0ed9f9ccd56373609cf8eac\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456084121,
+      "committed_date": 1456167225,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 0,
+      "hash": "a953e5a9007e08cd6905efd240e6a8cc21c4d442",
+      "lines": {
+        "deletions": 9,
+        "files": 4,
+        "insertions": 25,
+        "lines": 34
+      },
+      "message": "Add REST API for getting list of branches.\n\nChange-Id: If3c685b30efb89ffe9315503f92aa61fc44b96de\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456060735,
+      "committed_date": 1456167178,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 0,
+      "hash": "15303cc587e18bb22a36183a63ab3095c9008acb",
+      "lines": {
+        "deletions": 4,
+        "files": 2,
+        "insertions": 4,
+        "lines": 8
+      },
+      "message": "Updating README file.\n\nChange-Id: If1dc84062c59c34412d278e3881ff88662a2f190\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1456060533,
+      "committed_date": 1456131391,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "f748bda2f2915aed58a75cd7d2c43e7b0de9c0a8",
+      "lines": {
+        "deletions": 2,
+        "files": 2,
+        "insertions": 2,
+        "lines": 4
+      },
+      "message": "Fix bug due to renamings in Change 34645\n\nspectrometer-server script broke after renaming spectrometer_api\ndirectory. As the Change is already merged it is fixed in a new Change.\n\nChange-Id: Ib978c3c49a4b927c0246fbcb9708cb0a28e1a680\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455995920,
+      "committed_date": 1456059851,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "cfc600dc128b270077fc7983a2ac8b18b0fcf02b",
+      "lines": {
+        "deletions": 18,
+        "files": 1,
+        "insertions": 22,
+        "lines": 40
+      },
+      "message": "Refactor get_commits_stat method.\n\nChange-Id: I58d11edf4fdeeb93acc82bb6cb2c1a793459bfd0\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455491956,
+      "committed_date": 1455884386,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "dfc19b2f92e61b58800a65e4510249df43954433",
+      "lines": {
+        "deletions": 328,
+        "files": 28,
+        "insertions": 328,
+        "lines": 656
+      },
+      "message": "Rename create_dashboard to create_app as there is no dashboard anymore.\n\nChange-Id: I60ad0be5a02c7d4bee9612d4f30afaec5fddd5bf\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455467822,
+      "committed_date": 1455577698,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "0acf3137b8a79d0093b2e0d8f7c781f4234c0556",
+      "lines": {
+        "deletions": 328,
+        "files": 28,
+        "insertions": 328,
+        "lines": 656
+      },
+      "message": "Rename spectrometer_server to spectrometer-server\n\nReplacing underscore to hyphen to match ODL projects convention.\n\nChange-Id: Ia59c16913a0cb956e386c0a32b9b692e982cb95a\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455291761,
+      "committed_date": 1455321374,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "e1593d870a2082ff4eddf72c3860e10ddebc317e",
+      "lines": {
+        "deletions": 6,
+        "files": 5,
+        "insertions": 21,
+        "lines": 27
+      },
+      "message": "Add functionality for getting commits of a specific branch.\n\nChange-Id: Id626734826ace3f527c81e7fc341ac64994ce0b5\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455223146,
+      "committed_date": 1455228472,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "047cf4aae075d457e515bb65834849591932a477",
+      "lines": {
+        "deletions": 339,
+        "files": 32,
+        "insertions": 317,
+        "lines": 656
+      },
+      "message": "Restructure to add spectrometer_ui\n\nChange-Id: I9fc747002c181ed7342cdde6c2fd3d9a3a43095f\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1455207941,
+      "committed_date": 1455207941,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "c40545212ee6c94d4459277b154c660310fdfa7b",
+      "lines": {
+        "deletions": 5,
+        "files": 1,
+        "insertions": 1,
+        "lines": 6
+      },
+      "message": "Fixing bug in githelper module for accessing repositories\n\nChange-Id: I84157fdcec2dddb4dfd68c8009254c39f728d1cb\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449443747,
+      "committed_date": 1454094039,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "888a51e083be2c9670a7ee1924e5c9c2000d0ccb",
+      "lines": {
+        "deletions": 23,
+        "files": 5,
+        "insertions": 32,
+        "lines": 55
+      },
+      "message": "Add setup.py configuration for program run scripts\n\nThis allowes Python to install spectrometer-dashboard to a location that\nthe end user can run after \"pip install spectrometer\" by simply typing\n\"spectrometer-dashboard\" on their local system.\n\nIn a development environment devs would use the command \"python\nspectrometer\" to run the app.\n\nChange-Id: Ia3595dbf0dff12fabdbfb49915dd1756900e6bc1\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449443440,
+      "committed_date": 1454094039,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "f6aa44bd0388de8f6b43555ac8ed915ab1b3f75d",
+      "lines": {
+        "deletions": 3,
+        "files": 3,
+        "insertions": 10,
+        "lines": 13
+      },
+      "message": "Use a variable to load config\n\nIn the future we'll want to allow this file to be specified by the end\nuser in a production environment.\n\nChange-Id: Ia5abcd0d37d2780f42d9f3871777e7824be0f9c0\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449435031,
+      "committed_date": 1454094036,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "5cad124cd8cf792d8135fea0b45163bbfbc1ad3b",
+      "lines": {
+        "deletions": 5,
+        "files": 8,
+        "insertions": 73,
+        "lines": 78
+      },
+      "message": "Add basic py.test framework.\n\nChange-Id: I4176003a5cd13effc712b430b9687d930c9d9f2f\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449434207,
+      "committed_date": 1449443991,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "d22d4e2468bbb6907954766f1ccb8477f33fec59",
+      "lines": {
+        "deletions": 10,
+        "files": 4,
+        "insertions": 18,
+        "lines": 28
+      },
+      "message": "Refactor spectrometer to use Flask factories\n\nApplication Factories are useful for automated Testing and we need to in\norder to take advantage of py.test.\n\nhttp://flask.pocoo.org/docs/0.10/patterns/appfactories/\n\nChange-Id: Ia3e74d578f5ad65053a739c6bcb8cee9edf0f5be\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449391305,
+      "committed_date": 1449434276,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "e2f8bb8cadf05013f0d6ad929ef9e589e555b6c4",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Add pytest-flask to test requirements\n\nChange-Id: I7120f61f3d9a50f4b714fd14de1cf59aeab6eee0\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449389315,
+      "committed_date": 1449434276,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "c1a8458e66347ffd6e334fc26db9c52ab68afe85",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 47,
+        "lines": 47
+      },
+      "message": "Add initial setup.py for packaging\n\nChange-Id: Ie701486c893bcd5f02783baf886b4bb0845748ad\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449387647,
+      "committed_date": 1449434276,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "364d571daa352de261dce8d9feb599419b08c913",
+      "lines": {
+        "deletions": 2,
+        "files": 3,
+        "insertions": 7,
+        "lines": 9
+      },
+      "message": "Fix Flask hello world code\n\nChange-Id: I919c92cec088f022166b0f56618d7b48718a3134\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1449433917,
+      "committed_date": 1449433917,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "33d842c4de6b180862e081dcc8d96c167ae23b63",
+      "lines": {
+        "deletions": 4,
+        "files": 1,
+        "insertions": 2,
+        "lines": 6
+      },
+      "message": "Merge \"Consolidate requirements.txt and test-requirements.txt\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449388026,
+      "committed_date": 1449388029,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "cadedfa6669e281b0b89b8b9dca9437cef19d076",
+      "lines": {
+        "deletions": 4,
+        "files": 1,
+        "insertions": 2,
+        "lines": 6
+      },
+      "message": "Consolidate requirements.txt and test-requirements.txt\n\n- Make test-requirements.txt pull requirements from requirements.txt\n- Update test-requirement from pep8 to flake8\n\nChange-Id: I4202f4e62f4e0412c62ef5b8b51492abf0717d4c\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449288538,
+      "committed_date": 1449288541,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "573b44e7f661d503307b3ff457ff8e4111b043ba",
+      "lines": {
+        "deletions": 26,
+        "files": 1,
+        "insertions": 0,
+        "lines": 26
+      },
+      "message": "Remove pep8 unit test\n\nTox covers this so no longer necessary.\n\nChange-Id: Iffb89815a8ac22400c4cbb783c4f45429e9e0b5a\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449288375,
+      "committed_date": 1449288495,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "ec8df855b7b806e4b66e40ce00c4b9221509174a",
+      "lines": {
+        "deletions": 0,
+        "files": 12,
+        "insertions": 0,
+        "lines": 0
+      },
+      "message": "Remove executable bit on files that do not need it\n\nChange-Id: I62da4bfaafed4f0fb45b41d26e1437afea879d14\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449285924,
+      "committed_date": 1449285924,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "a0fd691b70c3218ce88dc6d9c8f406d44f15290d",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 3,
+        "lines": 3
+      },
+      "message": "Add Python 2 compiled files to .gitignore\n\nChange-Id: I463bba756315c813a8254a23606dffafc9134a7c\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449285498,
+      "committed_date": 1449285778,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "8ee09e5dbd7afda8a1b3fbc38507d1413f0907d9",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 4,
+        "lines": 4
+      },
+      "message": "Add Python 3 __pycache__ directory to .gitignore\n\nChange-Id: I04454b3c49690ba8110a02253a29ce7beb9afd38\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449285764,
+      "committed_date": 1449285777,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "c9dcbf19c537bbda5889821de1f7b6d0ff384f33",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 1,
+        "lines": 1
+      },
+      "message": "Exclude venv-tox directory from flake8 scan\n\nChange-Id: I645aa307a1b483e57d369d7100ff5eb95ae5829b\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449188023,
+      "committed_date": 1449188079,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "8ed9237f4e948ab4ed386eedaba7216f82da4d9d",
+      "lines": {
+        "deletions": 0,
+        "files": 2,
+        "insertions": 13,
+        "lines": 13
+      },
+      "message": "Add tox file to run validation tests\n\nChange-Id: I8c2da4358e2225b0ce099da990501fa20053a1b0\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449187833,
+      "committed_date": 1449187833,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "8a101881cc1b2daf092a6012483af4371e9bd05c",
+      "lines": {
+        "deletions": 5,
+        "files": 3,
+        "insertions": 3,
+        "lines": 8
+      },
+      "message": "Fix PEP8 errors in code\n\nCurrent spectrometer code does not pass pep8 scanners. We should update\nthe code to fix all the existing pep8 issues and then activate a Gerrit\nTrigger job to automatically validate pep8 on future code reviews.\n\nChange-Id: I40cb669b7963ce440447f472604fb7cd74a1bd55\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1449187592,
+      "committed_date": 1449187592,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "77c5b1d9a4db4b4db22473bd9241edf97f7ad5ef",
+      "lines": {
+        "deletions": 86,
+        "files": 7,
+        "insertions": 143,
+        "lines": 229
+      },
+      "message": "Merge \"Change copyright headers to EPL\""
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449170485,
+      "committed_date": 1449170616,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "db22069899f97f4b5cd8dfcfd8cd0e8cfa53a4b0",
+      "lines": {
+        "deletions": 86,
+        "files": 7,
+        "insertions": 143,
+        "lines": 229
+      },
+      "message": "Change copyright headers to EPL\n\nChange-Id: Ib2fbe1a66ed2ec3108df9ec7ea32abef623dda87\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1449170062,
+      "committed_date": 1449170067,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "3a679ff4352559f7266d23e51a61cda740675a76",
+      "lines": {
+        "deletions": 40,
+        "files": 2,
+        "insertions": 40,
+        "lines": 80
+      },
+      "message": "Rename md extension to markdown\n\nChange-Id: Ifbf2ce0a491a7e771eb8b0640f41befa318298d4\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Mohammad Hassan Zahraee",
+      "author_email": "moh_zahraee@yahoo.com",
+      "author_tz_offset": -3600,
+      "authored_date": 1449161282,
+      "committed_date": 1449161701,
+      "committer": "Mohammad Hassan Zahraee",
+      "committer_email": "moh_zahraee@yahoo.com",
+      "committer_tz_offset": -3600,
+      "hash": "ebc7208422b3abb45ac8ee59dccb0d15bb2632dd",
+      "lines": {
+        "deletions": 0,
+        "files": 13,
+        "insertions": 272,
+        "lines": 272
+      },
+      "message": "Moving files from Github\n\nChange-Id: I752a3e87a03abfdd1ff634b97a0dc1177c233fa5\nSigned-off-by: Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>\n"
+    },
+    {
+      "author": "Thanh Ha",
+      "author_email": "thanh.ha@linuxfoundation.org",
+      "author_tz_offset": 18000,
+      "authored_date": 1448849259,
+      "committed_date": 1448849300,
+      "committer": "Thanh Ha",
+      "committer_email": "thanh.ha@linuxfoundation.org",
+      "committer_tz_offset": 18000,
+      "hash": "f3d7296885386ca68b074c0fe21b42c8d799f818",
+      "lines": {
+        "deletions": 0,
+        "files": 1,
+        "insertions": 5,
+        "lines": 5
+      },
+      "message": "Add .gitreview\n\nChange-Id: I19cc938e0faa78b6eb99372c68664b284604988a\nSigned-off-by: Thanh Ha <thanh.ha@linuxfoundation.org>\n"
+    },
+    {
+      "author": "Andrew Grimberg",
+      "author_email": "agrimberg@linuxfoundation.org",
+      "author_tz_offset": 0,
+      "authored_date": 1447957557,
+      "committed_date": 1447957557,
+      "committer": "Gerrit Code Review",
+      "committer_email": "gerrit@opendaylight.org",
+      "committer_tz_offset": 0,
+      "hash": "8b053408ae61ce7cb67372146edd7ed5a0fd6838",
+      "lines": {
+        "deletions": 0,
+        "files": 0,
+        "insertions": 0,
+        "lines": 0
+      },
+      "message": "Initial empty repository\n"
+    }
+  ]
+}
