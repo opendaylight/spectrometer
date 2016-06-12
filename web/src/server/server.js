@@ -20,7 +20,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import packagejson from '../../package.json';
 import configureStore from './store';
 import routes from './routes';
-import { loadProjectNames, loadBranches, loadCommits, mapProjectCommits } from './api/data-initializer'
+import { loadProjectNames, loadBranches, loadCommits } from './api/data-initializer'
+import { mapProjectCommits } from './api/data-reducers'
 
 console.log(`starting OpenDaylight Spectrometer web app in ${process.env.NODE_ENV} mode`)
 
@@ -44,8 +45,9 @@ loadProjectNames(apiServerUrl).then((names) => {
   loadBranches(apiServerUrl, names).then((projectsWithBranches) => {
     console.info("server: project branches loaded:", projectsWithBranches.length)
     loadCommits(apiServerUrl, names).then((projectsWithCommits) => {
-      allProjects = _.merge(projectsWithBranches, projectsWithCommits)
+      allProjects = _.merge(projectsWithCommits, projectsWithBranches)
       console.log("server: it took ", moment().diff(startTime, 'seconds'), "seconds to load", allProjects.length, "projects")
+      // console.log("ALL PROJECTS", JSON.stringify(allProjects, undefined, 2))
       console.log("server: all projects loaded into store, Spectrometer is READY for browsing")
     })
   })

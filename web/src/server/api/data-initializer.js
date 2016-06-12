@@ -1,53 +1,52 @@
 import axios from 'axios'
 import _ from 'lodash'
 
-let projects = []
+import { mapProjectsBranches, mapProjects }  from './data-reducers'
 
-export function mapProjectCommits(commits) {
-  return _(commits).map((c) => {
-    return {
-      author: c.author,
-      author_email: c.author_email,
-      authored_date: c.authored_date,
-      author_tz_offset: c.author_tz_offset,
-      organization: c.author_email.split('@')[1],
-      insertions: c.lines.insertions,
-      deletions: c.lines.deletions,
-      files: c.lines.files
-    }
-  }).sortBy(y => y.authored_date).valueOf()
-}
-
+/**
+ * load project names from api server
+ * @param url http://$apiServerUrl
+ * @returns array of project names loaded from apiServerUrl via gerrit api
+ */
 export function loadProjectNames(url) {
   return new Promise((resolve, reject) => {
-    console.info('data-initializer:loadProjectNames', url)
+    console.info(`data-initializer:loadProjectNames start... (${url})`)
     axios.get(`${url}/gerrit/projects`)
-      .then((res) => {
-        console.info("data-initializer:loaded ", res.data.projects.length, " project names")
-        // resolve(_(res.data.projects).sortBy().reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,10).valueOf())
-        resolve(res.data.projects.slice(1)) //remove All-Users projects
+      .then((response) => {
+        console.info("data-initializer:loadProjectNames complete:", response.data.projects.length, " project names loaded.")
+        // resolve(_(response.data.projects).sortBy().reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,10).valueOf())
+        //remove All-Users projects, as that does not contain data
+        resolve(_(response.data.projects).sortBy().slice(1).valueOf())
       })
     })
 }
 
+/**
+ * load branches from api server
+ * @param url http://$apiServerUrl
+ * @param names array of project names obtained from gerrit api
+ * @returns [ {name: aaa, branches: [master, stable/lithium, stable/helium]}, {...} ]
+ */
 export function loadBranches(url, names) {
   return new Promise((resolve, reject) => {
-    console.info('data-initializer:loadBranches start...')
-    let urls = _.map(names, (p) => {
+    console.log('data-initializer:loadBranches start...')
+    const urls = _.map(names, (p) => {
       return axios.get(`${url}/git/branches?project=${p}`)
     })
-    let projects = []
-    axios.all(urls)
-      .then((response) => {
-        response.forEach(x => {
-          projects.push( { name: x.config.url.replace(`${url}/git/branches?project=`,''), branches: x.data.branches })
-        })
-        console.info("data-initializer:loadBranches complete")
-        resolve(projects)
-      })
+    axios.all(urls).then((response) => {
+      const projectsBranches = mapProjectsBranches(response)
+      console.log("data-initializer:loadBranches complete")
+      resolve(projectsBranches)
+    })
   })
 }
 
+/**
+ * load commits from api server
+ * @param url http://$apiServerUrl
+ * @param names array of project names obtained from gerrit api
+ * @returns [ {name: aaa, commits: [...] }, {...} ]
+ */
 export function loadCommits(url, names) {
   console.info('data-initializer:loadCommits start...')
   const n0 = names //_.reject(names, n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0)
@@ -58,17 +57,9 @@ export function loadCommits(url, names) {
     let projects = []
     axios.all(urls)
       .then((response) => {
-        response.forEach((x, index) => {
-          const key = x.config.url.replace(`${url}/git/commits?project=`,'')
-          console.info('data-initializer:loading commits for', index, key)
-          projects.push({
-            name: key,
-            ref1: 'master',
-            ref2: 'master',
-            commits: mapProjectCommits(x.data.commits || [])
-          })
-        })
-        console.log("data-initializer:loadCommits complete") //, JSON.stringify(projects, undefined, 2))
+        console.log("data-initializer:loadCommits all data retrieved, resolving commits")
+        const projects = mapProjects(response)
+        console.log("data-initializer:loadCommits complete")
         resolve(projects)
     })
   })

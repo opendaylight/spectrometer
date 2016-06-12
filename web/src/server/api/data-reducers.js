@@ -74,6 +74,74 @@ export function findMasterBranchProjects(projects, name) {
 }
 
 /**
+ * parses the project url to find the project name using regex
+ * @param url http://$apiServerUrl/git/...?project=aaa
+ * @returns aaa
+ */
+export function parseProjectFromUrl(url) {
+  return url.match(/.*project=(.*)/)[1]
+}
+
+/**
+ * Map the response from axios and extract project branches info from each
+ * called when data is initialized on server for the first time
+ * eventually can be used when from ui client want to fetch multiple projects (no use case now)
+ */
+export function mapProjectsBranches(response) {
+  return _.map(response, (x) => {
+    return {
+      name: parseProjectFromUrl(x.config.url),
+      branches: x.data.branches
+    }
+  })
+}
+
+/**
+ * Map the response from axios and extract project info from each
+ * called when data is initialized on server for the first time
+ * eventually can be used when from ui client want to fetch multiple projects (no use case now)
+ */
+export function mapProjects(response) {
+  return _.map(response, (x, index) => {
+    const name = parseProjectFromUrl(x.config.url)
+    console.log('data-reducers:mapProjects', index, name)
+    return mapProjectCommits(name, 'master', 'master', x.data.commits || [])
+  })
+}
+
+/**
+ * Map the project commits to web format
+ */
+export function mapProjectCommits(name, ref1, ref2, commits) {
+  console.log("data-reducers:mapProjectCommits", name, ref1, ref2)
+  return {
+    name, ref1, ref2,
+    commits: mapCommits(commits)
+  }
+}
+
+/**
+ * maps the commits to web format
+ * web format: add organization field, remove commits.committed_* fields and commits.message fields to reduce payload size
+ */
+export function mapCommits(commits) {
+  console.log("data-reducers:mapCommits", commits.length)
+  return _(commits).map((c, index) => {
+    return {
+      author: c.author,
+      author_email: c.author_email,
+      authored_date: c.authored_date,
+      author_tz_offset: c.author_tz_offset,
+      organization: c.author_email.split('@')[1],
+      insertions: c.lines.insertions,
+      deletions: c.lines.deletions,
+      files: c.lines.files
+    }
+  }).sortBy('authored_date').valueOf()
+}
+
+
+/**
  * Question: What is the timeline of projects started ?
  */
 export function timelineForAllProjects(projects, sortBy = 'x') {
