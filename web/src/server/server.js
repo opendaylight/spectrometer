@@ -21,7 +21,7 @@ import packagejson from '../../package.json';
 import configureStore from './store';
 import routes from './routes';
 import { loadProjectNames, loadBranches, loadCommits } from './api/data-initializer'
-import { mapProjectCommits } from './api/data-reducers'
+import { mapCommits } from './api/data-reducers'
 
 console.log(`starting OpenDaylight Spectrometer web app in ${process.env.NODE_ENV} mode`)
 
@@ -97,7 +97,7 @@ app.get('/spectrometer-api/*', function(req, res) {
   axios.get(url)
     .then(response => {
       req.url.indexOf('/git/commits') >= 0 ?
-        res.json({commits: mapProjectCommits(response.data.commits)}) :
+        res.json({commits: mapCommits(response.data.commits)}) :
         res.json(response.data)
     })
 })

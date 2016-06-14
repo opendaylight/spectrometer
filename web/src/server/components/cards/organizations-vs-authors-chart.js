@@ -33,7 +33,7 @@ export default class OrganizationsVsLocChart extends Component {
     if (_.isEmpty(this.props.projects)) return null
     console.log("organizations-vs-authors-chart:render", this.state.view.chartType, this.state.view.sortBy)
 
-    const dataSeries = DataReducers.organizationsVsAuthorsForAllProjects(this.props.projects)
+    const dataSeries = DataReducers.organizationsVsAuthorsCountForAllProjects(this.props.projects)
 
     const renderColumnChart = (dataSeries) => {
       const config = {

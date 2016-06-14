@@ -90,7 +90,7 @@ export default class ProjectsVsCommitsChart extends Component {
 
     let dataSeries = []
     if (!_.isEmpty(this.props.organization)) {
-      dataSeries = DataReducers.commitCountForAllProjects(DataReducers.projectsContainingOrganization(this.props.projects, this.props.organization), this.state.view.sortBy)
+      dataSeries = DataReducers.commitCountForAllProjectsPerOrg(this.props.projects, this.props.organization, this.state.view.sortBy)
     } else {
       dataSeries = DataReducers.commitCountForAllProjects(this.props.projects, this.state.view.sortBy)
     }

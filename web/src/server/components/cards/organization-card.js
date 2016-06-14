@@ -49,16 +49,13 @@ export default class OrganizationCard extends Component {
       return (
         <div>
           <p>
-            <span className="text-project">{series.length}</span><span> projects contributed </span>
+            <span className="text-project">{series.length}</span><span> projects contributed</span>
           </p>
           <p>
-            <span className="text-commits">{commitCount}</span><span> commits</span>
+            <span className="text-author">{authors}</span><span> authors have made </span><span className="text-commits">{commitCount}</span><span> commits</span>
           </p>
           <p>
-            <span className="text-loc">{loc}</span><span> lines of code contributed</span>
-          </p>
-          <p>
-            <span className="text-author">{authors}</span><span> authors contributed</span>
+            <span className="text-loc">{loc}</span><span> lines of code</span>
           </p>
         </div>
       )
@@ -84,8 +81,8 @@ export default class OrganizationCard extends Component {
       <PaperLayout id={`org-layout-${this.props.card.name}-${this.props.card.index}`} style={{width: '49%', margin: '0.2rem'}}
         title={this.props.card.name} avatar={this.props.avatar}
         handleOnClose={this.handleOnClose.bind(this, this.props.card.index)}
-        buttonActions={buttonActions} 
-	handleButtonActions={this.handleButtonActions.bind(this)}
+        buttonActions={buttonActions}
+        handleButtonActions={this.handleButtonActions.bind(this)}
         currentView={this.state.view}>
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'summary' && renderSummary(projectsForOrg)}

@@ -14,9 +14,9 @@ export function loadProjectNames(url) {
     axios.get(`${url}/gerrit/projects`)
       .then((response) => {
         console.info("data-initializer:loadProjectNames complete:", response.data.projects.length, " project names loaded.")
-        // resolve(_(response.data.projects).sortBy().reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,10).valueOf())
+        resolve(_(response.data.projects).sortBy().reject(n => n.indexOf('integration') >= 0 || n.indexOf('controller') >= 0).slice(1,10).valueOf())
         //remove All-Users projects, as that does not contain data
-        resolve(_(response.data.projects).sortBy().slice(1).valueOf())
+        // resolve(_(response.data.projects).sortBy().slice(1).valueOf())
       })
     })
 }

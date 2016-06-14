@@ -58,7 +58,7 @@ function getInitialState() {
 }
 
 export default function(state = {}, action) {
-  // console.info('git-stats:reducer:action', action)
+  console.info('git-stats:reducer:action', action)
   // console.info('git-stats:reducer:previous state', state)
 
   switch (action.type) {

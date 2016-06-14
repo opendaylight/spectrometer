@@ -22,9 +22,6 @@ import ProjectsPage from './projects-page'
 import AuthorsPage from './authors-page'
 import OrganizationsPage from './organizations-page'
 
-// @connect(state => ({
-//   projects: state.projects.projects
-// }))
 export default class App extends Component {
 
   constructor(props){

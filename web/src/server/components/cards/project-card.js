@@ -74,6 +74,7 @@ export default class ProjectCard extends Component {
     //swap ref1 and ref2 if out of sequence
     [ref1, ref2] = DataReducers.swapBranchRefs(ref1, ref2)
 
+    //fetch if not existing
     if (!DataReducers.findBranchProject(this.props.projects, this.props.card.name, ref1, ref2)) {
       this.props.dispatch(GitStats.setProjectCommitsSinceRef(this.props.card.name, ref1, ref2))
     }
@@ -83,32 +84,33 @@ export default class ProjectCard extends Component {
 
   render() {
     const renderSummary = (project) => {
-
-      const commits = project.commits
       const uniqueAuthors = DataReducers.authorsForOneProject(project)
-      const {firstCommit, firstCommitter, lastCommit, lastCommitter} = DataReducers.commitStats(project)
-      const commit = DataReducers.mostAndLeast(DataReducers.authorsVsCommitsForOneProject(project), 'commitCount')
-      const loc = DataReducers.mostAndLeast(DataReducers.authorsVsLocForOneProject(project), 'loc')
+      const cd = DataReducers.mostAndLeast(project.commits, 'authored_date') //most and least commits by date
+      const cc = DataReducers.mostAndLeast(DataReducers.authorsVsCommitsForOneProject(project), 'commitCount') //most and least commits by count
+      const loc = DataReducers.mostAndLeast(DataReducers.authorsVsLocForOneProject(project), 'loc') //most and least by loc
+      //to find who initiated, need data from masterBranch
+      const masterBranch = DataReducers.findBranchProject(this.props.projects, this.props.card.name, 'master', 'master')
+      const cm = DataReducers.mostAndLeast(masterBranch.commits, 'authored_date') 
 
       return (
         <div>
           <p>
             <span className="text-author">{uniqueAuthors.length}</span><span> authors made </span>
-            <span className="text-commits">{commits.length}</span><span> commits</span>
+            <span className="text-commits">{project.commits.length}</span><span> commits</span>
           </p>
           <p>
-            <span className="text-author">{lastCommitter}</span> <span> committed last </span> <span className="text-time">{moment(lastCommit).fromNow()}</span>
+            <span className="text-author">{cd.most1.author}</span> <span> authored last </span> <span className="text-time">{moment(cd.most1.authored_date*1000).fromNow()}</span>
           </p>
           <p>
-            {commit.most1 && (<span><span className="text-author">{commit.most1.name}</span><span className="text-commits"> ({commit.most1.commitCount})</span><span> committed most</span></span>)}
-            {commit.most2 && (<span><span>, followed by </span><span className="text-author">{commit.most2.name}</span><span className="text-commits"> ({commit.most2.commitCount})</span></span>)}
+            {cc.most1 && (<span><span className="text-author">{cc.most1.name}</span><span className="text-commits"> ({cc.most1.commitCount})</span><span> committed most</span></span>)}
+            {cc.most2 && (<span><span>, followed by </span><span className="text-author">{cc.most2.name}</span><span className="text-commits"> ({cc.most2.commitCount})</span></span>)}
           </p>
           <p>
             {loc.most1 && (<span><span className="text-author">{loc.most1.name}</span><span className="text-commits"> ({loc.most1.loc})</span><span> coded most</span></span>)}
             {loc.most2 && (<span><span>, followed by </span><span className="text-author">{loc.most2.name}</span><span className="text-commits"> ({loc.most2.loc})</span></span>)}
           </p>
           <p>
-            <span className="text-author">{firstCommitter}</span> <span> initiated on </span> <span className="text-time">{firstCommit}</span>
+            <span className="text-author">{cm.least1.author}</span> <span> initiated on </span> <span className="text-time">{moment(cm.least1.authored_date*1000).format("DD-MMM-YYYY")}</span>
           </p>
         </div>
       )
@@ -142,7 +144,7 @@ export default class ProjectCard extends Component {
 
     const project = DataReducers.findBranchProject(this.props.projects, this.props.card.name, this.state.view.ref1, this.state.view.ref2)
     const branchActions = DataReducers.findBranchActions(this.props.projects, this.props.card.name)
-    console.info("project-card:render", this.props.card.name, project)
+    console.info("project-card:render", this.props.card.name, this.state.view.ref1, this.state.view.ref2, project)
     return (
       <PaperLayout id={`projects-layout-${this.props.card.name}-${this.props.card.index}`} style={{width: '49%', margin: '0.2rem'}}
         title={this.props.card.name} avatar={this.props.avatar}
