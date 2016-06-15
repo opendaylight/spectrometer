@@ -44,7 +44,7 @@ export default class App extends Component {
         <div id="opendaylight-spectrometer">
           <Toolbar className="toolbar">
             <ToolbarGroup firstChild={true}>
-              <FontIcon className="material-icons">menu</FontIcon>
+              <img src={require('../../../assets/images/opendaylight.png')} className="logo"/>
               <ToolbarTitle text="OpenDaylight Spectrometer" className="toolbar-title" />
             </ToolbarGroup>
             <ToolbarGroup>

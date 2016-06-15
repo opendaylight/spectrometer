@@ -29,6 +29,14 @@ html {
   margin: 1rem 2rem 1rem 2rem;
 }
 
+.logo {
+  margin-left: 1rem;
+  border-bottom: solid 1px lightgrey;
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+}
+
 .highcharts-container {
   width: 100% !important;
   height: auto !important;
@@ -112,6 +120,7 @@ html {
   color: #E65100 !important;
   letter-spacing: 0.2rem;
   font-weight: bold;
+  font-size: 2rem !important;
 }
 
 .project-card {

@@ -11,7 +11,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from '../server/store';
 import routes from '../server/routes';
 
-import "../../assets/styles/index.css";
+import "../../assets/styles/index.css"
+require('../../assets/images/favicon.ico')
 
 console.log("starting OpenDaylight Spectrometer client")
 injectTapEventPlugin()

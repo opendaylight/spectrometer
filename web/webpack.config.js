@@ -15,10 +15,9 @@ var webpackConfig = {
   ]
 };
 
-console.log(`loading webpack.config.js for ${process.env.NODE_ENV} mode`)
+console.log(`loading webpack.config.js for mode [${process.env.NODE_ENV}]`)
 
 if (process.env.NODE_ENV === 'production') {
-
   webpackConfig = merge(webpackConfig, {
     devtool: "source-map",
     entry: [
@@ -35,16 +34,10 @@ if (process.env.NODE_ENV === 'production') {
           presets: ['es2015', 'react', 'stage-0'],
           plugins: ['transform-decorators-legacy']
         }
-      }, {
-        test: /\.(png|jpg|gif|jpeg)$/,
-        loader: 'url-loader?limit=8192'
-      }, {
-        test: /\.json$/,
-        loader: 'json-loader'
-      }, {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap')
-      }]
+      },
+      { test: /\.(png|jpg|gif|jpeg|ico|svg)$/, loader: 'file-loader?name=images/[name].[ext]?v=[hash]' },
+      { test: /\.json$/, loader: 'json-loader' },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap') }]
     },
     plugins: [
       new webpack.DefinePlugin({
@@ -58,7 +51,6 @@ if (process.env.NODE_ENV === 'production') {
       })
     ]
   });
-
 } else {
   webpackConfig = merge(webpackConfig, {
     devtool: 'inline-source-map',
@@ -67,43 +59,15 @@ if (process.env.NODE_ENV === 'production') {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules/,
-        include: __dirname,
-        // env: {
-        //   development: {
-        //     plugins: [
-        //       'react-transform',
-        //       'transform-decorators-legacy'
-        //     ],
-        //     extra: {
-        //       'react-transform': {
-        //         transforms: [{
-        //           transform:  'react-transform-hmr',
-        //           imports: ['react'],
-        //           locals:  ['module']
-        //         },
-        //         {
-        //           transform: 'react-transform-catch-errors',
-        //           imports: ['react','redbox-react' ]
-        //         }
-        //       ]}
-        //     }
-        //   }
-        // },
         query: {
           cacheDirectory: true,
           presets: ['es2015', 'react', 'stage-0'],
           plugins: ['transform-decorators-legacy']
         }
-      }, {
-        test: /\.(png|jpg|gif|jpeg)$/,
-        loader: 'url-loader?limit=8192'
-      }, {
-        test: /\.json$/,
-        loader: 'json-loader'
-      }, {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap')
-      }]
+      },
+      { test: /\.(png|jpg|gif|jpeg|ico|svg)$/, loader: 'file-loader?name=images/[name].[ext]?v=[hash]' },
+      { test: /\.json$/, loader: 'json-loader' },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap') }]
     },
     entry: [
       'webpack-hot-middleware/client',
@@ -114,7 +78,6 @@ if (process.env.NODE_ENV === 'production') {
       new ExtractTextPlugin("app.css")
     ]
   });
-
 }
 
 module.exports = webpackConfig;

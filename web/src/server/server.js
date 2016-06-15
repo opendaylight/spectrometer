@@ -59,14 +59,12 @@ const renderFullPage = (html, initialState) => {
     <html>
       <head>
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="OpenDaylight Spectrometer">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta name="keywords" content="OpenDaylight, Spectrometer"/>
         <title>OpenDaylight Spectrometer</title>
 
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
-        <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-        <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192" />
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
         <link rel="stylesheet" type="text/css" href="/static/app.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       </head>
@@ -83,9 +81,11 @@ const renderFullPage = (html, initialState) => {
 
 if (process.env.NODE_ENV !== 'production') {
   console.info('using webpack dev middleware')
+  console.info('process running from', __dirname)
   const compiler = webpack(webpackConfig);
   app.use(webpackDevMiddleware(compiler, { noInfo: true, stats: { colors: true }, publicPath: webpackConfig.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
+  app.use('/static', express.static(__dirname))
 } else {
   app.use('/static', express.static(__dirname + '/../../dist'));
 }
@@ -104,9 +104,8 @@ app.get('/spectrometer-api/*', function(req, res) {
 
 // handle non-api requests
 app.get('/*', function(req, res, next) {
-  // console.info("serving url:", req.url)
+  console.info("serving url:", req.url)
   if ((/\.(gif|jpg|jpeg|tiff|png|ico|svg)$/i).test(req.url)) next()
-  // if (req.url.indexOf('.png') >= 0 || req.url.indexOf('.ico') >= 0 || req.url.indexOf('.jpg') >= 0) next();
 
   const location = createLocation(req.url);
   match({ routes, location }, (err, redirectLocation, renderProps) => {
