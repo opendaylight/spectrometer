@@ -10,7 +10,7 @@ import expect from 'expect';
 
 import configureStore from '../src/server/store';
 
-import App from '../src/server/components/App';
+import App from '../src/server/components/app';
 
 describe('app suite:', function(){
 
