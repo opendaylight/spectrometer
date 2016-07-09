@@ -13,6 +13,7 @@
 
 import logging
 from logging.handlers import RotatingFileHandler
+from multiprocessing import Pool
 import os
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -67,8 +68,39 @@ def create_app(config):
     return app
 
 
+def update_repo(project, mirror_dir, gerrit_url):
+    """Utility function to mirror git repo
+
+    Arguments:
+        :arg str project: Git project to mirror
+        :arg str mirror_dir: Path to directory containing repos.
+        :arg str gerrit_url: URL to the Gerrit server. Used for cloning repos.
+    """
+    log.debug("Updating repo for {0}".format(project))
+    project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
+
+    if os.path.exists(project_dir):
+        args = ['git', 'fetch']
+    else:
+        os.makedirs(project_dir)
+        args = ['git', 'clone', '--mirror',
+                '{0}/{1}'.format(gerrit_url, project), '.']
+
+    project_repo = Git(project_dir)
+    project_repo.execute(args)
+
+
+def update_repo_parallel(args):
+    """Helper function to parallelize the update_repo() function"""
+    return update_repo(*args)
+
+
 def mirror_repos(mirror_dir, gerrit_url):
     """Updates repository mirrors
+
+    This function creates a multiprocessing pool that will parallelize the
+    repo mirroring process. It will create as many worker threads as there are
+    cpus on the system.
 
     Arguments:
 
@@ -79,19 +111,9 @@ def mirror_repos(mirror_dir, gerrit_url):
     gerrit = GerritHandler(gerrit_url)
     projects = gerrit.projects_list()
 
-    for project in projects:
-        log.debug("Updating repo for {0}".format(project))
-        project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
-
-        if os.path.exists(project_dir):
-            args = ['git', 'fetch']
-        else:
-            os.makedirs(project_dir)
-            args = ['git', 'clone', '--mirror',
-                    '{0}/{1}'.format(gerrit_url, project), '.']
-
-        project_repo = Git(project_dir)
-        project_repo.execute(args)
+    pool = Pool()
+    jobs = [(project, mirror_dir, gerrit_url) for project in projects]
+    pool.map(update_repo_parallel, jobs)
 
 
 def run_scheduler(app):
