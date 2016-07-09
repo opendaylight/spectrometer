@@ -16,6 +16,7 @@ from __future__ import absolute_import
 from git import GitCmdObjectDB
 from git import Repo
 from git.exc import GitCommandError
+import yaml
 
 
 class GitHandler:
@@ -98,3 +99,19 @@ class GitHandler:
         commits.extend(self._fetch_commits(revision))
 
         return commits
+
+    def project_info(self):
+        """Returns a YAML object containing PROJECT_INFO.yaml from repo
+
+        Searches the Git repo's root directory for a PROJECT_INFO.yaml and
+        returns it.
+        """
+        data = self.repo.git.execute(
+            ['git', 'cat-file', 'blob', 'master:PROJECT_INFO.yaml'])
+
+        project_info = yaml.load(data)
+        # Force dates to be string in case Python decides to convert them to
+        # datetime objects
+        project_info['creation-date'] = str(project_info['creation-date'])
+        project_info['termination-date'] = str(project_info['termination-date'])
+        return project_info

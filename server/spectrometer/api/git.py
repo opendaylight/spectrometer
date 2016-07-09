@@ -202,3 +202,23 @@ def commits_since_ref():
                 ref1=mapping['ref1'], ref2=mapping['ref2'])}
 
     return jsonify(result)
+
+
+@gitapi.route('/project_info')
+def project_info():
+    """Provides meta information on project.
+
+    Refer to the specfile located here:
+    https://opendaylight-spectrometer.readthedocs.io/en/latest/project-info-spec.html
+    """
+    mapping = {
+        'project': request.args.get('project', None),
+    }
+
+    result = check_parameters(mapping)
+    if not result:
+        git = create_handler(mapping['project'])
+        project_info = git.project_info()
+        result = {'project-info': project_info}
+
+    return jsonify(result)
