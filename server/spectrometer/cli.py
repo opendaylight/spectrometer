@@ -13,6 +13,7 @@
 import click
 
 from spectrometer import create_app
+from spectrometer import mirror_repos
 from spectrometer.reporttool.git import GitReport
 
 
@@ -28,13 +29,24 @@ def cli(ctx):
 ###############################################################################
 
 @cli.group()
-def server():
-    pass
+@click.option('-c', '--conf', default='/etc/spectrometer/config.py')
+@click.pass_context
+def server(ctx, conf):
+    ctx.obj['conf'] = conf
 
 
 @click.command()
-@click.option('-c', '--conf', default='/etc/spectrometer/config.py')
-def start(conf):
+@click.pass_context
+def sync_repos(ctx):
+    app = create_app(ctx.obj['conf'])
+    gerrit_url = app.config['GERRIT_URL']
+    mirror_dir = app.config['MIRROR_DIR']
+    mirror_repos(mirror_dir, gerrit_url)
+
+
+@click.command()
+@click.pass_context
+def start(ctx):
     """Runs the spectrometer server
 
     This function is effectively the spectrometer main() function and is the
@@ -42,7 +54,7 @@ def start(conf):
     """
     click.echo('Starting spectrometer...')
 
-    app = create_app(conf)
+    app = create_app(ctx.obj['conf'])
     app.run(
         threaded=True,
         host=app.config['LISTEN_HOST'],
@@ -50,6 +62,7 @@ def start(conf):
     )
 
 
+server.add_command(sync_repos)
 server.add_command(start)
 
 
