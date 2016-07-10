@@ -137,7 +137,7 @@ export function mapCommits(commits) {
       deletions: c.lines.deletions,
       files: c.lines.files
     }
-  }).sortBy('authored_date').valueOf()
+  }).valueOf()
 }
 
 

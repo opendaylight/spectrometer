@@ -52,7 +52,7 @@ describe('data reducers suite:', function(){
     expect(project.name).to.equal('spectrometer')
     expect(project.ref1).to.equal('master')
     expect(project.ref2).to.equal('master')
-    expect(project.commits[0]).to.be.like({
+    expect(project.commits[project.commits.length - 1]).to.be.like({
       "author": "Andrew Grimberg",
       "author_email": "agrimberg@linuxfoundation.org",
       "author_tz_offset": 0,
@@ -70,17 +70,17 @@ describe('data reducers suite:', function(){
     expect(result).to.be.like([
       {
         "name": "aaa",
-        "firstCommit": 1400610058,
-        "lastCommit": 1462562634
+        "firstCommit": 1462562634,
+        "lastCommit": 1400610058,
       },
       {
         "name": "spectrometer",
-        "firstCommit": 1447957557,
-        "lastCommit": 1462661049
+        "firstCommit": 1462661049,
+        "lastCommit": 1447957557,
       }
     ])
-    expect(DataReducers.toMonthYearFormat(result[0].firstCommit)).to.equal('May-2014')
-    expect(DataReducers.toMonthYearFormat(result[0].lastCommit)).to.equal('May-2016')
+    expect(DataReducers.toMonthYearFormat(result[0].firstCommit)).to.equal('May-2016')
+    expect(DataReducers.toMonthYearFormat(result[0].lastCommit)).to.equal('May-2014')
   })
 
   it('should calculate timeVsCommitsForOneProject', () => {
@@ -88,12 +88,12 @@ describe('data reducers suite:', function(){
     // console.json("timeVsCommitsForOneProject", result)
     expect(result).to.have.length(25)
     expect(result[0]).to.be.like({
-      "time": "May-2014",
-      "commitCount": 1
-    })
-    expect(result[24]).to.be.like({
       "time": "May-2016",
       "commitCount": 7
+    })
+    expect(result[24]).to.be.like({
+      "time": "May-2014",
+      "commitCount": 1
     })
   })
 
@@ -102,12 +102,12 @@ describe('data reducers suite:', function(){
     // console.json("timeVsLocForOneProject", result)
     expect(result).to.have.length(25)
     expect(result[0]).to.be.like({
-      "time": "May-2014",
-      "loc": 0
-    })
-    expect(result[24]).to.be.like({
       "time": "May-2016",
       "loc": 760
+    })
+    expect(result[24]).to.be.like({
+      "time": "May-2014",
+      "loc": 0
     })
   })
 
@@ -116,16 +116,16 @@ describe('data reducers suite:', function(){
     // console.json("timeVsLocDetailsForOneProject", result)
     expect(result).to.have.length(25)
     expect(result[0]).to.be.like({
-      "time": "May-2014",
-      "insertions": 0,
-      "deletions": 0,
-      "files": 0
-    })
-    expect(result[24]).to.be.like({
       "time": "May-2016",
       "insertions": 274,
       "deletions": 486,
       "files": 28
+    })
+    expect(result[24]).to.be.like({
+      "time": "May-2014",
+      "insertions": 0,
+      "deletions": 0,
+      "files": 0
     })
   })
 
@@ -383,9 +383,17 @@ describe('data reducers suite:', function(){
     // console.json('organizationsVsCommitsForOneProject', result)
     expect(result).to.have.length(10)
     expect(result).to.be.like([
-      { "name": "pantheon.sk", "commits": 1 }, { "name": "huawei.com", "commits": 1 }, { "name": "colindixon.com", "commits": 2 },
-      { "name": "brocade.com", "commits": 2 }, { "name": "inocybe.com", "commits": 12 }, { "name": "redhat.com", "commits": 17 }, { "name": "linuxfoundation.org", "commits": 30 },
-      { "name": "hp.com", "commits": 68 }, { "name": "cisco.com", "commits": 138 }, { "name": "gmail.com", "commits": 162 }])
+      { "name": "huawei.com", "commits": 1 },
+      { "name": "pantheon.sk", "commits": 1 },
+      { "name": "brocade.com", "commits": 2 },
+      { "name": "colindixon.com", "commits": 2 },
+      { "name": "inocybe.com", "commits": 12 },
+      { "name": "redhat.com", "commits": 17 },
+      { "name": "linuxfoundation.org", "commits": 30 },
+      { "name": "hp.com", "commits": 68 },
+      { "name": "cisco.com", "commits": 138 },
+      { "name": "gmail.com", "commits": 162 },
+    ])
 
     const result2 = DataReducers.organizationsVsCommitsForOneProject(project, 'linuxfoundation.org')
     // console.json('organizationsVsCommitsForOneProject for one organization', result2)
@@ -435,9 +443,16 @@ describe('data reducers suite:', function(){
     const result = DataReducers.organizationsVsAuthorCountForOneProject(this.projects.find(x => x.name === 'aaa'))
     // console.json('organizationsVsAuthorCountForOneProject', result)
     expect(result).to.be.like([
-      { "name": "brocade.com", "authorCount": 2 }, { "name": "cisco.com", "authorCount": 14 }, { "name": "colindixon.com", "authorCount": 1 },
-      { "name": "gmail.com", "authorCount": 1 }, { "name": "hp.com", "authorCount": 8 }, { "name": "huawei.com", "authorCount": 1 },
-      { "name": "inocybe.com", "authorCount": 4 }, { "name": "linuxfoundation.org", "authorCount": 2 }, { "name": "redhat.com", "authorCount": 3 }
+      { "name": "brocade.com", "authorCount": 2 },
+      { "name": "cisco.com", "authorCount": 13 },
+      { "name": "colindixon.com", "authorCount": 1 },
+      { "name": "gmail.com", "authorCount": 1 },
+      { "name": "hp.com", "authorCount": 8 },
+      { "name": "huawei.com", "authorCount": 1 },
+      { "name": "inocybe.com", "authorCount": 4 },
+      { "name": "linuxfoundation.org", "authorCount": 2 },
+      { "name": "pantheon.sk", "authorCount": 1 },
+      { "name": "redhat.com", "authorCount": 3 },
     ])
   })
 
@@ -446,15 +461,15 @@ describe('data reducers suite:', function(){
     const result = DataReducers.organizationsVsAuthorsForOneProject(project)
     // console.json('organizationsVsAuthorsForOneProject', result)
     expect(result).to.have.length(10)
-    expect(result[0]).to.be.like({ "name": "linuxfoundation.org", "authors": [ "Aric Gardner", "Thanh Ha" ] })
-    expect(result[3]).to.be.like({ "name": "redhat.com", "authors": [ "John Dennis", "Stephen Kitt", "Jamo Luhrsen" ] })
+    expect(result[0]).to.be.like({ "name": "gmail.com", "authors": [ "Ryan Goulding", "Sharon Aicler" ] })
+    expect(result[3]).to.be.like({ "name": "linuxfoundation.org", "authors": [ "Thanh Ha", "Aric Gardner" ] })
   })
 
   it('should calculate organizationsVsAuthorsForAllProjects', () => {
     const result = DataReducers.organizationsVsAuthorsForAllProjects(this.projects)
     // console.json('organizationsVsAuthorsForAllProjects', result)
     expect(result).to.have.length(11)
-    expect(result[0]).to.be.like({ "name": "linuxfoundation.org", "authors": [ "Aric Gardner", "Thanh Ha", "Andrew Grimberg" ] })
+    expect(result[0]).to.be.like({ "name": "gmail.com", "authors": [ "Ryan Goulding", "Sharon Aicler", "Vasu" ] })
   })
 
   it('should calculate organizationsVsAuthorsCountForAllProjects', () => {
