@@ -1,0 +1,41 @@
+# This file is used by Spectrometer to determine project meta information
+# Please refer to the spec file located here:
+# https://opendaylight-spectrometer.readthedocs.io/en/latest/project-info-spec.html
+
+name: spectrometer
+display_name: Spectrometer
+creation_date: 2015-11-19
+termination_date: n/a
+description: |
+    Spectrometer provides statistics on community contributions
+
+    The main purpose of Spectrometer is to deliver transparent statistics of
+    contributions to OpenDaylight Project. It collects activity data such as:
+
+    - Commits statistics from project repositories
+    - Review statistics from code review system
+    - Mailing list statistics
+primary_contact: Firstname Lastname <first.last@example.com>
+project_lead: Firstname Lastname <first.last@example.com>
+categories:
+    - application
+committers:
+    - An Ho <An.Ho@huawei.com>
+    - Mohammad Hassan Zahraee <moh_zahraee@yahoo.com>
+    - Thanh Ha <thanh.ha@linuxfoundation.org>
+    - Thomas Nadeau <tnadeau@lucidvision.com>
+    - Vasu Srinivasan <vasya10@gmail.com>
+wiki: https://wiki.opendaylight.org/view/Spectrometer
+irc: irc://irc.freenode.net/opendaylight-spectrometer
+mailing_lists:
+    - email: spectrometer-dev@lists.opendaylight.org
+      archives: http://lists.opendaylight.org/pipermail/spectrometer-dev/
+meetings:
+    - topic: Spectrometer
+      days-of-week: Friday
+      time: 15:00 UTC
+releases:
+    - helium
+    - lithium
+    - beryllium
+    - boron
