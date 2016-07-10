@@ -56,7 +56,7 @@ export default class App extends Component {
                 iconButtonElement={<FontIcon className="material-icons more-menu-icon">more_vert</FontIcon>}
                 anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                 targetOrigin={{horizontal: 'left', vertical: 'top'}}>
-                <MenuItem primaryText="Help" linkButton={true} href="https://wiki.opendaylight.org/view/Spectrometer" target="_blank"/>
+                <MenuItem primaryText="Help" linkButton={true} href="http://opendaylight-spectrometer.readthedocs.io/" target="_blank"/>
               </IconMenu>
             </ToolbarGroup>
           </Toolbar>
