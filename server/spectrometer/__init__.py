@@ -114,6 +114,8 @@ def mirror_repos(mirror_dir, gerrit_url):
     pool = Pool()
     jobs = [(project, mirror_dir, gerrit_url) for project in projects]
     pool.map(update_repo_parallel, jobs)
+    pool.close()
+    pool.join()
 
 
 def run_scheduler(app):
