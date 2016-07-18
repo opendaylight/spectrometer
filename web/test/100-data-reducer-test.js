@@ -70,17 +70,17 @@ describe('data reducers suite:', function(){
     expect(result).to.be.like([
       {
         "name": "aaa",
-        "firstCommit": 1462562634,
-        "lastCommit": 1400610058,
+        "firstCommit": 1400610058,
+        "lastCommit": 1462562634,
       },
       {
         "name": "spectrometer",
-        "firstCommit": 1462661049,
-        "lastCommit": 1447957557,
+        "firstCommit": 1447957557,
+        "lastCommit": 1462661049,
       }
     ])
-    expect(DataReducers.toMonthYearFormat(result[0].firstCommit)).to.equal('May-2016')
-    expect(DataReducers.toMonthYearFormat(result[0].lastCommit)).to.equal('May-2014')
+    expect(DataReducers.toMonthYearFormat(result[0].firstCommit)).to.equal('May-2014')
+    expect(DataReducers.toMonthYearFormat(result[0].lastCommit)).to.equal('May-2016')
   })
 
   it('should calculate timeVsCommitsForOneProject', () => {

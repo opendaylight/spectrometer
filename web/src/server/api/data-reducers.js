@@ -149,8 +149,8 @@ export function timelineForAllProjects(projects, sortBy = 'x') {
     .map(x => {
       return {
         name: x.name,
-        firstCommit: !_.isEmpty(x.commits) ? x.commits[0].authored_date : 0,
-        lastCommit: !_.isEmpty(x.commits) ? x.commits[x.commits.length - 1].authored_date : 0
+        firstCommit: !_.isEmpty(x.commits) ? x.commits[x.commits.length - 1].authored_date : 0,
+        lastCommit: !_.isEmpty(x.commits) ? x.commits[0].authored_date : 0,
       }
     })
     .sortBy(sortBy === 'x' ? 'name' : 'firstCommit')
