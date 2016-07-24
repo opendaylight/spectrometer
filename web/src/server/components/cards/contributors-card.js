@@ -9,9 +9,11 @@ import FontIcon from 'material-ui/FontIcon'
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 import ContributionsByContributorChart from '../charts/contributions-by-contributor'
+import LocByContributorChart from '../charts/loc-by-contributor'
 
 const buttonActions = [
   {type: 'chart', option: 'contributions-by-contributor', icon: 'code', tooltip: 'Contributions By Contributor'},
+  {type: 'chart', option: 'loc-by-contributor', icon: 'subject', tooltip: 'Lines of Code by Contributor'},
 ]
 
 export default class ContributorsCard extends Component {
@@ -37,6 +39,7 @@ export default class ContributorsCard extends Component {
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'contributions-by-contributor' && <ContributionsByContributorChart projects={this.props.projects} />}
+          {this.state.view.chart === 'loc-by-contributor' && <LocByContributorChart projects={this.props.projects} />}
         </div>
       </PaperLayout>
     )
