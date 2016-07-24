@@ -14,8 +14,8 @@ import LocByProjectChart from '../charts/loc-by-project'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organization Summary'},
-  {type: 'chart', option: 'projectsVsCommits', icon: 'playlist_add_check', tooltip: 'Projects vs Commits Chart'},
-  {type: 'chart', option: 'projectsVsLoc', icon: 'code', tooltip: 'Projects vs LOC Chart'},
+  {type: 'chart', option: 'projectsVsCommits', icon: 'code', tooltip: 'Projects vs Commits Chart'},
+  {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'},
   {type: 'chart', option: 'projectsVsAuthors', icon: 'perm_identity', tooltip: 'Projects vs Authors Chart'}
 ]
 

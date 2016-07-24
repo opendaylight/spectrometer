@@ -15,7 +15,7 @@ import LocByProjectChart from '../charts/loc-by-project'
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Author Profile'},
   {type: 'chart', option: 'projectsVsCommits', icon: 'playlist_add_check', tooltip: 'Projects vs Commits Chart'},
-  {type: 'chart', option: 'projectsVsLoc', icon: 'code', tooltip: 'Projects vs LOC Chart'}
+  {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'}
 ]
 
 @connect(state => ({
