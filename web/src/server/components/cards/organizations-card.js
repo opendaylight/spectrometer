@@ -9,12 +9,12 @@ import FontIcon from 'material-ui/FontIcon'
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 
-import ContributionsByOrganizationsChart from '../charts/contributions-by-organizations'
+import ContributionsByOrganizationChart from '../charts/contributions-by-organization'
 import LocByOrganizationChart from '../charts/loc-by-organization'
 import OrganizationsVsAuthorsChart from './organizations-vs-authors-chart'
 
 const buttonActions = [
-  {type: 'chart', option: 'contributionsByOrganizations', icon: 'code', tooltip: 'Contributions By Organizations'},
+  {type: 'chart', option: 'contributions-by-organization', icon: 'code', tooltip: 'Contributions By Organization'},
   {type: 'chart', option: 'loc-by-organization', icon: 'subject', tooltip: 'Lines of Code by Organization'},
   {type: 'chart', option: 'organizationsVsAuthors', icon: 'perm_identity', tooltip: 'Organizations vs Authors'}
 ]
@@ -24,7 +24,7 @@ export default class OrganizationsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'contributionsByOrganizations'
+        chart: 'contributions-by-organization'
       }
     }
   }
@@ -68,7 +68,7 @@ export default class OrganizationsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
-          {this.state.view.chart === 'contributionsByOrganizations' && <ContributionsByOrganizationsChart projects={this.props.projects} />}
+          {this.state.view.chart === 'contributions-by-organization' && <ContributionsByOrganizationChart projects={this.props.projects} />}
           {this.state.view.chart === 'loc-by-organization' && <LocByOrganizationChart projects={this.props.projects} />}
           {this.state.view.chart === 'organizationsVsAuthors' && <OrganizationsVsAuthorsChart projects={this.props.projects} />}
         </div>

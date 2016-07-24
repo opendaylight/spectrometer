@@ -11,7 +11,7 @@ const buttonActions = [
   {type: 'chartType', option: 'detailed', icon: 'format_list_numbered', tooltip: 'Show Detailed'},
 ]
 
-export default class ContributionsByContributorsChart extends Component {
+export default class ContributionsByProjectChart extends Component {
 
   constructor(props) {
     super(props)
@@ -21,9 +21,6 @@ export default class ContributionsByContributorsChart extends Component {
       view: {
         chartType: 'pie',
         sortBy: 'y',
-        query: 'all',
-        skewLeast: 0,
-        skewMost: 0
       }
     }
   }
@@ -87,7 +84,7 @@ export default class ContributionsByContributorsChart extends Component {
           >
             <TableRow>
               <TableHeaderColumn>#</TableHeaderColumn>
-              <TableHeaderColumn>Contributor</TableHeaderColumn>
+              <TableHeaderColumn>Project</TableHeaderColumn>
               <TableHeaderColumn>Commits</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -107,20 +104,19 @@ export default class ContributionsByContributorsChart extends Component {
       )
     }
 
+    if (_.isEmpty(this.props.projects)) return null
+
     let dataSeries = []
-    if (!_.isEmpty(this.props.project)) {
-      dataSeries = DataReducers.authorsVsCommitsForOneProject(this.props.project, this.state.view.sortBy)
-    } else if (!_.isEmpty(this.props.projects)) {
-      dataSeries = DataReducers.authorsVsCommitsForAllProjects(this.props.projects, this.state.view.sortBy)
+    if (!_.isEmpty(this.props.organization)) {
+      dataSeries = DataReducers.commitCountForAllProjectsPerOrg(this.props.projects, this.props.organization, this.state.view.sortBy)
+    } else {
+      dataSeries = DataReducers.commitCountForAllProjects(this.props.projects, this.state.view.sortBy)
     }
-    dataSeries.sort(function(a, b) {
-      return a.commitCount - b.commitCount
-    });
     let commits = dataSeries
     dataSeries = DataReducers.sliceAndGroupOthers(dataSeries.reverse(), 12, 'commitCount')
 
     return (
-      <PaperLayout id="contributions-by-contributors-chart" title="Contributions by Contributors"
+      <PaperLayout id="contributions-by-projects-chart" zDepth={2} title="Contributions By Projects"
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}
@@ -130,8 +126,7 @@ export default class ContributionsByContributorsChart extends Component {
   }
 }
 
-ContributionsByContributorsChart.propTypes = {
+ContributionsByProjectChart.propTypes = {
   projects: React.PropTypes.array,
-  project: React.PropTypes.object,
   organization: React.PropTypes.string
 }

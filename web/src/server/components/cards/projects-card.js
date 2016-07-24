@@ -8,14 +8,14 @@ import FontIcon from 'material-ui/FontIcon'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
-import ContributionsByProjectsChart from '../charts/contributions-by-projects'
+import ContributionsByProjectChart from '../charts/contributions-by-project'
 import LocByProjectChart from '../charts/loc-by-project'
 import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
 import ProjectsVsOrganizationsChart from './projects-vs-organizations-chart'
 import TimeVsProjectsChart from './time-vs-projects-chart'
 
 const buttonActions = [
-  {type: 'chart', option: 'contributionsByProjects', icon: 'code', tooltip: 'Contributions By Projects'},
+  {type: 'chart', option: 'contributions-by-project', icon: 'code', tooltip: 'Contributions By Project'},
   {type: 'chart', option: 'loc-by-project', icon: 'subject', tooltip: 'Lines of Code by Project'},
   {type: 'chart', option: 'timeline', icon: 'timeline', tooltip: 'Projects Timeline'},
   {type: 'chart', option: 'authorsForAllProjects', icon: 'perm_identity', tooltip: 'Projects vs Authors'},
@@ -27,7 +27,7 @@ export default class ProjectsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'contributionsByProjects'
+        chart: 'contributions-by-project'
       }
     }
   }
@@ -83,7 +83,7 @@ export default class ProjectsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}} className="animated fadeIn">
-          {this.state.view.chart === 'contributionsByProjects' && <ContributionsByProjectsChart projects={projects} />}
+          {this.state.view.chart === 'contributions-by-project' && <ContributionsByProjectChart projects={projects} />}
           {this.state.view.chart === 'loc-by-project' && <LocByProjectChart projects={projects} />}
           {this.state.view.chart === 'timeline' && <TimeVsProjectsChart projects={projects}/> }
           {this.state.view.chart === 'authorsForAllProjects' && <ProjectsVsAuthorsChart projects={projects} />}

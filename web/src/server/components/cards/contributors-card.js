@@ -8,10 +8,10 @@ import FontIcon from 'material-ui/FontIcon'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
-import ContributionsByContributorsChart from '../charts/contributions-by-contributors'
+import ContributionsByContributorChart from '../charts/contributions-by-contributor'
 
 const buttonActions = [
-  {type: 'chart', option: 'contributionsByContributors', icon: 'code', tooltip: 'Contributions By Contributors'},
+  {type: 'chart', option: 'contributions-by-contributor', icon: 'code', tooltip: 'Contributions By Contributor'},
 ]
 
 export default class ContributorsCard extends Component {
@@ -19,7 +19,7 @@ export default class ContributorsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'contributionsByContributors'
+        chart: 'contributions-by-contributors'
       }
     }
   }
@@ -36,7 +36,7 @@ export default class ContributorsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
-          {this.state.view.chart === 'contributionsByContributors' && <ContributionsByContributorsChart projects={this.props.projects} />}
+          {this.state.view.chart === 'contributions-by-contributors' && <ContributionsByContributorChart projects={this.props.projects} />}
         </div>
       </PaperLayout>
     )

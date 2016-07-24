@@ -11,7 +11,7 @@ const buttonActions = [
   {type: 'chartType', option: 'detailed', icon: 'format_list_numbered', tooltip: 'Show Detailed'},
 ]
 
-export default class ContributionsByOrganizationsChart extends Component {
+export default class ContributionsByOrganizationChart extends Component {
 
   constructor(props) {
     super(props)
@@ -129,7 +129,7 @@ export default class ContributionsByOrganizationsChart extends Component {
   }
 }
 
-ContributionsByOrganizationsChart.propTypes = {
+ContributionsByOrganizationChart.propTypes = {
   projects: React.PropTypes.array,
   project: React.PropTypes.object,
   organization: React.PropTypes.string
