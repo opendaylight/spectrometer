@@ -17,7 +17,7 @@ import TimeVsProjectsChart from './time-vs-projects-chart'
 const buttonActions = [
   {type: 'chart', option: 'contributionsByProjects', icon: 'code', tooltip: 'Contributions By Projects'},
   {type: 'chart', option: 'timeline', icon: 'timeline', tooltip: 'Projects Timeline'},
-  {type: 'chart', option: 'locForAllProjects', icon: 'code', tooltip: 'Projects vs LOC'},
+  {type: 'chart', option: 'locForAllProjects', icon: 'subject', tooltip: 'Projects vs LOC'},
   {type: 'chart', option: 'authorsForAllProjects', icon: 'perm_identity', tooltip: 'Projects vs Authors'},
   {type: 'chart', option: 'organizationsForAllProjects', icon: 'business', tooltip: 'Projects vs Organizations'}
 ]

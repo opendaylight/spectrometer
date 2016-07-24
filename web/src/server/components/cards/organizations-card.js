@@ -15,7 +15,7 @@ import OrganizationsVsAuthorsChart from './organizations-vs-authors-chart'
 
 const buttonActions = [
   {type: 'chart', option: 'contributionsByOrganizations', icon: 'code', tooltip: 'Contributions By Organizations'},
-  {type: 'chart', option: 'organizationsVsLoc', icon: 'code', tooltip: 'Organizations vs Loc'},
+  {type: 'chart', option: 'organizationsVsLoc', icon: 'subject', tooltip: 'Organizations vs Loc'},
   {type: 'chart', option: 'organizationsVsAuthors', icon: 'perm_identity', tooltip: 'Organizations vs Authors'}
 ]
 
