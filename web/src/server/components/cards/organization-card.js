@@ -8,13 +8,13 @@ import Avatar from 'material-ui/Avatar'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
-import ProjectsVsCommitsChart from './projects-vs-commits-chart'
+import ContributionsByProjectChart from '../charts/contributions-by-project'
 import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
 import LocByProjectChart from '../charts/loc-by-project'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organization Summary'},
-  {type: 'chart', option: 'projectsVsCommits', icon: 'code', tooltip: 'Projects vs Commits Chart'},
+  {type: 'chart', option: 'contributions-by-project', icon: 'code', tooltip: 'Contributions by Project'},
   {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'},
   {type: 'chart', option: 'projectsVsAuthors', icon: 'perm_identity', tooltip: 'Projects vs Authors Chart'}
 ]
@@ -62,7 +62,7 @@ export default class OrganizationCard extends Component {
     }
 
     const renderProjectsVsCommitsChart = (projectsForOrg) => {
-      return (<ProjectsVsCommitsChart projects={this.props.projects} organization={this.props.card.name} />)
+      return (<ContributionsByProjectChart projects={this.props.projects} organization={this.props.card.name} />)
     }
 
     const renderProjectsVsLocChart = (projectsForOrg) => {
@@ -86,7 +86,7 @@ export default class OrganizationCard extends Component {
         currentView={this.state.view}>
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'summary' && renderSummary(projectsForOrg)}
-          {this.state.view.chart === 'projectsVsCommits' && renderProjectsVsCommitsChart(projectsForOrg)}
+          {this.state.view.chart === 'contributions-by-project' && renderProjectsVsCommitsChart(projectsForOrg)}
           {this.state.view.chart === 'projectsVsLoc' && renderProjectsVsLocChart(projectsForOrg)}
           {this.state.view.chart === 'projectsVsAuthors' && renderProjectsVsAuthorsChart(projectsForOrg)}
         </div>

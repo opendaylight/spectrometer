@@ -9,12 +9,12 @@ import Avatar from 'material-ui/Avatar'
 import * as GitStats from '../../git-stats/git-stats'
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
-import ProjectsVsCommitsChart from './projects-vs-commits-chart'
+import ContributionsByProjectChart from '../charts/contributions-by-project'
 import LocByProjectChart from '../charts/loc-by-project'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Author Profile'},
-  {type: 'chart', option: 'projectsVsCommits', icon: 'playlist_add_check', tooltip: 'Projects vs Commits Chart'},
+  {type: 'chart', option: 'contributions-by-project', icon: 'code', tooltip: 'Contributions by Project'},
   {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'}
 ]
 
@@ -77,7 +77,7 @@ export default class AuthorCard extends Component {
     }
 
     const renderProjectsVsCommitsChart = (projectsForAuthor) => {
-      return (<ProjectsVsCommitsChart projects={projectsForAuthor} author={this.props.card.name} />)
+      return (<ContributionsByProjectChart projects={projectsForAuthor} author={this.props.card.name} />)
     }
 
     const renderProjectsVsLocChart = (projectsForAuthor) => {
@@ -97,7 +97,7 @@ export default class AuthorCard extends Component {
         currentView={this.state.view}>
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'summary' && renderSummary(projectsForAuthor)}
-          {this.state.view.chart === 'projectsVsCommits' && renderProjectsVsCommitsChart(projectsForAuthor)}
+          {this.state.view.chart === 'contributions-by-project' && renderProjectsVsCommitsChart(projectsForAuthor)}
           {this.state.view.chart === 'projectsVsLoc' && renderProjectsVsLocChart(projectsForAuthor)}
         </div>
       </PaperLayout>
