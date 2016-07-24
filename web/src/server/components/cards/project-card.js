@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar'
 
 import * as GitStats from '../../git-stats/git-stats'
 import * as DataReducers from '../../api/data-reducers'
+import ContributionsByContributorsChart from '../charts/contributions-by-contributors'
 import PaperLayout from '../layouts/paper-layout'
 import TimeVsCommitsChart from './time-vs-commits-chart'
 import TimeVsLocChart from './time-vs-loc-chart'
@@ -18,6 +19,7 @@ import OrganizationsVsLocChart from './organizations-vs-loc-chart'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Project Summary'},
+  {type: 'chart', option: 'contributionsByContributors', icon: 'code', tooltip: 'Contributions By Contributors'},
   {type: 'chart', option: 'timeVsCommits', icon: 'date_range', tooltip: 'Time vs Commits Chart'},
   {type: 'chart', option: 'timeVsLoc', icon: 'access_time', tooltip: 'Time vs LOC Chart'},
   {type: 'chart', option: 'timeVsLocDetails', icon: 'timelapse', tooltip: 'Time vs LOC Details Chart'},
@@ -90,7 +92,7 @@ export default class ProjectCard extends Component {
       const loc = DataReducers.mostAndLeast(DataReducers.authorsVsLocForOneProject(project), 'loc') //most and least by loc
       //to find who initiated, need data from masterBranch
       const masterBranch = DataReducers.findBranchProject(this.props.projects, this.props.card.name, 'master', 'master')
-      const cm = DataReducers.mostAndLeast(masterBranch.commits, 'authored_date') 
+      const cm = DataReducers.mostAndLeast(masterBranch.commits, 'authored_date')
 
       return (
         <div>
@@ -154,6 +156,7 @@ export default class ProjectCard extends Component {
         currentView={this.state.view}>
         {project && <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'summary' && renderSummary(project)}
+          {this.state.view.chart === 'contributionsByContributors' && <ContributionsByContributorsChart project={project} />}
           {this.state.view.chart === 'timeVsCommits' && renderTimeVsCommits(project)}
           {this.state.view.chart === 'timeVsLoc' && renderTimeVsLoc(project)}
           {this.state.view.chart === 'timeVsLocDetails' && renderTimeVsLocDetails(project)}

@@ -108,12 +108,10 @@ export default class ContributionsByContributorsChart extends Component {
     }
 
     let dataSeries = []
-    if (!_.isEmpty(this.props.projects)) {
-      dataSeries = DataReducers.authorsVsCommitsForAllProjects(this.props.projects, this.state.view.sortBy)
-    } else if (!_.isEmpty(this.props.project)) {
+    if (!_.isEmpty(this.props.project)) {
       dataSeries = DataReducers.authorsVsCommitsForOneProject(this.props.project, this.state.view.sortBy)
     } else if (!_.isEmpty(this.props.projects)) {
-      dataSeries = DataReducers.authorsVsCommitsForOneProject(this.props.projects, this.state.view.sortBy)
+      dataSeries = DataReducers.authorsVsCommitsForAllProjects(this.props.projects, this.state.view.sortBy)
     }
     dataSeries.sort(function(a, b) {
       return a.commitCount - b.commitCount

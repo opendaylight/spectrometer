@@ -85,7 +85,7 @@ export default class ProjectsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}} className="animated fadeIn">
-          {this.state.view.chart === 'contributionsByProjects' && <ContributionsByProjectsChart projects={this.props.projects} />}
+          {this.state.view.chart === 'contributionsByProjects' && <ContributionsByProjectsChart projects={projects} />}
           {this.state.view.chart === 'timeline' && <TimeVsProjectsChart projects={projects}/> }
           {this.state.view.chart === 'commitCountForAllProjects' && <ProjectsVsCommitsChart projects={projects} />}
           {this.state.view.chart === 'locForAllProjects' && <ProjectsVsLocChart projects={projects} />}
