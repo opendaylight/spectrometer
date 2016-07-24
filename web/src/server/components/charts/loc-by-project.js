@@ -66,7 +66,7 @@ export default class LocByProjectChart extends Component {
           }
         },
         series: [{
-          name: 'Commits',
+          name: 'Lins of Code',
           colorByPoint: true,
           data: _.map(dataSeries, (x) => { return {name: x.name, y: x.value} })
         }]
