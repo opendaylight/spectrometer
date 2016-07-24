@@ -49,6 +49,7 @@ export default class App extends Component {
             </ToolbarGroup>
             <ToolbarGroup>
               <FontIcon className="material-icons" title="Home" onClick={this.handlePageClick.bind(this, 'home')}>home</FontIcon>
+              <FontIcon className="material-icons" title="Contributors" onClick={this.handlePageClick.bind(this, 'authors')}>people</FontIcon>
               <FontIcon className="material-icons" title="Projects" onClick={this.handlePageClick.bind(this, 'projects')}>folder</FontIcon>
               <FontIcon className="material-icons" title="Organizations" onClick={this.handlePageClick.bind(this, 'organizations')}>business</FontIcon>
               {/*<FontIcon className="material-icons" title="Authors" onClick={this.handlePageClick.bind(this, 'authors')}>account_circle</FontIcon>*/}
