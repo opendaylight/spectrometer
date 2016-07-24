@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 
 import ReactHighcharts from 'react-highcharts'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 
-const buttonActions = []
+const buttonActions = [
+  {type: 'chartType', option: 'pie', icon: 'pie_chart_outlined', tooltip: 'Show as Pie Chart'},
+  {type: 'chartType', option: 'detailed', icon: 'format_list_numbered', tooltip: 'Show Detailed'},
+]
 
 export default class ContributionsByProjectsChart extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      showCheckboxes: false,
+      height: '400px',
       view: {
         chartType: 'pie',
         sortBy: 'y',
-        query: 'all',
-        skewLeast: 0,
-        skewMost: 0
       }
     }
   }
 
-  handleButtonActions = (type, value) => { return null}
+  handleButtonActions = (type, value) => {
+    let newView = _.merge(this.state.view, {[type]: value})
+    this.setState({ view: newView })
+  }
 
   render() {
     const renderPieChart = (dataSeries) => {
@@ -67,6 +73,37 @@ export default class ContributionsByProjectsChart extends Component {
       )
     }
 
+    const renderDetailedChart = (dataSeries) => {
+      return (
+        <Table
+          height={this.state.height}
+        >
+          <TableHeader
+            displaySelectAll={this.state.showCheckboxes}
+            adjustForCheckbox={this.state.showCheckboxes}
+          >
+            <TableRow>
+              <TableHeaderColumn>#</TableHeaderColumn>
+              <TableHeaderColumn>Project</TableHeaderColumn>
+              <TableHeaderColumn>Commits</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody
+            displayRowCheckbox={this.state.showCheckboxes}
+          >
+            {dataSeries.map((project, index) => (
+              <TableRow>
+                <TableRowColumn>{index+1}</TableRowColumn>
+                <TableRowColumn>{project.name}</TableRowColumn>
+                <TableRowColumn>{project.commitCount}</TableRowColumn>
+               </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )
+    }
+
     if (_.isEmpty(this.props.projects)) return null
 
     let dataSeries = []
@@ -75,6 +112,7 @@ export default class ContributionsByProjectsChart extends Component {
     } else {
       dataSeries = DataReducers.commitCountForAllProjects(this.props.projects, this.state.view.sortBy)
     }
+    let commits = dataSeries
     dataSeries = DataReducers.sliceAndGroupOthers(dataSeries.reverse(), 12, 'commitCount')
 
     return (
@@ -82,6 +120,7 @@ export default class ContributionsByProjectsChart extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}
+        {this.state.view.chartType === 'detailed' && renderDetailedChart(commits)}
       </PaperLayout>
     )
   }
