@@ -7,7 +7,7 @@ import PaperLayout from '../layouts/paper-layout'
 
 const buttonActions = []
 
-export default class ContributionsByModulesChart extends Component {
+export default class ContributionsByProjectsChart extends Component {
 
   constructor(props) {
     super(props)
@@ -78,7 +78,7 @@ export default class ContributionsByModulesChart extends Component {
     dataSeries = DataReducers.sliceAndGroupOthers(dataSeries.reverse(), 12, 'commitCount')
 
     return (
-      <PaperLayout id="contributions-by-modules-chart" zDepth={2} title="Contributions By Modules"
+      <PaperLayout id="contributions-by-projects-chart" zDepth={2} title="Contributions By Projects"
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}
@@ -87,7 +87,7 @@ export default class ContributionsByModulesChart extends Component {
   }
 }
 
-ContributionsByModulesChart.propTypes = {
+ContributionsByProjectsChart.propTypes = {
   projects: React.PropTypes.array,
   organization: React.PropTypes.string
 }

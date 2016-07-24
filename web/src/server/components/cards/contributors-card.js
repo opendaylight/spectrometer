@@ -8,10 +8,10 @@ import FontIcon from 'material-ui/FontIcon'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
-import ContributionsByContributorsChart from './contributions-by-contributors-chart'
+import ContributionsByContributorsChart from '../charts/contributions-by-contributors'
 
 const buttonActions = [
-  {type: 'chart', option: 'contributionsByContributors', icon: 'perm_identity', tooltip: 'Contributions By Contributors'},
+  {type: 'chart', option: 'contributionsByContributors', icon: 'code', tooltip: 'Contributions By Contributors'},
 ]
 
 export default class ContributorsCard extends Component {

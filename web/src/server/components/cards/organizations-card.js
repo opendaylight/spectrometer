@@ -8,12 +8,14 @@ import FontIcon from 'material-ui/FontIcon'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
+
+import ContributionsByOrganizationsChart from '../charts/contributions-by-organizations'
 import OrganizationsVsCommitsChart from './organizations-vs-commits-chart'
 import OrganizationsVsLocChart from './organizations-vs-loc-chart'
 import OrganizationsVsAuthorsChart from './organizations-vs-authors-chart'
 
 const buttonActions = [
-  {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organizations Summary'},
+  {type: 'chart', option: 'contributionsByOrganizations', icon: 'code', tooltip: 'Contributions By Organizations'},
   {type: 'chart', option: 'organizationsVsCommits', icon: 'playlist_add_check', tooltip: 'Organizations vs Commits'},
   {type: 'chart', option: 'organizationsVsLoc', icon: 'code', tooltip: 'Organizations vs Loc'},
   {type: 'chart', option: 'organizationsVsAuthors', icon: 'perm_identity', tooltip: 'Organizations vs Authors'}
@@ -24,7 +26,7 @@ export default class OrganizationsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'organizationsVsCommits'
+        chart: 'contributionsByOrganizations'
       }
     }
   }
@@ -68,7 +70,7 @@ export default class OrganizationsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
-          {this.state.view.chart === 'summary' && renderSummary(this.props.projects)}
+          {this.state.view.chart === 'contributionsByOrganizations' && <ContributionsByOrganizationsChart projects={this.props.projects} />}
           {this.state.view.chart === 'organizationsVsCommits' && <OrganizationsVsCommitsChart projects={this.props.projects} />}
           {this.state.view.chart === 'organizationsVsLoc' && <OrganizationsVsLocChart projects={this.props.projects} />}
           {this.state.view.chart === 'organizationsVsAuthors' && <OrganizationsVsAuthorsChart projects={this.props.projects} />}

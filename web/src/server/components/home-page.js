@@ -12,11 +12,9 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import * as DataReducers from '../api/data-reducers'
 import TrendCard from './cards/trend-card'
 import CommunityCard from './cards/community-card'
+import ContributorsCard from './cards/contributors-card'
 import ProjectsCard from './cards/projects-card'
 import OrganizationsCard from './cards/organizations-card'
-import ContributorsCard from './cards/contributors-card'
-import ModulesCard from './cards/modules-card'
-import CompaniesCard from './cards/companies-card'
 
 @connect(state => ({
   projects: state.projects.projects
@@ -38,8 +36,6 @@ export default class HomePage extends Component {
         <div id="left-panel-graphs" style={{flexGrow: 1, marginLeft: '0.5rem', marginTop: '0.5rem'}}>
           <div id="graphs-content" className="flex-column-content">
             <ContributorsCard projects={master} />
-            <ModulesCard projects={master} />
-            <CompaniesCard projects={master} />
             <ProjectsCard projects={master} />
             <OrganizationsCard projects={master} />
           </div>

@@ -8,6 +8,7 @@ import FontIcon from 'material-ui/FontIcon'
 
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
+import ContributionsByProjectsChart from '../charts/contributions-by-projects'
 import ProjectsVsCommitsChart from './projects-vs-commits-chart'
 import ProjectsVsLocChart from './projects-vs-loc-chart'
 import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
@@ -15,7 +16,7 @@ import ProjectsVsOrganizationsChart from './projects-vs-organizations-chart'
 import TimeVsProjectsChart from './time-vs-projects-chart'
 
 const buttonActions = [
-  {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Projects Summary'},
+  {type: 'chart', option: 'contributionsByProjects', icon: 'code', tooltip: 'Contributions By Projects'},
   {type: 'chart', option: 'timeline', icon: 'timeline', tooltip: 'Projects Timeline'},
   {type: 'chart', option: 'commitCountForAllProjects', icon: 'playlist_add_check', tooltip: 'Projects vs Commits'},
   {type: 'chart', option: 'locForAllProjects', icon: 'code', tooltip: 'Projects vs LOC'},
@@ -28,7 +29,7 @@ export default class ProjectsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'timeline'
+        chart: 'contributionsByProjects'
       }
     }
   }
@@ -84,7 +85,7 @@ export default class ProjectsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}} className="animated fadeIn">
-          {this.state.view.chart === 'summary' && renderSummary(projects)}
+          {this.state.view.chart === 'contributionsByProjects' && <ContributionsByProjectsChart projects={this.props.projects} />}
           {this.state.view.chart === 'timeline' && <TimeVsProjectsChart projects={projects}/> }
           {this.state.view.chart === 'commitCountForAllProjects' && <ProjectsVsCommitsChart projects={projects} />}
           {this.state.view.chart === 'locForAllProjects' && <ProjectsVsLocChart projects={projects} />}
