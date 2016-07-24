@@ -19,7 +19,7 @@ export default class ContributorsCard extends Component {
     super(props)
     this.state = {
       view: {
-        chart: 'contributions-by-contributors'
+        chart: 'contributions-by-contributor'
       }
     }
   }
@@ -36,7 +36,7 @@ export default class ContributorsCard extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
-          {this.state.view.chart === 'contributions-by-contributors' && <ContributionsByContributorChart projects={this.props.projects} />}
+          {this.state.view.chart === 'contributions-by-contributor' && <ContributionsByContributorChart projects={this.props.projects} />}
         </div>
       </PaperLayout>
     )
