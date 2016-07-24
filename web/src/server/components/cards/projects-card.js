@@ -9,15 +9,15 @@ import FontIcon from 'material-ui/FontIcon'
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 import ContributionsByProjectsChart from '../charts/contributions-by-projects'
-import ProjectsVsLocChart from './projects-vs-loc-chart'
+import LocByProjectChart from '../charts/loc-by-project'
 import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
 import ProjectsVsOrganizationsChart from './projects-vs-organizations-chart'
 import TimeVsProjectsChart from './time-vs-projects-chart'
 
 const buttonActions = [
   {type: 'chart', option: 'contributionsByProjects', icon: 'code', tooltip: 'Contributions By Projects'},
+  {type: 'chart', option: 'loc-by-project', icon: 'subject', tooltip: 'Lines of Code by Project'},
   {type: 'chart', option: 'timeline', icon: 'timeline', tooltip: 'Projects Timeline'},
-  {type: 'chart', option: 'locForAllProjects', icon: 'subject', tooltip: 'Projects vs LOC'},
   {type: 'chart', option: 'authorsForAllProjects', icon: 'perm_identity', tooltip: 'Projects vs Authors'},
   {type: 'chart', option: 'organizationsForAllProjects', icon: 'business', tooltip: 'Projects vs Organizations'}
 ]
@@ -84,8 +84,8 @@ export default class ProjectsCard extends Component {
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}} className="animated fadeIn">
           {this.state.view.chart === 'contributionsByProjects' && <ContributionsByProjectsChart projects={projects} />}
+          {this.state.view.chart === 'loc-by-project' && <LocByProjectChart projects={projects} />}
           {this.state.view.chart === 'timeline' && <TimeVsProjectsChart projects={projects}/> }
-          {this.state.view.chart === 'locForAllProjects' && <ProjectsVsLocChart projects={projects} />}
           {this.state.view.chart === 'authorsForAllProjects' && <ProjectsVsAuthorsChart projects={projects} />}
           {this.state.view.chart === 'organizationsForAllProjects' && <ProjectsVsOrganizationsChart projects={projects} />}
         </div>

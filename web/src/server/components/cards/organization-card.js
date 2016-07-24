@@ -10,7 +10,7 @@ import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 import ProjectsVsCommitsChart from './projects-vs-commits-chart'
 import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
-import ProjectsVsLocChart from './projects-vs-loc-chart'
+import LocByProjectChart from '../charts/loc-by-project'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organization Summary'},
@@ -66,7 +66,7 @@ export default class OrganizationCard extends Component {
     }
 
     const renderProjectsVsLocChart = (projectsForOrg) => {
-      return (<ProjectsVsLocChart projects={this.props.projects} organization={this.props.card.name} />)
+      return (<LocByProjectChart projects={this.props.projects} organization={this.props.card.name} />)
     }
 
     const renderProjectsVsAuthorsChart = (projectsForOrg) => {

@@ -10,12 +10,12 @@ import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 
 import ContributionsByOrganizationsChart from '../charts/contributions-by-organizations'
-import OrganizationsVsLocChart from './organizations-vs-loc-chart'
+import LocByOrganizationChart from '../charts/loc-by-organization'
 import OrganizationsVsAuthorsChart from './organizations-vs-authors-chart'
 
 const buttonActions = [
   {type: 'chart', option: 'contributionsByOrganizations', icon: 'code', tooltip: 'Contributions By Organizations'},
-  {type: 'chart', option: 'organizationsVsLoc', icon: 'subject', tooltip: 'Organizations vs Loc'},
+  {type: 'chart', option: 'loc-by-organization', icon: 'subject', tooltip: 'Lines of Code by Organization'},
   {type: 'chart', option: 'organizationsVsAuthors', icon: 'perm_identity', tooltip: 'Organizations vs Authors'}
 ]
 
@@ -69,7 +69,7 @@ export default class OrganizationsCard extends Component {
         handleButtonActions={this.handleButtonActions.bind(this)}>
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'contributionsByOrganizations' && <ContributionsByOrganizationsChart projects={this.props.projects} />}
-          {this.state.view.chart === 'organizationsVsLoc' && <OrganizationsVsLocChart projects={this.props.projects} />}
+          {this.state.view.chart === 'loc-by-organization' && <LocByOrganizationChart projects={this.props.projects} />}
           {this.state.view.chart === 'organizationsVsAuthors' && <OrganizationsVsAuthorsChart projects={this.props.projects} />}
         </div>
       </PaperLayout>

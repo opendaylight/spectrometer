@@ -10,7 +10,7 @@ import * as GitStats from '../../git-stats/git-stats'
 import * as DataReducers from '../../api/data-reducers'
 import PaperLayout from '../layouts/paper-layout'
 import ProjectsVsCommitsChart from './projects-vs-commits-chart'
-import ProjectsVsLocChart from './projects-vs-loc-chart'
+import LocByProjectChart from '../charts/loc-by-project'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Author Profile'},
@@ -81,7 +81,7 @@ export default class AuthorCard extends Component {
     }
 
     const renderProjectsVsLocChart = (projectsForAuthor) => {
-      return (<ProjectsVsLocChart projects={projectsForAuthor} author={this.props.card.name} />)
+      return (<LocByProjectChart projects={projectsForAuthor} author={this.props.card.name} />)
     }
 
     if (_.isEmpty(this.props.card)) return (null)

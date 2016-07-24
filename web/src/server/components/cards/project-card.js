@@ -15,7 +15,7 @@ import TimeVsLocChart from './time-vs-loc-chart'
 import TimeVsLocDetailsChart from './time-vs-loc-details-chart'
 import AuthorsVsLocChart from './authors-vs-loc-chart'
 import OrganizationsVsCommitsChart from './organizations-vs-commits-chart'
-import OrganizationsVsLocChart from './organizations-vs-loc-chart'
+import LocByOrganizationChart from '../charts/loc-by-organization'
 
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Project Summary'},
@@ -139,7 +139,7 @@ export default class ProjectCard extends Component {
     }
 
     const renderOrganizationsVsLoc = (project) => {
-      return (<OrganizationsVsLocChart project={project}  />)
+      return (<LocByOrganizationChart project={project}  />)
     }
 
     if (_.isEmpty(this.props.card)) return (null)
