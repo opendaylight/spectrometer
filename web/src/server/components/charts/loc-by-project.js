@@ -112,6 +112,8 @@ export default class LocByProjectChart extends Component {
     let dataSeries = []
     if (!_.isEmpty(this.props.organization)) {
       dataSeries = DataReducers.locForAllProjects(DataReducers.projectsContainingOrganization(this.props.projects, this.props.organization), this.state.view.sortBy)
+    } else if (!_.isEmpty(this.props.contributor)) {
+      dataSeries = DataReducers.locForAllProjectsPerAuthor(DataReducers.projectsContainingAuthor(this.props.projects, this.props.contributor), this.state.view.sortBy)
     } else {
       dataSeries = DataReducers.locForAllProjects(this.props.projects, this.state.view.sortBy)
     }
@@ -131,6 +133,7 @@ export default class LocByProjectChart extends Component {
 }
 
 LocByProjectChart.propTypes = {
+  contributor: React.PropTypes.string,
   projects: React.PropTypes.array,
-  organization: React.PropTypes.string
+  organization: React.PropTypes.string,
 }

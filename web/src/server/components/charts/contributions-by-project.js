@@ -109,10 +109,12 @@ export default class ContributionsByProjectChart extends Component {
     let dataSeries = []
     if (!_.isEmpty(this.props.organization)) {
       dataSeries = DataReducers.commitCountForAllProjectsPerOrg(this.props.projects, this.props.organization, this.state.view.sortBy)
+    } else if (!_.isEmpty(this.props.contributor)) {
+      dataSeries = DataReducers.commitCountForAllProjectsPerAuthor(this.props.projects, this.props.contributor, this.state.view.sortBy)
     } else {
       dataSeries = DataReducers.commitCountForAllProjects(this.props.projects, this.state.view.sortBy)
     }
-    let commits = dataSeries
+    let fullData = dataSeries
     dataSeries = DataReducers.sliceAndGroupOthers(dataSeries.reverse(), 12, 'commitCount')
 
     return (
@@ -120,13 +122,14 @@ export default class ContributionsByProjectChart extends Component {
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}
-        {this.state.view.chartType === 'detailed' && renderDetailedChart(commits)}
+        {this.state.view.chartType === 'detailed' && renderDetailedChart(fullData)}
       </PaperLayout>
     )
   }
 }
 
 ContributionsByProjectChart.propTypes = {
+  contributor: React.PropTypes.string,
   projects: React.PropTypes.array,
-  organization: React.PropTypes.string
+  organization: React.PropTypes.string,
 }

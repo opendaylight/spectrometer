@@ -15,7 +15,7 @@ import LocByProjectChart from '../charts/loc-by-project'
 const buttonActions = [
   {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Author Profile'},
   {type: 'chart', option: 'contributions-by-project', icon: 'code', tooltip: 'Contributions by Project'},
-  {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'}
+  {type: 'chart', option: 'loc-by-project', icon: 'subject', tooltip: 'Lins of code by Project'}
 ]
 
 @connect(state => ({
@@ -77,11 +77,11 @@ export default class AuthorCard extends Component {
     }
 
     const renderProjectsVsCommitsChart = (projectsForAuthor) => {
-      return (<ContributionsByProjectChart projects={projectsForAuthor} author={this.props.card.name} />)
+      return (<ContributionsByProjectChart projects={projectsForAuthor} contributor={this.props.card.name} />)
     }
 
     const renderProjectsVsLocChart = (projectsForAuthor) => {
-      return (<LocByProjectChart projects={projectsForAuthor} author={this.props.card.name} />)
+      return (<LocByProjectChart projects={projectsForAuthor} contributor={this.props.card.name} />)
     }
 
     if (_.isEmpty(this.props.card)) return (null)
@@ -98,7 +98,7 @@ export default class AuthorCard extends Component {
         <div style={{margin: '1rem'}}>
           {this.state.view.chart === 'summary' && renderSummary(projectsForAuthor)}
           {this.state.view.chart === 'contributions-by-project' && renderProjectsVsCommitsChart(projectsForAuthor)}
-          {this.state.view.chart === 'projectsVsLoc' && renderProjectsVsLocChart(projectsForAuthor)}
+          {this.state.view.chart === 'loc-by-project' && renderProjectsVsLocChart(projectsForAuthor)}
         </div>
       </PaperLayout>
     )
