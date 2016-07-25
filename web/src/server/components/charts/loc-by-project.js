@@ -122,7 +122,7 @@ export default class LocByProjectChart extends Component {
     console.log("projects-vs-loc-chart:render", this.props.organization, this.props.author)
 
     return (
-      <PaperLayout id="projects-vs-loc" zDepth={2} title="Lines of Code across projects"
+      <PaperLayout id="projects-vs-loc" zDepth={2} title="Lines of code by Projects"
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}

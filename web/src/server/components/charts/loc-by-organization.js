@@ -121,7 +121,7 @@ export default class LocByOrganizationChart extends Component {
     dataSeries = DataReducers.sliceAndGroupOthers(dataSeries.reverse(), 12, 'loc')
 
     return (
-      <PaperLayout id="orgs-vs-loc-chart" title="LOC contributed by organization"
+      <PaperLayout id="orgs-vs-loc-chart" title="Lines of code by Organization"
         buttonActions={buttonActions} currentView={this.state.view}
         handleButtonActions={this.handleButtonActions.bind(this)}>
         {this.state.view.chartType === 'pie' && renderPieChart(dataSeries)}
