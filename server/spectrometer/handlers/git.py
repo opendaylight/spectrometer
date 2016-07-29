@@ -20,14 +20,23 @@ import yaml
 
 
 class GitHandler:
-    def __init__(self, project, repo_address):
+    def __init__(self, project, repo_address, cache={}):
         self.name = project
         self.repo = Repo(repo_address, odbt=GitCmdObjectDB)
 
+        # Local in-memory cache used for caching commit stats
+        self.cache = cache
+
     def format_commit_info(self, commit):
+        # Use a cache for stats.total information as that API requires
+        # significant processing time and is static information that does not
+        # change for a commit object.
+        if not self.cache.get(commit.hexsha, None):
+            self.cache[commit.hexsha] = commit.stats.total
+        commit_stats = self.cache[commit.hexsha]
         return {
                 'hash': commit.hexsha,
-                'lines': commit.stats.total,
+                'lines': commit_stats,
                 'author': commit.author.name,
                 'author_email': commit.author.email.lower(),
                 'authored_date': commit.authored_date,  # seconds since epoch
