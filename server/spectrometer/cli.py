@@ -62,8 +62,25 @@ def start(ctx):
     )
 
 
+@click.command()
+@click.pass_context
+def profile(ctx):
+    from werkzeug.contrib.profiler import ProfilerMiddleware
+    from spectrometer import create_app
+
+    app = create_app(ctx.obj['conf'])
+    app.config['PROFILE'] = True
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
+    app.run(
+        debug=True,
+        host=app.config['LISTEN_HOST'],
+        port=app.config['LISTEN_PORT'],
+    )
+
+
 server.add_command(sync_repos)
 server.add_command(start)
+server.add_command(profile)
 
 
 ###############################################################################

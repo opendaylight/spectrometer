@@ -1,6 +1,7 @@
 APScheduler==3.0.5
 click>=6.0,<7.0
 Flask>=0.10.1
+Flask-Profile>=0.2
 Flask-PyMongo>=0.4.1
 GitPython>=1.0.1
 PyYAML>=3.11

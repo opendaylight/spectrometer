@@ -19,6 +19,7 @@ import os
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 from flask.ext.pymongo import PyMongo
+from flask.ext.profile import Profiler
 from git.cmd import Git
 
 from spectrometer import views
@@ -33,6 +34,10 @@ def create_app(config):
     app = Flask(__name__)
     app.config.from_pyfile(config)
     app.debug = app.config.get('DEBUG', False)
+
+    # Flask profiler is only active when in debug mode
+    profiler = Profiler()
+    profiler.init_app(app)
 
     if not app.debug:
         # Setup Logger
