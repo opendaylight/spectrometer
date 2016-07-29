@@ -20,7 +20,6 @@ import tempfile
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
-from flask.ext.pymongo import PyMongo
 from flask.ext.profile import Profiler
 from git.cmd import Git
 
@@ -68,8 +67,6 @@ def create_app(config):
         except IOError:
             log.warn('Unable to activate File logger. Please ensure that the '
                      'log directory ({0}) is writable by the spectrometer user.'.format(logdir))
-
-    app.mongo = PyMongo(app)
 
     # Stop Flask debug mode from running the scheduler twice
     if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':

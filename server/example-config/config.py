@@ -1,7 +1,5 @@
 LISTEN_HOST = '127.0.0.1'
 LISTEN_PORT = 5000
-MONGO_HOST = '127.0.0.1'
-MONGO_PORT = 27017
 DEBUG = True
 
 LOG_DIR = '/var/log/spectrometer'

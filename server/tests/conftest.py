@@ -15,7 +15,6 @@ import os
 
 import pytest
 from git import Repo
-import mongomock
 
 from spectrometer import create_app
 
@@ -52,5 +51,4 @@ spectrometer:
 
     config = os.path.join(str(tmpdir), 'config.py')
     app = create_app(config)
-    app.mongo = mongomock.MongoClient()  # Setup mongomock to fake a mongodb in test
     return app

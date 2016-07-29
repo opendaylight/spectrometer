@@ -20,7 +20,6 @@ from flask import request
 
 from spectrometer.handlers.git import GitHandler
 from spectrometer.utils import check_parameters
-from spectrometer.utils import get_cache
 
 gitapi = Blueprint('git', __name__)
 
@@ -55,17 +54,12 @@ def branches():
 
     mapping = {
         'project': request.args.get('project', None),
-        'no_cache': request.args.get('no_cache', False),
     }
 
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
-        collection = app.mongo.db.branches
-        data_id = '{0}'.format(mapping['project'])
-
-        args = []
-        branches = get_cache(collection, data_id, mapping['no_cache'], git.branches, args)
+        branches = git.branches()
 
         if branches:
             result = {'branches': branches}
@@ -83,7 +77,6 @@ def commits():
 
     :arg str project: Project to query commits from. (required)
     :arg str branch: Branch to pull commits from. (default: master)
-    :arg bool no_cache: To skip cached data or not. (default: false)
 
     JSON::
 
@@ -119,17 +112,12 @@ def commits():
     mapping = {
         'project': request.args.get('project', None),
         'branch': request.args.get('branch', 'master'),
-        'no_cache': request.args.get('no_cache', False),
     }
 
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
-        collection = app.mongo.db.commits
-        data_id = '{0}:{1}'.format(mapping['project'], mapping['branch'])
-
-        args = [mapping['branch']]
-        commits = get_cache(collection, data_id, mapping['no_cache'], git.commits, args)
+        commits = git.commits(mapping['branch'])
 
         if commits:
             result = {'commits': commits}
@@ -143,15 +131,15 @@ def commits():
 def commits_since_ref():
     """Returns a list of commits in branch until common parent of ref.
 
-    Searches Git for a common_parent between *branch* and *ref* and returns
+    Searches Git for a common_parent between *ref1* and *ref2* and returns
     a the commit log of all the commits until the common parent excluding
     the common_parent commit itself.
 
     GET /git/commits_since_ref?param=<value>
 
     :arg str project: Project to query commits from. (required)
-    :arg str branch: Branch to pull commits from. (required)
-    :arg str ref: To pull cached data or not. (required)
+    :arg str ref1: Reference to get commit information from. (required)
+    :arg str ref2: Reference to start at until ref1. (required)
 
     JSON::
 
@@ -183,17 +171,12 @@ def commits_since_ref():
         'project': request.args.get('project', None),
         'ref1': request.args.get('ref1', None),
         'ref2': request.args.get('ref2', None),
-        'no_cache': request.args.get('no_cache', False),
     }
 
     result = check_parameters(mapping)
     if not result:
         git = create_handler(mapping['project'])
-        collection = app.mongo.db.commits
-        data_id = '{0}:{1}:{2}'.format(mapping['project'], mapping['ref1'], mapping['ref2'])
-
-        args = [mapping['ref1'], mapping['ref2']]
-        commits = get_cache(collection, data_id, mapping['no_cache'], git.commits_since_ref, args)
+        commits = git.commits_since_ref(mapping['ref1'], mapping['ref2'])
 
         if commits:
             result = {'commits': commits}
