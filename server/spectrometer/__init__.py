@@ -15,6 +15,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 from multiprocessing import Pool
 import os
+import pickle
+import tempfile
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
@@ -34,6 +36,14 @@ def create_app(config):
     app = Flask(__name__)
     app.config.from_pyfile(config)
     app.debug = app.config.get('DEBUG', False)
+
+    # Setup semi-permanent cache stored in os temp directory
+    try:
+        app.cache_file = os.path.join(
+            tempfile.gettempdir(), 'spectrometer-cache.p')
+        app.cache = pickle.load(open(app.cache_file, "rb"))
+    except IOError:
+        app.cache = {}
 
     # Flask profiler is only active when in debug mode
     profiler = Profiler()
@@ -137,6 +147,12 @@ def run_scheduler(app):
     }
     apsched.add_job(mirror_repos, 'interval', seconds=mirror_interval, kwargs=args)
 
+    args = {
+        'cache_file': app.cache_file,
+        'cache': app.cache,
+    }
+    apsched.add_job(save_cache, 'interval', seconds=300, kwargs=args)
+
 
 def run_app(config='/etc/spectrometer/config.py'):
     """Runs the spectrometer app
@@ -147,3 +163,9 @@ def run_app(config='/etc/spectrometer/config.py'):
     app = create_app(config)
 
     return app
+
+
+def save_cache(cache_file, cache):
+    """Saves the Spectrometer cache to disk"""
+    log.info("Saving cache to file {0}".format(cache_file))
+    pickle.dump(cache, open(cache_file, "wb"))
