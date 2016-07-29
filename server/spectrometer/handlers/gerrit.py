@@ -49,4 +49,10 @@ class GerritHandler():
         url = urljoin(self.BASE_URL, 'projects/')
         response = requests.get(url).text.lstrip(self.GERRIT_MAGIC_STRING)
         projects = json.loads(response)
-        return sorted(list(projects))
+        projects = sorted(list(projects))
+        # Remove Gerrit special projects
+        try:
+            projects.remove('All-Users')
+        except ValueError:
+            pass  # Fail silently when list item does not exist
+        return projects
