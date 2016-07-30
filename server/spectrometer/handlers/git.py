@@ -62,7 +62,7 @@ class GitHandler:
                 'message': commit.message,
             }
 
-    def _fetch_commits(self, revision):
+    def _fetch_commits(self, revision, filters=None):
         """Convenience function to fetch comments from a revision
 
         This function also automatically strips out commits from Gerrit Code
@@ -79,6 +79,19 @@ class GitHandler:
                      # Skip counting Gerrit Code Review Merge commits
                      commit.message.startswith('Merge \"'))):
                 continue
+
+            if filters:
+                # Filter for author by email
+                author = filters.get('author', None)
+                if author and author != commit.author.email:
+                    continue
+
+                # Filter for organization by email
+                organization = filters.get('organization', None)
+                if (organization and organization != commit.author.email.split('@', 1)[-1]):  # noqa
+                    continue
+
+            # Finally pass on the commit object
             commit_dic = self.format_commit_info(commit)
             commits.append(commit_dic)
         return commits
@@ -88,15 +101,15 @@ class GitHandler:
         branches = [b.name for b in self.repo.branches]
         return branches
 
-    def commits(self, branch):
+    def commits(self, branch, filters=None):
         """Returns a list of commit data from a repository.
 
         Keyword arguments:
         branch -- Branch of repo to pull data from.
         """
-        return self._fetch_commits(branch)
+        return self._fetch_commits(branch, filters=filters)
 
-    def commits_since_ref(self, ref1, ref2):
+    def commits_since_ref(self, ref1, ref2, filters=None):
         """Returns a list of commits in branch until common parent of ref
 
         Searches Git for a common_parent between *branch* and *ref* and returns
@@ -119,7 +132,7 @@ class GitHandler:
         # excluding A. Spectrometer is interested in finding all commits since
         # the common parent of ref1 and ref2
         revision = "{parent}..{ref1}".format(ref1=ref1, parent=common_parent.hexsha)
-        commits.extend(self._fetch_commits(revision))
+        commits.extend(self._fetch_commits(revision, filters=filters))
 
         return commits
 

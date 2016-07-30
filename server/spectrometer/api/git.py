@@ -103,10 +103,15 @@ def commits():
         'branch': request.args.get('branch', 'master'),
     }
 
+    filters = {
+        'author': request.args.get('author', None),
+        'organization': request.args.get('organization', None)
+    }
+
     result = check_parameters(mapping)
     if not result:
         git = get_githandler(mapping['project'])
-        commits = git.commits(mapping['branch'])
+        commits = git.commits(mapping['branch'], filters=filters)
 
         if commits:
             result = {'commits': commits}
@@ -162,10 +167,16 @@ def commits_since_ref():
         'ref2': request.args.get('ref2', None),
     }
 
+    filters = {
+        'author': request.args.get('author', None),
+        'organization': request.args.get('organization', None)
+    }
+
     result = check_parameters(mapping)
     if not result:
         git = get_githandler(mapping['project'])
-        commits = git.commits_since_ref(mapping['ref1'], mapping['ref2'])
+        commits = git.commits_since_ref(
+            mapping['ref1'], mapping['ref2'], filters=filters)
 
         if commits:
             result = {'commits': commits}
