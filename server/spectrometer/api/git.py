@@ -10,25 +10,14 @@
 # which accompanies this distribution, and is available at
 # http://www.eclipse.org/legal/epl-v10.html
 ##############################################################################
-
-import os
-
 from flask import Blueprint
-from flask import current_app as app
 from flask import jsonify
 from flask import request
 
-from spectrometer.handlers.git import GitHandler
+from spectrometer.handlers.git import get_githandler
 from spectrometer.utils import check_parameters
 
 gitapi = Blueprint('git', __name__)
-
-
-def create_handler(project):
-    """Convenience function for creating GitHandlers"""
-    mirror_dir = app.config['MIRROR_DIR']
-    project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
-    return GitHandler(project, project_dir)
 
 
 @gitapi.route('/branches')
@@ -58,7 +47,7 @@ def branches():
 
     result = check_parameters(mapping)
     if not result:
-        git = create_handler(mapping['project'])
+        git = get_githandler(mapping['project'])
         branches = git.branches()
 
         if branches:
@@ -116,7 +105,7 @@ def commits():
 
     result = check_parameters(mapping)
     if not result:
-        git = create_handler(mapping['project'])
+        git = get_githandler(mapping['project'])
         commits = git.commits(mapping['branch'])
 
         if commits:
@@ -175,7 +164,7 @@ def commits_since_ref():
 
     result = check_parameters(mapping)
     if not result:
-        git = create_handler(mapping['project'])
+        git = get_githandler(mapping['project'])
         commits = git.commits_since_ref(mapping['ref1'], mapping['ref2'])
 
         if commits:
@@ -200,7 +189,7 @@ def project_info():
 
     result = check_parameters(mapping)
     if not result:
-        git = create_handler(mapping['project'])
+        git = get_githandler(mapping['project'])
         project_info = git.project_info()
         result = {'project-info': project_info}
 
