@@ -20,17 +20,6 @@ The Spectrometer project collects data from repositories located locally in
 your system.
 
 
-Setup mongodb
--------------
-
-MongoDB needs to be installed and run on it's default port, an easy way is to
-use Docker to spin up a MongoDB instance.
-
-.. code-block:: bash
-
-    docker run -d -p 27017:27017 mongo
-
-
 Setup spectrometer-server
 -------------------------
 
