@@ -56,9 +56,14 @@ def start(ctx):
     This function is effectively the spectrometer main() function and is the
     entry point for spectrometer server.
     """
-    click.echo('Starting spectrometer...')
-
     app = create_app(ctx.obj['conf'])
+
+    click.echo('Syncing Spectrometer data...')
+    gerrit_url = app.config['GERRIT_URL']
+    mirror_dir = app.config['MIRROR_DIR']
+    mirror_repos(mirror_dir, gerrit_url)
+
+    click.echo('Starting spectrometer...')
     app.run(
         threaded=True,
         host=app.config['LISTEN_HOST'],
