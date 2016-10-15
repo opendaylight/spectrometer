@@ -100,8 +100,8 @@ server.add_command(profile)
 @click.option('--server-url', default='https://spectrometer.opendaylight.org/api/',
               help='URL to Spectrometer API server.')
 @click.pass_context
-def reporttool(ctx, server_url):
-    """Entry point for the report tool command"""
+def report(ctx, server_url):
+    """Entry point for the report tool"""
     ctx.obj['SERVER_URL'] = server_url
 
 
@@ -109,12 +109,23 @@ def reporttool(ctx, server_url):
 @click.argument('ref1')
 @click.argument('ref2')
 @click.pass_context
-def full(ctx, ref1, ref2):
-    """Generate a full report"""
+def release(ctx, ref1, ref2):
+    """Generate a release report
+
+    Takes 2 git refspecs and generates a report between the two points. For
+    example if there are 2 release tags one my pass:
+
+        spectrometer report release v2.0 v1.0
+
+    Which will generate a report on contributions into v2.0 tag since v1.0.
+
+    ref1 - is the reference point to create a report against
+    ref2 - is the point to start gathering data from
+    """
     git_data = GitReport(ctx.obj['SERVER_URL'], ref1, ref2)
     git_data.print_report()
 
 
-reporttool.add_command(full)
+report.add_command(release)
 
 cli(obj={})
