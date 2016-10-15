@@ -13,10 +13,24 @@
 
 from __future__ import absolute_import
 
+import os
+
 from git import GitCmdObjectDB
 from git import Repo
 from git.exc import GitCommandError
 import yaml
+
+from flask import current_app as app
+
+
+def get_githandler(project):
+    """Convenience function for creating GitHandlers"""
+    if app.githandlers.get(project):
+        return app.githandlers.get(project)
+
+    mirror_dir = app.config['MIRROR_DIR']
+    project_dir = os.path.join(mirror_dir, '{0}.git'.format(project))
+    return GitHandler(project, project_dir, cache=app.cache)
 
 
 class GitHandler:

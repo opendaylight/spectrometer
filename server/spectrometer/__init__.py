@@ -68,6 +68,10 @@ def create_app(config):
             log.warn('Unable to activate File logger. Please ensure that the '
                      'log directory ({0}) is writable by the spectrometer user.'.format(logdir))
 
+    # Prep resource handlers
+    app.gerrithandler = GerritHandler(app.config['GERRIT_URL'])
+    app.githandlers = {}
+
     # Stop Flask debug mode from running the scheduler twice
     if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
         run_scheduler(app)
