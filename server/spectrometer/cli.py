@@ -37,7 +37,11 @@ def server(ctx, conf):
 
 @click.command()
 @click.pass_context
-def sync_repos(ctx):
+def sync(ctx):
+    """Syncs Spectrometer data
+
+    Force syncs the git repositories to pull down the latest data.
+    """
     app = create_app(ctx.obj['conf'])
     gerrit_url = app.config['GERRIT_URL']
     mirror_dir = app.config['MIRROR_DIR']
@@ -78,7 +82,7 @@ def profile(ctx):
     )
 
 
-server.add_command(sync_repos)
+server.add_command(sync)
 server.add_command(start)
 server.add_command(profile)
 
