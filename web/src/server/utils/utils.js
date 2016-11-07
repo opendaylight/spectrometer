@@ -11,19 +11,29 @@
 */
 
 /**
- * Spectrometer application boot up page
- * - includes babel and polyfill for on-the-fly transpilation
+ * Shared Utilities
  *
  * @author: Vasu Srinivasan
  * @since: 0.0.1
  */
 
-require('babel-register')({
-  ignore: function(filename) {
-    return filename.indexOf('/node_modules/') >= 0;
-  }
-});
-require('babel-polyfill')
+import _ from 'lodash'
+import moment from 'moment'
 
-// Startup the NodeJS server
-require('./server');
+/**
+ * converts time to MMM-YYYY format for better display in the graphs
+ * @returns string, date in MMM-YYYY format
+ */
+export function toMonthYearFormat(time, timezone) {
+  const k = moment(time)
+  return k.format('MMM')+'-'+k.year()
+}
+
+/**
+ * parses the project url to find the project name using regex
+ * @param url http://$apiServerUrl/git/...?project=aaa
+ * @returns string, project name, eg: aaa
+ */
+export function parseProjectFromUrl(url) {
+  return url.match(/.*project=(.*)/)[1]
+}

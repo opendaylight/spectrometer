@@ -1,4 +1,16 @@
-// import 'babel-register';
+/**
+# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+##############################################################################
+# Copyright (c) 2016 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
+*/
+
+
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,16 +23,17 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from '../server/store';
 import routes from '../server/routes';
 
-import "../../assets/styles/index.css"
 require('../../assets/images/favicon.ico')
+window.logger = global.logger || require('../server/logger')
 
-console.log("starting OpenDaylight Spectrometer client")
+logger.info("starting OpenDaylight Spectrometer client")
+
 injectTapEventPlugin()
 
 const initialState = window.__INITIAL_STATE__
 const store = configureStore(initialState)
 const history = syncHistoryWithStore(browserHistory,store)
-const rootElement = document.getElementById('root')
+const rootElement = document.getElementById('spectrometer')
 
 ReactDOM.render(
   <Provider store={store}>
@@ -28,13 +41,8 @@ ReactDOM.render(
       { routes }
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('spectrometer')
 );
-
-// if (process.env.NODE_ENV !== 'production') {
-//   var devtools = require('../server/devtools');
-//   devtools.default(store);
-// }
 
 if (process.env.NODE_ENV !== 'production') {
   // Don't change this to an import, it needs to be in the

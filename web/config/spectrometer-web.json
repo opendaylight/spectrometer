@@ -1,4 +1,37 @@
 {
-  "apiServerUrl": "http://localhost:5000",
-  "httpPort": 8000
+  "app": {
+    "title": "OpenDaylight Spectrometer",
+    "subtitle": "",
+    "metaKeywords": "OpenDaylight, Spectrometer",
+    "storeRefreshIntervalInMinutes": 2
+  },
+  "server": {
+    "apiServerUrl": "http://localhost:5000",
+    "httpPort": 8000
+  },
+  "chart": {
+    "pieChartColors": ["#e2cf56", "#aee256", "#68e256", "#56e289", "#56e2cf", "#56aee2", "#5668e2", "#8a56e2", "#cf56e2", "#e256ae", "#e25668", "#e28956"],
+    "titleColor": "#4E4E4E",
+    "style": {
+      "fontFamily": "Ubuntu"
+    }
+  },
+  "branches": [
+    { "name": "master", "code": "M"},
+    { "name": "stable/boron", "code": "B"},
+    { "name": "stable/beryllium", "code": "Be"},
+    { "name": "stable/lithium", "code": "Li"},
+    { "name": "stable/helium", "code": "He"},
+    { "name": "stable/hydrogen", "code": "H"}
+  ],
+  "hints": [
+    { "type": "organization", "text": "Select an organization from the list\nto view her contributions"},
+    { "type": "project", "text": "Select an organization from the list\nto view her contributions"},
+    { "type": "author", "text": "Select an author from the list\nto view his or her contributions"},
+    { "type": "all", "text": "You can add multiple cards\nof the same item for comparison.\nJust click again on the item in the list"},
+    { "type": "all", "text": "Filter items by typing \na few characters in the Filter input"},
+    { "type": "all", "text": "Pie-charts only show top 10 results.\nCheck the Table view for full results"},
+    { "type": "all", "text": "On pie-charts you can click on a legend\nto toggle its display in the pie"}
+  ],
+  "top10": 11
 }

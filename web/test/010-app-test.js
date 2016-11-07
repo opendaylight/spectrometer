@@ -1,3 +1,17 @@
+/**
+# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+##############################################################################
+# Copyright (c) 2016 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
+*/
+
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -17,7 +31,7 @@ describe('app suite:', function(){
   before('render app component', function() {
     const c0 = require('./fixtures/commits-spectrometer')
     const store = configureStore({
-      projects: [{ name: 'spectrometer', commits: c0.commits }]
+      spectro: { projects: [{ name: 'spectrometer', commits: c0.commits }] }
     });
 
     const renderedComponent = TestUtils.renderIntoDocument(
@@ -27,10 +41,10 @@ describe('app suite:', function(){
         </Router>
       </Provider>);
 
-    this.wrapper = TestUtilsAdditions.findRenderedDOMComponentWithId( renderedComponent, 'opendaylight-spectrometer' );
+    this.wrapper = TestUtilsAdditions.findRenderedDOMComponentWithId( renderedComponent, 'opendaylight-spectrometer-main' );
   });
 
-  it('app with id opendaylight-spectrometer should exist', function() {
+  it('app with id #odls-main should exist', function() {
     expect(this.wrapper).toExist();
   });
 });

@@ -1,23 +1,36 @@
 /**
- * A collection of pure functions that reduces projects array into format as required for charts
+# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+##############################################################################
+# Copyright (c) 2016 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
+*/
+
+/**
+ * Map Reducer functions to convert projects, commits, authors, organizations, timelines into meaningful X,Y data series
+ *  that will be consumed by tables, charts and summaries in the UI components
+ *
+ * @author: Vasu Srinivasan
+ * @since: 0.0.1
  */
+
 import _ from 'lodash'
 import moment from 'moment'
+import {parseProjectFromUrl, toMonthYearFormat} from '../utils/utils'
 
-const BRANCHES = [
-  { name: 'master', code: 'M'},
-  { name: 'stable/beryllium', code: 'Be'},
-  { name: 'stable/lithium', code: 'Li'},
-  { name: 'stable/helium', code: 'He'},
-  { name: 'stable/hydrogen', code: 'H'}
-]
+import * as Branches from './branches'
 
-export function toMonthYearFormat(time, timezone) {
-  const k = moment(time*1000)
-  return k.format('MMM')+'-'+k.year()
-}
+const logger = global.logger || require('../logger');
 
-export function sliceAndGroupOthers(series, sliceSize, field) {
+/**
+ * slices a series to a given number and puts the rest of them in "Other" bucket
+ * @returns array, sliced data series
+ */
+export function sliceLeftAndGroupOthers(series, sliceSize, field) {
   if (series.length > sliceSize) {
     let newSeries = series.slice(0, sliceSize-1)
     newSeries.push({name: 'Others', [field]: _(series.slice(sliceSize)).map(field).sum().valueOf()})
@@ -27,15 +40,64 @@ export function sliceAndGroupOthers(series, sliceSize, field) {
 }
 
 /**
- * Find the master branch of a given project, then find the stable branches in that project
+ * slices a series to a given number and puts the rest of them in "Other" bucket
+ * @returns array, sliced data series
+ */
+export function sliceAndGroupOthers(series, sliceSize, field) {
+  if (series.length > sliceSize) {
+    let newSeries = series.slice(series.length - sliceSize)
+    newSeries.push({name: 'Others', [field]: _(series.slice(0, series.length - sliceSize - 1)).map(field).sum().valueOf()})
+    return newSeries
+  }
+  return series;
+}
+
+/**
+ * filters only the master projects from the projects array
+ * this is used to construct home page (top 10) charts
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @returns array, only the master branch of all the projects
+ */
+export function filterMasterProjects(projects) {
+  return _.filter(projects, (x) => { return x.ref1 === 'master' && x.ref2 === 'master'} )
+}
+
+/**
+ * find a particular branch of a particular project
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options = { name, ref1 = 'master', ref2 = 'master' }
+ * @returns object, only one project that meets ref1-ref2 criteria
+ */
+export function findBranchProject(projects, options = {}) {
+  const {name, ref1 = 'master', ref2 = 'master'} = options
+  return _.find(projects, (x) => { return x.name === name && x.ref1 === ref1 && x.ref2 === ref2} )
+}
+
+/**
+ * finds only master branch project
+ * alias for findBranchProject(projects, {name})
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param name = project name
+ * @returns object, only one project of master branch
+ */
+export function findMasterBranchProjects(projects, name) {
+  return findBranchProject(projects, {name})
+}
+
+/**
+ * find the master branch of a given project, then find the stable branches in that project.
  * used for viewing data only in a specific stable release branch (commits_since_ref)
+ * code = {M, Be, Li, He, H}
+ * enabled = true, if the project is released in that stable branch
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param name = project name
+ * @returns array, [name, code, ref1, ref2, enabled]
  */
 export function findBranchActions(projects, name) {
   //only the master contains master.branches property which is a list[string] of stable branches
   const master = findMasterBranchProjects(projects, name)
   //all stable branch names for this project
-  // const stableBranches = _.filter(BRANCHES, x => _.indexOf(master.branches, x.name) >= 0)
-  return _.map(BRANCHES, x => {
+  return _.map(Branches.BranchMap, x => {
     return {
       name: x.name, code: x.code, ref1: x.name === 'master', ref2: x.name === 'master', enabled: _.indexOf(master.branches, x.name) >= 0
     }
@@ -43,43 +105,41 @@ export function findBranchActions(projects, name) {
 }
 
 /**
- * git_commits_since_ref works only where ref1=newer, ref2=older branches chronologically
- * if user clicked out of sequence, readjust references to chronological sequence
- * this way ref1 is always newer branch, ref2 is always older branch
- * Sequence is 0 -> N as OLDEST -> NEWEST
+ * maps the commits to web desired format
+ * web desired format = add organization field, remove commits.committed_* fields and commits.message fields to reduce payload size
+ * sorts commits by authored_date asc to desc (earliest authored is index 0)
+ * @param commits array
+ * @returns array of commits, [{author, author_email, authored_date, author_tz_offset, organization, insertions, deletions, files}, {} ...]
  */
-export function swapBranchRefs(ref1, ref2) {
-  return (_.findIndex(BRANCHES, {name: ref2}) > _.findIndex(BRANCHES, {name: ref1})) ? [ref1, ref2] : [ref2,ref1]
+export function mapCommits(commits) {
+  // logger.info("data-reducers:mapCommits", commits.length)
+  return _(commits).map((c, index) => {
+    return {
+      author: c.author,
+      author_email: c.author_email,
+      authored_date: c.authored_date*1000,
+      author_tz_offset: c.author_tz_offset,
+      organization: c.author_email.split('@')[1],
+      insertions: c.lines.insertions,
+      deletions: c.lines.deletions,
+      files: c.lines.files
+    }
+  }).sortBy('authored_date').valueOf()
 }
 
 /**
- * @returns only master branch of the projects
+ * map a project's commits from original format to web desired format
+ * @param name = project name
+ * @param ref1, ref2
+ * @param commits = commits to map
+ * @returns object, {name, ref1, ref2, commits}
  */
-export function filterMasterProjects(projects) {
-  return _.filter(projects, (x) => { return x.ref1 === 'master' && x.ref2 === 'master'} )
-}
-
-/**
- * @returns only one project that meets ref1-ref2 criteria
- */
-export function findBranchProject(projects, name, ref1, ref2) {
-  return _.find(projects, (x) => { return x.name === name && x.ref1 === ref1 && x.ref2 === ref2} )
-}
-
-/**
- * @returns only master projects
- */
-export function findMasterBranchProjects(projects, name) {
-  return findBranchProject(projects, name, 'master', 'master')
-}
-
-/**
- * parses the project url to find the project name using regex
- * @param url http://$apiServerUrl/git/...?project=aaa
- * @returns aaa
- */
-export function parseProjectFromUrl(url) {
-  return url.match(/.*project=(.*)/)[1]
+export function mapProjectCommits(name, ref1, ref2, commits) {
+  logger.info("data-reducers:mapProjectCommits", name, ref1, ref2, commits.length)
+  return {
+    name, ref1, ref2,
+    commits: mapCommits(commits)
+  }
 }
 
 /**
@@ -88,7 +148,9 @@ export function parseProjectFromUrl(url) {
  * eventually can be used when from ui client want to fetch multiple projects (no use case now)
  */
 export function mapProjectsBranches(response) {
+  logger.info("data-reducers:mapProjectsBranches")
   return _.map(response, (x) => {
+    logger.info("data-reducers:mapProjectsBranches:", x.config.url)
     return {
       name: parseProjectFromUrl(x.config.url),
       branches: x.data.branches
@@ -104,95 +166,257 @@ export function mapProjectsBranches(response) {
 export function mapProjects(response) {
   return _.map(response, (x, index) => {
     const name = parseProjectFromUrl(x.config.url)
-    console.log('data-reducers:mapProjects', index, name)
+    logger.info('data-reducers:mapProjects', index, name)
     return mapProjectCommits(name, 'master', 'master', x.data.commits || [])
   })
 }
 
 /**
- * Map the project commits to web format
+ * finds recent $projectLimit commits from each project upto $totalLimit projects
+ * this gives a distribution of recent commits from each project, instead of recent commits of all projects
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param projectLimit = number of recent commits to take from each project
+ * @param totalLimit = number of total commits to take
+ * @returns [{name: aaa, commits: [...]}, {name: controller, commits: [...]}]
  */
-export function mapProjectCommits(name, ref1, ref2, commits) {
-  // console.log("data-reducers:mapProjectCommits", name, ref1, ref2)
-  return {
-    name, ref1, ref2,
-    commits: mapCommits(commits)
-  }
-}
-
-/**
- * maps the commits to web format
- * web format: add organization field, remove commits.committed_* fields and commits.message fields to reduce payload size
- */
-export function mapCommits(commits) {
-  console.log("data-reducers:mapCommits", commits.length)
-  return _(commits).map((c, index) => {
+export function recentCommits(projects, projectLimit = 5, totalLimit = 10) {
+  return _(projects).map(p => {
     return {
-      author: c.author,
-      author_email: c.author_email,
-      authored_date: c.authored_date,
-      author_tz_offset: c.author_tz_offset,
-      organization: c.author_email.split('@')[1],
-      insertions: c.lines.insertions,
-      deletions: c.lines.deletions,
-      files: c.lines.files
-    }
-  }).valueOf()
-}
-
-
-/**
- * Question: What is the timeline of projects started ?
- */
-export function timelineForAllProjects(projects, sortBy = 'x') {
-  return _(projects)
-    .map(x => {
-      return {
-        name: x.name,
-        firstCommit: !_.isEmpty(x.commits) ? x.commits[x.commits.length - 1].authored_date : 0,
-        lastCommit: !_.isEmpty(x.commits) ? x.commits[0].authored_date : 0,
-      }
-    })
-    .sortBy(sortBy === 'x' ? 'name' : 'firstCommit')
-    .valueOf()
-}
-
-/**
- * Question: How many commits per Month for ONE Project
- * collects commit lines of code grouped by month
- * returns [{time: 'Jun-2016', loc:2100}, {time: 'Jul-2016', loc: 4000}]
- */
-export function timeVsCommitsForOneProject(project) {
-  return _(project.commits)
-    .countBy(x => toMonthYearFormat(x.authored_date))
-    .map((v,k) => { return { time: k, commitCount: v } })
-    .valueOf()
-}
-
-/**
- * Question: How many LOC commits per Month for ONE Project
- * collects commit lines of code grouped by month
- * returns [{time: 'Jun-2016', loc:2100}, {time: 'Jul-2016', loc: 4000}]
- */
-export function timeVsLocForOneProject(project) {
-  let m = _(project.commits).map(c => {
-    return {
-      time: toMonthYearFormat(c.authored_date),
-      lines: c.insertions + c.deletions
+      name: p.name,
+      commits: _.takeRight(p.commits, projectLimit)
     }
   })
-  .groupBy('time')
-  .reduce( (result, value, key) => {
-    let loc = _.reduce(value, (r, v) => { return r + v.lines} , 0)
-    result.push( {time: key, loc: loc} )
-    return result
-  }, [])
+  .flatten().sortBy((x) => !_.isEmpty(x.commits) ? x.commits[0].authored_date : null)
+  .takeRight(totalLimit)
+  .reverse()
   .valueOf()
-
-  return m
 }
 
 /**
+ * filter one project's commits by multiple options
+ * filter commits for a single organization AND/OR single author AND/OR range of dates
+ * multiple filters can be applied at the same time
+ * if options is empty, original commits are returned without any filtering
+ * @example filterCommits(commits, {organization: 'gmail.com', author: 'John'}) will return commits by John from that organization
+ * @param commits = array of commits of a single project
+ * @param options = {organization, author, startDate, endDate}
+ * @returns filtered commits based on given options
+ */
+const filterCommits = (commits, options = {}) => {
+  const { organization, author, startDate, endDate } = options
+  const c0 = _(commits)
+    .filter(c => organization ? (c.organization === organization) : c )
+    .filter(c => author ? (c.author === author) : c )
+    .filter(c => startDate ? (c.authored_date >= startDate) : c )
+    .filter(c => endDate ? (c.authored_date <= endDate) : c )
+    .valueOf()
+  // logger.info("filterCommits: options", options, "original count:", commits.length, "filter count:", c0.length)
+  return c0
+}
+
+/**
+ * sums up commit and loc count by a given contributor
+ * @example sumCommitCountByContributor(commits, 'John') will return {name: John, commitCount: 250, loc: 3000}
+ * @param commits = commits array of a single project
+ * @param contributor = a string of either 'organization' or 'author'
+ * @returns [{name: string, commitCount: number, loc: number}]
+ */
+const sumCommitCountByContributor = (commits, key) => {
+  const c0 = _(commits)
+    .transform((r,v) => {
+      let a0 = _.find(r, {name: v[key]})
+      if (a0) {
+        a0.commitCount += 1
+        a0.loc += (v.insertions || 0) + (v.deletions || 0)
+      } else {
+        r.push({name: v[key], commitCount: 1, loc: (v.insertions || 0) + (v.deletions || 0)})
+      }
+    }, [])
+    .valueOf()
+
+  // logger.info("sumCommitCountByContributor", key, c0)
+  return c0
+}
+
+/**
+ * maps each project's commits after filtering by various options
+ * @param projects = [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options = {name, organization, author, startDate, endDate}
+ * @returns [{name: aaa, commits: [...]}, {name: controller, commits: [...]}]
+ */
+export function projectsVsCommits(projects, options = {}) {
+  const { name, ref1, ref2, organization, author, startDate, endDate } = options
+  logger.info("data-reducers:projectsVsCommits", projects.length, options)
+  return _(projects)
+    .filter(p => name ? p.name === name : p)
+    .filter(p => (ref1 && ref2) ? (p.ref1 === ref1 && p.ref2 === ref2) : p)
+    .map(x => { return { name: x.name, commits: filterCommits(x.commits, options) }} )
+    .filter(x => x.commits.length > 0)
+    .valueOf()
+}
+
+/**
+ * find each project's commit count find commit count after applying given criteria
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: {name, organization, author, startDate, endDate, takeLeft, takeRight, sortBy = 'x'}
+ * sortBy: x => name, y => commitCount
+ * takeRight: is used to pick the top 10 commits
+ * @returns [ {name: aaa, commitCount: 200, loc: 30000}, {name: bgp, commitCount: 150, loc: 4000}, ...]
+ */
+export function projectsVsCommitCount(projects, options = {}) {
+  logger.info("data-reducers:projectsVsCommitCount", projects.length, options)
+  const { name, ref1, ref2, organization, author, startDate, endDate, takeLeft, takeRight, sortBy} = options
+  let c0 = projectsVsCommits(projects, options)
+  let result = _(c0)
+    .map(x => { return { name: x.name, commitCount: x.commits ? x.commits.length : 0, loc: _.sumBy(x.commits, c => (c.insertions || 0) + (c.deletions || 0) )} })
+    .sortBy(sortBy)
+
+  result = takeLeft ? result.take(takeLeft) : result
+  result = takeRight ? result.takeRight(takeRight) : result
+  return result.valueOf()
+}
+
+/**
+ * find each project's contibutors by contributor key (organization | author)
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, organization, author, contributor }
+ * @returns [ {name: aaa, contributors: []}, {name: bgp, contributors: []}, ...]
+ */
+export function projectsVsContributors(projects, options = {}) {
+  logger.info("data-reducers:projectsVsContributors", options)
+  const { name, ref1, ref2, organization, author, contributor } = options
+   //contributor is one of ['author', 'organization']
+   return _(projects)
+    .filter(p => name ? p.name === name : p)
+    .filter(p => (ref1 && ref2) ? (p.ref1 === ref1 && p.ref2 === ref2) : p)
+    .map(x => { return { name: x.name, commits: filterCommits(x.commits, options) }} )
+    .map(x => { return { name: x.name, contributors: _(x.commits).map(contributor).uniq().orderBy().valueOf() }})
+    .valueOf()
+}
+
+/**
+ * find each project's contibutor count by contributor key (organization | author)
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, organization, author, contributor }
+ * @returns [ {name: aaa, contributorCount: 200}, {name: bgp, contributorCount: 300}, ...]
+ */
+export function projectsVsContributorCount(projects, options = {}) {
+  const {sortBy} = options
+  const p0 = projectsVsContributors(projects, options)
+  return _(p0)
+    .map(x => { return { name: x.name, contributorCount: x.contributors.length }})
+    .sortBy(sortBy)
+    .valueOf()
+}
+
+/**
+ * find all contributors by contributor key (organization | author)
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, organization, author, contributor }
+ * @returns  [contributor1, contributor2, ...]
+ */
+export function allContributors(projects, options = {}) {
+  const p0 = projectsVsContributors(projects, options)
+  return _(p0).map('contributors').flatten().uniq().orderBy().valueOf()
+}
+
+/**
+ * find commit count per organization
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, organization, takeLeft, takeRight, sortBy = 'x' }
+ * @returns [ {name: org1, commitCount: 200}, {name: org2, commitCount: 300}, ...]
+ */
+export function organizationsVsCommitCount(projects, options = {}) {
+  logger.info("organizationsVsCommitCount", projects.length, options)
+  const {name, ref1, ref2, takeLeft, takeRight, sortBy} = options
+  let result = _(projects)
+    .filter(p => name ? p.name === name : p)
+    .filter(p => (ref1 && ref2) ? (p.ref1 === ref1 && p.ref2 === ref2) : p)
+    .map(p => { return sumCommitCountByContributor(filterCommits(p.commits, options), 'organization')})
+    .flatten()
+    .groupBy('name')
+    .transform( (r, v, k) => {
+      r.push( {name: k, commitCount: _.sumBy(v, 'commitCount'),  loc: _.sumBy(v, 'loc')} )
+    }, [])
+    .sortBy(sortBy)
+
+  result = takeLeft ? result.take(takeLeft) : result
+  result = takeRight ? result.takeRight(takeRight) : result
+  return result.valueOf()
+}
+
+/**
+ * find commit count per author
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, takeLeft, takeRight, sortBy = 'x' }
+ * @returns [ {name: author1, commitCount: 200}, {name: author2, commitCount: 300}, ...]
+ */
+export function authorsVsCommitCount(projects, options = {}) {
+  logger.info("authorsVsCommitCount", projects.length, options)
+  const {name, ref1, ref2, takeLeft, takeRight, sortBy} = options
+  let result = _(projects)
+    .filter(p => name ? p.name === name : p)
+    .filter(p => (ref1 && ref2) ? (p.ref1 === ref1 && p.ref2 === ref2) : p)
+    .map(p => sumCommitCountByContributor(filterCommits(p.commits, options), 'author'))
+    .flatten()
+    .groupBy('name')
+    .transform( (r, v, k) => {
+      r.push( {name: k, commitCount: _.sumBy(v, 'commitCount'),  loc: _.sumBy(v, 'loc')} )
+    }, [])
+    .sortBy(sortBy)
+
+  result = takeLeft ? result.take(takeLeft) : result
+  result = takeRight ? result.takeRight(takeRight) : result
+  // logger.info("authorsVsCommitCount", projects.length, options, result.valueOf())
+  return result.valueOf()
+}
+
+/**
+ * find commit count per project by time
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, takeLeft, takeRight, sortBy }
+ * @returns [ {name: 'aaa', timeline: [{name: 'Mar-2014',commitCount: 200, loc: 2500}, ...]}, {name: 'bgp', timeline: [{name: 'Mar-2014',commitCount: 300, loc: 23500}, ...]},  ...]
+ */
+export function timeVsProjectsCommitCount(projects, options = {}) {
+  logger.info("timeVsProjectsCommitCount", projects.length, options)
+  const {name, ref1, ref2} = options
+  let result = _(projects)
+    .filter(p => name ? p.name === name : p)
+    .filter(p => (ref1 && ref2) ? (p.ref1 === ref1 && p.ref2 === ref2) : p)
+    .map(x => { return { name: x.name, commits: filterCommits(x.commits, options) }} )
+    .map(x => { return {
+      name: x.name,
+      timeline: _(x.commits).groupBy(c => toMonthYearFormat(c.authored_date))
+                            .transform((r,v,k) => { r.push({name: k, commitCount: v.length, loc: _.sumBy(v, c => (c.insertions || 0) + (c.deletions || 0)) })},[]).valueOf()
+      }
+    }).valueOf()
+  // logger.info("timeVsProjectsCommitCount", result)
+  return result
+}
+
+/**
+ * find commit count for all projects (aggregated commitcount of projects by time)
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { name, ref1, ref2, takeLeft, takeRight, sortBy}
+ * @returns [ {name: 'Mar-2014', commitCount: 500, loc: 5000}, {name: 'Apr-2014', commitCount: 300, loc: 20000}, ...]
+ */
+export function timeVsCommitCount(projects, options={}) {
+  const {takeLeft, takeRight} = options
+  const c0 = timeVsProjectsCommitCount(projects, options)
+  let result = _(c0)
+    .map("timeline")
+    .flatten()
+    .groupBy(x => x.name)
+    .transform((r,v,k) => {r.push({ name: k, commitCount: _.sumBy(v, 'commitCount'), loc: _.sumBy(v, 'loc') })}, [])
+
+  result = takeLeft ? result.take(takeLeft) : result
+  result = takeRight ? result.takeRight(takeRight) : result
+  const r0 = result.sortBy(x => moment(x.name).unix(Number)).valueOf()
+  return r0
+}
+
+/**
+ * UNUSED
  * Question: How many LOC insertions+deletions+files per Month for ONE Project
  * collects commit lines of code grouped by month
  */
@@ -219,49 +443,22 @@ export function timeVsLocDetailsForOneProject(project) {
 }
 
 /**
- * What are the recent activities across all projects
- * @returns [{name: aaa, commits: [...]}, {name: controller, commits: [...]}]
+ * find first date of when each project was started
+ * @param projects: [{name: aaa, ref1: master, ref2: master, commits}, {name: aaa, ref1: stable/helium, ref2: stable/helium, commits} ...]
+ * @param options: { sortBy = 'x' }
+ * @returns [ {name: 'aaa', firstCommit: 'Mar-2014', lastCommit: 'Apr-2016'}, ...]
  */
-export function recentActivitiesForAllProjects(projects, projectLimit = 5, totalLimit = 10) {
-  return _(projects).map(p => {
-    return {
-      name: p.name,
-      commits: _.takeRight(p.commits, projectLimit)
-    }
-  })
-  .flatten().sortBy((x) => !_.isEmpty(x.commits) ? x.commits[0].authored_date : null)
-  .takeRight(totalLimit)
-  .reverse()
-  .valueOf()
-}
-
-/**
- * Question: How many commits FOR ALL Projects ?
- * collects commit count from all projects
- * @returns [{name: aaa, commitCount: 25}, {name: affinity, commitCount: 30}]
- */
-export function commitCountForAllProjects(projects, sortBy = 'x') {
+export function timeVsProjectsInitiation(projects, options) {
+  const {sortBy = 'x'} = options
   return _(projects)
-    .map(x => { return { name: x.name, commitCount: x.commits ? x.commits.length : 0} })
-    .sortBy(sortBy === 'x' ? 'name' : 'commitCount')
-    .valueOf()
-}
-
-export function commitCountForAllProjectsPerOrg(projects, organization, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return { name: x.name, commits: _.filter(x.commits, c => c.organization === organization) }})
-    .map(x => { return { name: x.name, commitCount: x.commits ? x.commits.length : 0} })
-    .reject(x => x.commitCount === 0)
-    .sortBy(sortBy === 'x' ? 'name' : 'commitCount')
-    .valueOf()
-}
-
-export function commitCountForAllProjectsPerAuthor(projects, author, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return { name: x.name, commits: _.filter(x.commits, c => c.author === author) }})
-    .map(x => { return { name: x.name, commitCount: x.commits ? x.commits.length : 0} })
-    .reject(x => x.commitCount === 0)
-    .sortBy(sortBy === 'x' ? 'name' : 'commitCount')
+    .map(x => {
+      return {
+        name: x.name,
+        firstCommit: !_.isEmpty(x.commits) ? x.commits[0].authored_date : 0,
+        lastCommit: !_.isEmpty(x.commits) ? x.commits[x.commits.length - 1].authored_date : 0
+      }
+    })
+    .sortBy(sortBy === 'x' ? 'name' : 'firstCommit')
     .valueOf()
 }
 
@@ -270,7 +467,6 @@ export function commitCountForAllProjectsPerAuthor(projects, author, sortBy = 'x
  * @returns projects which has commits that has this organization
  */
 export function projectsContainingOrganization(projects, organization) {
-  // console.log("projectsContainingOrganization", projects)
   return _(projects)
     .filter(p => _.some(p.commits, {organization}))
     .valueOf()
@@ -287,272 +483,17 @@ export function projectsContainingAuthor(projects, author) {
 }
 
 /**
- * Question: How many number of LOC FOR ALL Projects
- * @returns [{name: aaa, loc: 2500}, {name: affinity, loc: 300}]
- */
-export function locForAllProjects(projects, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return { name: x.name, value: _.sumBy(x.commits, (c) => { return (c.insertions || 0) - (c.deletions || 0) } )} })
-    .sortBy(sortBy === 'x' ? 'name' : 'value')
-    .valueOf()
-}
-
-export function locForAllProjectsPerOrg(projects, organization, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return { name: x.name, commits: _.filter(x.commits, c => c.organization === organization) }})
-    .map(x => { return { name: x.name, value: _.sumBy(x.commits, (c) => { return (c.insertions || 0) - (c.deletions || 0) } )} })
-    .sortBy(sortBy === 'x' ? 'name' : 'value')
-    .valueOf()
-}
-
-export function locForAllProjectsPerAuthor(projects, author, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return { name: x.name, commits: _.filter(x.commits, c => c.author === author) }})
-    .map(x => { return { name: x.name, value: _.sumBy(x.commits, (c) => { return (c.insertions || 0) - (c.deletions || 0) } )} })
-    .sortBy(sortBy === 'x' ? 'name' : 'value')
-    .valueOf()
-}
-
-/**
- * Question: Who are the unique authors in a project ?
- * find all the unique authors per project
- * @returns [author1, author2, author3]
- */
-export function authorsForOneProject(project, organization) {
-  return _(project.commits)
-    .filter(x => organization ? x.organization === organization : x)
-    .map('author').uniq().orderBy().valueOf()
-}
-
-/**
- * Question: How many authors per project ?
- * Question: Who are the authors for EVERY project ?
- * Question: What is the most active project by authors ?
- * find all the unique authors for EVERY project
- * @returns [{name: aaa, authors: [a1, a2, a3]}, {name: affinity, authors: [b1, b2, b3, a1]}]
- */
-export function authorsForAllProjects(projects, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return {name: x.name, authors: authorsForOneProject(x)} } )
-    .sortBy(sortBy === 'x' ? 'name' : 'authors')
-    .valueOf()
-}
-
-/**
- * Question: How many authors per project for all projects?
- * @returns [{name: aaa, authorCount: 30}, {name: affinity, authorCount: 45}]
- */
-export function authorCountForAllProjects(projects, sortBy = 'x') {
-  return _(authorsForAllProjects(projects))
-    .map(x => {return { name: x.name, authorCount: x.authors.length }})
-    .sortBy(sortBy === 'x' ? 'name' : 'authorCount')
-    .valueOf()
-}
-
-/**
- * Question: How many unique authors in total FOR ALL projects ?
- * @returns [author11, author12, author21, author22, author31 ]
- */
-export function uniqueAuthorsForAllProjects(projects, organization) {
-  return _(projects)
-    .map(x => { return authorsForOneProject(x, organization)} )
-    .flatten().uniq().orderBy().valueOf()
-}
-
-/**
- * Question: How many times authors have committed FOR ONE project
- * find how many times authors have committed per project
- * @returns [{name: author1, commitCount: 20}, {name: author2, commitCount: 35}]
- */
-export function authorsVsCommitsForOneProject(project, sortBy='x') {
-  return _(project.commits)
-    .map('author')
-    .orderBy().countBy()
-    .map((v,k) => { return { name: k, commitCount: v}})
-    .sortBy(sortBy === 'x' ? 'name' : 'commitCount')
-    .valueOf()
-}
-
-/**
- * Question: How many times authors have committed FOR ALL projects
- * find how many times authors have committed per project
- * @returns { author1: 20, author2: 25, author3:12 }
- */
-export function authorsVsCommitsForAllProjects(projects, sortBy='x') {
-  return _(projects).map(x => {
-    return authorsVsCommitsForOneProject(x)
-  }).flatten()
-  .sortBy(sortBy === 'x' ? 'name' : 'commitCount')
-  .groupBy('name')
-  .reduce( (result, value, key) => {
-    result.push( {name: key, commitCount: _.sumBy(value, 'commitCount')} )
-    return result
-  }, [])
-}
-
-/**
- * Question: How much LOCs did authors contribute for ONE project ?
- * Question: Who is the Top-Most author for ONE Project ?
- * collects lines of code by author per project
- */
-export function authorsVsLocForOneProject(project, sortBy = 'x') {
-  return _(project.commits)
-    .groupBy('author')
-    .transform((r,v,k) => { r.push({name: k, loc: _.sumBy(v, y => y.insertions + y.deletions )}) }, [])
-    .sortBy(sortBy === 'x' ? 'name' : 'loc')
-    .valueOf()
-}
-
-/**
- * Question: How much LOC did an author contribute for ALL Projects ?
- * Question: Who is the Top-Most author of ALL Projects ?
- * collects lines of code by author per project
- */
-export function authorsVsLocForAllProjects(projects, sortBy = 'x') {
-  return _(projects).map(p => {
-    return authorsVsLocForOneProject(p)
-  })
-  .flatten()
-  .groupBy('name')
-  .map((value, key) => {
-    return { name: key, loc: _.sumBy(value, 'loc')}
-  })
-  .sortBy(sortBy === 'x' ? 'name' : 'loc')
-  .valueOf()
-}
-
-/**
  * Question: Who did what most ? Who did what second most ?
  * Question: Who did what least ? Who did what second least ?
- * Eg: Who committed most?
- * return { most1: object, most2: object, least1: object, least2: object }
+ * Eg: Who committed most? Who committed least?
+ * @returns { most1: object, most2: object, least1: object, least2: object }
  */
 export function mostAndLeast(array, key) {
-  //find the object with maximum value
-  const most1 = _.maxBy(array, key)
-  const most2 = _.maxBy(_.without(array, most1), key)
-  const least1 = _.minBy(array, key)
-  const least2 = _.minBy(_.without(array, least1), key)
+  const most1 = _.maxBy(array, key) //find the object with maximum value
+  const most2 = _.maxBy(_.without(array, most1), key) //find the object with maximum value, except the most1
+  const least1 = _.minBy(array, key) // find the object with minimum value
+  const least2 = _.minBy(_.without(array, least1), key) //find the object with maximum value, except the least1
   return { most1, most2, least1, least2 }
-}
-
-/**
- * Question: Who are the unique authors in a project ?
- * find all the unique authors per project
- */
-export function organizationsForOneProject(project) {
-  return _(project.commits).map('organization').uniq().orderBy().valueOf()
-}
-
-/**
- * Question: How many in total organizations have contributed FOR ALL projects ?
- * Question: Who are all the organizations for all projects ?
- * find all the unique authors for ALL projects
- */
-export function uniqueOrganizationsForAllProjects(projects) {
-  return _(projects)
-    .map(x => { return organizationsForOneProject(x)} )
-    .flatten().uniq().orderBy().valueOf()
-}
-
-/**
- * Question: How many organizations per project ?
- * Question: Who are the organizations for EVERY project ?
- * Question: What is the most active project by organizations ?
- */
-export function organizationsForAllProjects(projects, sortBy = 'x') {
-  return _(projects)
-    .map(x => { return {name: x.name, organizations: organizationsForOneProject(x)} } )
-    .sortBy(sortBy === 'x' ? 'name' : 'organizations')
-    .valueOf()
-}
-
-/**
- * Question: How many organizations are contributing for EACH project ?
- * @returns [{name: aaa, organizationCount: 5}, {name: controller, organizationCount:10 }]
- */
-export function organizationCountForAllProjects(projects, sortBy='x') {
-  return _(organizationsForAllProjects(projects))
-    .map(x => {return { name: x.name, organizationCount: x.organizations ? x.organizations.length : 0}})
-    .sortBy(sortBy === 'x' ? 'name' : 'organizationCount')
-    .valueOf()
-}
-
-/**
- * Question: How many commits per project by an organizations ?
- * collects commit count from all projects
- * returns [ {name: 'linuxfoundation.org', commits: 79} , {name:'huawei.com', commits: 3} ]
- */
-export function organizationsVsCommitsForOneProject(project, organization, sortBy='x') {
-  const commitsPerOrg = _(project.commits)
-    .filter(x => organization ? x.organization === organization : x)
-    .map('organization')
-    .countBy()
-    .reduce( (r,v,k) => {
-      r[k] = (r[k] || 0) + v
-      return r
-    }, {})
-
-  return _(commitsPerOrg)
-            .map((v,k) => { return { name: k, commits: v} })
-            .sortBy(sortBy === 'x' ? 'name' : 'commits')
-            .valueOf()
-}
-
-/**
- * Question: How many commits for EACH Projects by ALL organizations ?
- * collects commit count from all projects
- */
-export function organizationsVsCommitsForAllProjects(projects, organization, sortBy='x') {
-  let allCommitsPerOrg = _(projects)
-    .map(p => { return organizationsVsCommitsForOneProject(p)})
-    .flatten()
-    .reduce((r,x) => {
-      r[x.name] = (r[x.name] || 0) + x.commits
-      return r
-    }, {})
-
-  allCommitsPerOrg = _(allCommitsPerOrg)
-    .map((v,k) => { return { name: k, commits: v} })
-    .sortBy(sortBy === 'x' ? 'name' : 'commits')
-    .valueOf()
-
-  return allCommitsPerOrg
-}
-
-/**
- * Question: How much LOCs did an organization contribute for ONE project ?
- * Question: Who is the Top-Most author for ONE Project ?
- * collects lines of code by author per project
- */
-export function organizationsVsLocForOneProject(project, organization, sortBy='x') {
-  return _(project.commits)
-    .filter(x => organization ? x.organization === organization : x)
-    .map(c => { return { name: c.organization, loc: (c.insertions - c.deletions) } })
-    .groupBy('name')
-    .transform( (result, value, key) => {
-      result.push( {name: key, loc: _.sumBy(value, 'loc')} )
-    }, [])
-    .sortBy(sortBy === 'x' ? 'name' : 'loc')
-    .valueOf()
-}
-
-/**
- * Question: How much LOC did an organization contribute for ALL Projects ?
- * Question: Who is the Top-Most author of ALL Projects ?
- * collects lines of code by author per project
- */
-export function organizationsVsLocForAllProjects(projects, organization, sortBy='x') {
-  return _(projects).map(p => {
-    return organizationsVsLocForOneProject(p, organization)
-  })
-  .flatten()
-  .groupBy('name')
-  .map((value, key) => {
-    return { name: key, loc: _.sumBy(value, 'loc')}
-  })
-  .sortBy(sortBy === 'x' ? 'name' : 'loc')
-  .valueOf()
 }
 
 /**
@@ -602,5 +543,6 @@ export function organizationsVsAuthorsCountForAllProjects(projects, sortBy='x') 
   .groupBy('name')
   .transform((r,v,k) => { r.push({ name: k, authors: _(v).map('authors').flatten().uniq().valueOf() }) }, [])
   .map(x => { return { name: x.name, authorCount: x.authors.length } })
+  .sortBy('authorCount')
   .valueOf()
 }

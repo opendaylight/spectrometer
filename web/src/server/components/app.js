@@ -1,3 +1,23 @@
+/**
+# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+##############################################################################
+# Copyright (c) 2016 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
+*/
+
+/**
+ * Main React Component, starting point for the UI App
+ * Used in routes.js as the default starting point for the UI App
+ *
+ * @author: Vasu Srinivasan
+ * @since: 0.0.1
+ */
+
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -8,26 +28,29 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import AppBar from 'material-ui/AppBar'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
 import FontIcon from 'material-ui/FontIcon'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
-import ActionHome from 'material-ui/svg-icons/action/home'
-import { deepOrange700 } from 'material-ui/styles/colors'
 
-import HomePage from './home-page'
-import ProjectsPage from './projects-page'
-import AuthorsPage from './authors-page'
-import OrganizationsPage from './organizations-page'
+import ReactHighcharts from 'react-highcharts'
 
+const ChartConfig = require('../../../config/spectrometer-web.json').chart
+const WebSocketUrl = require('../../../config/spectrometer-web.json').app.websocketUrl
+
+@connect(state => ({
+  projects: state.spectro.projects
+}))
 export default class App extends Component {
 
   constructor(props){
     super(props)
     this.state = {
       showPage: 'home'
+    }
+  }
+
+  componentWillMount() {
+    if (process.browser) {
+      // set global  Highcharts style
+      ReactHighcharts.Highcharts.setOptions({ chart: { style: ChartConfig.style  } });
     }
   }
 
@@ -38,39 +61,34 @@ export default class App extends Component {
   render() {
     if (!process.browser) return null
 
-    console.info("App:render")
+    logger.info("App:render: #projects", this.props.projects.length)
     const App = () => {
       return (
-        <div id="opendaylight-spectrometer">
-          <Toolbar className="toolbar">
+        <div id="opendaylight-spectrometer-main" className="page-layout">
+          <Toolbar id="page-header" className="toolbar">
             <ToolbarGroup firstChild={true}>
-            {process.env.NODE_ENV !== 'test' && <img src={require('../../../assets/images/opendaylight.png')} className="logo"/>}
+              {process.env.NODE_ENV !== 'test' && <img src={require('../../../assets/images/opendaylight.png')} className="logo"/>}
               <ToolbarTitle text="OpenDaylight Spectrometer" className="toolbar-title" />
             </ToolbarGroup>
             <ToolbarGroup>
-              <FontIcon className="material-icons" title="Home" onClick={this.handlePageClick.bind(this, 'home')}>home</FontIcon>
-              <FontIcon className="material-icons" title="Contributors" onClick={this.handlePageClick.bind(this, 'authors')}>people</FontIcon>
-              <FontIcon className="material-icons" title="Projects" onClick={this.handlePageClick.bind(this, 'projects')}>folder</FontIcon>
-              <FontIcon className="material-icons" title="Organizations" onClick={this.handlePageClick.bind(this, 'organizations')}>business</FontIcon>
-              {/*<FontIcon className="material-icons" title="Authors" onClick={this.handlePageClick.bind(this, 'authors')}>account_circle</FontIcon>*/}
-              <IconMenu
-                iconButtonElement={<FontIcon className="material-icons more-menu-icon">more_vert</FontIcon>}
-                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                targetOrigin={{horizontal: 'left', vertical: 'top'}}>
-                <MenuItem primaryText="Help" linkButton={true} href="http://opendaylight-spectrometer.readthedocs.io/" target="_blank"/>
-              </IconMenu>
+              <FontIcon className="material-icons" title="Home"><Link activeClassName="selected"  to="/home">home</Link></FontIcon>
+              <FontIcon className="material-icons" title="Authors" onClick={this.handlePageClick.bind(this, 'authors')}><Link activeClassName="selected" to="/authors">people</Link></FontIcon>
+              <FontIcon className="material-icons" title="Projects" onClick={this.handlePageClick.bind(this, 'projects')}><Link  activeClassName="selected" to="/projects">folder</Link></FontIcon>
+              <FontIcon className="material-icons" title="Organizations" onClick={this.handlePageClick.bind(this, 'organizations')}><Link  activeClassName="selected" to="/organizations">business</Link></FontIcon>
+              <FontIcon className="material-icons" title="Help"><Link href="http://opendaylight-spectrometer.readthedocs.io/" target="_blank">help</Link></FontIcon>
             </ToolbarGroup>
           </Toolbar>
-          {this.state.showPage === 'home' && <HomePage />}
-          {this.state.showPage === 'projects' && <ProjectsPage />}
-          {this.state.showPage === 'authors' && <AuthorsPage />}
-          {this.state.showPage === 'organizations' && <OrganizationsPage />}
+          {this.props.children}
         </div>
       )
     }
 
+    const muiTheme = getMuiTheme({
+      'fontFamily': 'Ubuntu'
+    })
+
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider muiTheme={muiTheme}>
         {App()}
       </MuiThemeProvider>
     )

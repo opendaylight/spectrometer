@@ -11,19 +11,18 @@
 */
 
 /**
- * Spectrometer application boot up page
- * - includes babel and polyfill for on-the-fly transpilation
+ * Global Logger
  *
  * @author: Vasu Srinivasan
  * @since: 0.0.1
  */
 
-require('babel-register')({
-  ignore: function(filename) {
-    return filename.indexOf('/node_modules/') >= 0;
-  }
-});
-require('babel-polyfill')
+var logger = require('loglevel')
+var logtimestamp = require('loglevel-timestamp')
 
-// Startup the NodeJS server
-require('./server');
+logger.setLevel(0)
+logtimestamp(logger, {shouldTimestamp: true, shouldLevel: true})
+
+global.logger = logger
+
+module.exports = logger

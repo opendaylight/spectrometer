@@ -1,3 +1,24 @@
+/**
+# @License EPL-1.0 <http://spdx.org/licenses/EPL-1.0>
+##############################################################################
+# Copyright (c) 2016 The Linux Foundation and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+##############################################################################
+*/
+
+/**
+ * React component to display Organization card
+ * Used in /organizations page
+ * Uses CardLayout
+ *
+ * @author: Vasu Srinivasan
+ * @since: 0.0.1
+ */
+
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -7,20 +28,45 @@ import {connect} from 'react-redux'
 import Avatar from 'material-ui/Avatar'
 
 import * as DataReducers from '../../api/data-reducers'
-import PaperLayout from '../layouts/paper-layout'
-import ContributionsByProjectChart from '../charts/contributions-by-project'
-import ProjectsVsAuthorsChart from './projects-vs-authors-chart'
-import LocByProjectChart from '../charts/loc-by-project'
+
+import CardLayout from '../card-layout'
+import ProjectsVsCommitsChart from '../charts/projects-vs-commits-chart'
+import ProjectsVsAuthorsChart from '../charts/projects-vs-authors-chart'
+
+const TOP_10 = require('../../../../config/spectrometer-web.json').top10
 
 const buttonActions = [
-  {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organization Summary'},
-  {type: 'chart', option: 'contributions-by-project', icon: 'code', tooltip: 'Contributions by Project'},
-  {type: 'chart', option: 'projectsVsLoc', icon: 'subject', tooltip: 'Projects vs LOC Chart'},
-  {type: 'chart', option: 'projectsVsAuthors', icon: 'perm_identity', tooltip: 'Projects vs Authors Chart'}
+  {type: 'chart', option: 'projects-vs-authors', icon: 'people', tooltip: 'Projects vs Authors Chart'},
+  {type: 'chart', option: 'projects-vs-commits', icon: 'code', tooltip: 'Projects vs Commits Chart'},
+  {type: 'chart', option: 'summary', icon: 'assignment', tooltip: 'Organization Summary'}
 ]
 
+const renderSummary = (projects, card) => {
+  const a0 = DataReducers.projectsVsContributorCount(projects, {contributor: 'author', organization: card.name})
+  const authorCount = _.sumBy(a0, 'contributorCount')
+
+  const p0 = DataReducers.projectsVsCommitCount(projects, {contributor: 'organization', organization: card.name})
+  // const p1 = _.filter(p0, x => x.commitCount > 0)
+  const commitCount = _.sumBy(p0, 'commitCount')
+  const locCount = _.sumBy(p0, 'loc')
+
+  return (
+    <div className="card-summary">
+      <p>
+        <span className="text-project">{p0.length}</span><span> projects contributed</span>
+      </p>
+      <p>
+        <span className="text-author">{authorCount}</span><span> authors have made </span><span className="text-commits">{commitCount}</span><span> commits</span>
+      </p>
+      <p>
+        <span className="text-loc">{locCount}</span><span> lines of code modified</span>
+      </p>
+    </div>
+  )
+}
+
 @connect(state => ({
-  projects: state.projects.projects
+  projects: state.spectro.projects
 }))
 export default class OrganizationCard extends Component {
   constructor(props) {
@@ -42,61 +88,26 @@ export default class OrganizationCard extends Component {
   }
 
   render() {
-    const renderSummary = (series) => {
-      const commitCount = _.sumBy(DataReducers.commitCountForAllProjectsPerOrg(series, this.props.card.name), 'commitCount')
-      const loc = _.sumBy(DataReducers.locForAllProjectsPerOrg(series, this.props.card.name), 'value')
-      const authors = DataReducers.uniqueAuthorsForAllProjects(series, this.props.card.name).length
-      return (
-        <div>
-          <p>
-            <span className="text-project">{series.length}</span><span> projects contributed</span>
-          </p>
-          <p>
-            <span className="text-author">{authors}</span><span> authors have made </span><span className="text-commits">{commitCount}</span><span> commits</span>
-          </p>
-          <p>
-            <span className="text-loc">{loc}</span><span> lines of code</span>
-          </p>
-        </div>
-      )
-    }
-
-    const renderProjectsVsCommitsChart = (projectsForOrg) => {
-      return (<ContributionsByProjectChart projects={this.props.projects} organization={this.props.card.name} />)
-    }
-
-    const renderProjectsVsLocChart = (projectsForOrg) => {
-      return (<LocByProjectChart projects={this.props.projects} organization={this.props.card.name} />)
-    }
-
-    const renderProjectsVsAuthorsChart = (projectsForOrg) => {
-      return (<ProjectsVsAuthorsChart projects={this.props.projects} organization={this.props.card.name} />)
-    }
-
     if (_.isEmpty(this.props.card)) return (null)
-    const projectsForOrg = DataReducers.projectsContainingOrganization(this.props.projects, this.props.card.name)
+    logger.info("organization-card:render", this.props.card.name)
 
-    console.info("organization-card:render", this.props.card.name)
     return (
-      <PaperLayout id={`org-layout-${this.props.card.name}-${this.props.card.index}`} style={{width: '49%', margin: '0.2rem'}}
+      <CardLayout id={`org-card-${this.props.card.name}-${this.props.card.index}`}
         title={this.props.card.name} avatar={this.props.avatar}
         handleOnClose={this.handleOnClose.bind(this, this.props.card.index)}
         buttonActions={buttonActions}
         handleButtonActions={this.handleButtonActions.bind(this)}
         currentView={this.state.view}>
-        <div style={{margin: '1rem'}}>
-          {this.state.view.chart === 'summary' && renderSummary(projectsForOrg)}
-          {this.state.view.chart === 'contributions-by-project' && renderProjectsVsCommitsChart(projectsForOrg)}
-          {this.state.view.chart === 'projectsVsLoc' && renderProjectsVsLocChart(projectsForOrg)}
-          {this.state.view.chart === 'projectsVsAuthors' && renderProjectsVsAuthorsChart(projectsForOrg)}
-        </div>
-      </PaperLayout>
+        {this.state.view.chart === 'summary' && renderSummary(this.props.projects, this.props.card)}
+        {this.state.view.chart === 'projects-vs-commits' && <ProjectsVsCommitsChart projects={this.props.projects} view={{organization:this.props.card.name, takeRight: TOP_10}} />}
+        {this.state.view.chart === 'projects-vs-authors' && <ProjectsVsAuthorsChart projects={this.props.projects} view={{organization:this.props.card.name, takeRight: TOP_10}} />}
+      </CardLayout>
     )
   }
 }
 
 OrganizationCard.propTypes = {
+  avatar: React.PropTypes.object,
   card: React.PropTypes.object,
-  handleOnClose: React.PropTypes.func,
-  avatar: React.PropTypes.object
+  handleOnClose: React.PropTypes.func
 }

@@ -1,0 +1,329 @@
+// @Author: Vasu Srinivasan <vasya10>
+// @Date:   2016-07-01T07:51:17-05:00
+// @Last modified by:   vasya10
+// @Last modified time: 2016-11-04T17:58:37-05:00
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+@import '../../node_modules/animate.css/animate.min.css';
+@import '../../node_modules/rc-slider/assets/index.css';
+
+/** Themes **/
+$font-family: 'Ubuntu';
+$body-base: white;
+$base-color: #E65100;
+$base-color-alt: #FFCC80;
+$text-color: white;
+$button-color: #607D8B;
+$border-color: lightgrey;
+$paper-color: white;
+$hint-color: lighten(darkgrey, 10%);
+$paper-header-color: darken(whitesmoke, 5%);
+$paper-header-title-color: #607D8B;
+$chart-header-color: white;
+$chart-header-title-color: darkgrey;
+
+$text-color-organization: #E91E63;
+$text-color-project: #00BCD4;
+$text-color-author: #009688;
+$text-color-commits: indigo;
+$text-color-loc: cornflowerblue;
+$text-color-branch: #795548;
+$text-color-time: #3F51B5;
+$text-color-email: black;
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $body-base;
+}
+
+html {
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 38em) {
+  html {
+    font-size: 1rem;
+  }
+}
+
+/** Icons, Colors, Logo **/
+.logo {
+  margin-left: 1rem;
+  border-bottom: solid 1px $base-color;
+  box-sizing: border-box;
+  width: 4rem;
+  height: 4rem;
+}
+
+.material-icons > a {
+  text-decoration: none;
+  color: $text-color;
+}
+
+.material-icons > a.selected {
+  text-decoration: underline;
+  color: $text-color;
+}
+
+.text-email {
+  color: $text-color-email;
+}
+
+.text-organization {
+  color: $text-color-organization;
+}
+
+/*cyan500*/
+.text-project {
+  color: $text-color-project;
+}
+
+/*teal500*/
+.text-author {
+  color: $text-color-author;
+}
+
+.text-time {
+  color: $text-color-time;
+  margin-left: 0.25rem;
+}
+
+.text-commits {
+  color: $text-color-commits;
+}
+
+.text-branch {
+  color: $text-color-branch;
+}
+
+.text-loc {
+  color: $text-color-loc;
+}
+
+.number-stat {
+  font-size: 1.5rem;
+}
+
+.community-card-text {
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  color: #606060;
+}
+
+/** Page Container **/
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100rem;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 100vh;
+  max-height: 100vh;
+  border-left: solid 1px lightgrey;
+  border-right: solid 1px lightgrey;
+}
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  background-color: $base-color !important;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 4rem !important;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.toolbar-title {
+  margin-left: 0.5rem;
+  color: $text-color !important;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  font-size: 2rem !important;
+}
+
+.more-menu-icon {
+  margin-right: 1rem;
+  left: 1rem;
+  top: 0.95rem;
+  cursor: pointer;
+  color: $text-color;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+/** page-content left panel **/
+.page-content-left {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  width: 80%;
+}
+
+/** page-content right panel **/
+.page-content-right {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  &--border {
+    border-left: solid 1px $border-color;
+  }
+}
+
+.card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0.4rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 48%;
+  &--full-width {
+    width: 100%;
+  }
+  &--fit {
+    flex: 1 0 auto;
+    width: 90%;
+  }
+  &--header {
+    padding: 0.5rem;
+    flex: 0 0 auto;
+    color: $paper-header-title-color;
+    background-color: $paper-header-color;
+    text-transform: uppercase;
+  }
+  &--title {
+    font-size: 1.2rem;
+    margin-left: 0.6rem;
+  }
+}
+
+.chart {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  &--header {
+    padding: 0.5rem;
+    flex: 0 0 auto;
+    color: $chart-header-title-color;
+    background-color: $chart-header-color;
+    border-bottom: 1px solid $button-color;
+  }
+  &--title {
+    font-size: 1.0rem;
+    margin-left: 0.6rem;
+  }
+}
+
+.card-summary {
+  margin: 1rem;
+}
+
+.card-button {
+  color: $button-color;
+  display: inline-block;
+  cursor: pointer;
+  float: right;
+  margin: 0 0.2rem 0 0.2rem;
+
+  &.selected {
+    color: $base-color;
+  }
+  &.group {
+    margin-right: 2rem;
+  }
+}
+
+.hint {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: $hint-color;
+  font-size: 2.0rem;
+  &--line {
+    align-self: center;
+  }
+}
+
+.card-branches {
+  padding: 0.3rem;
+  height: 2.5rem;
+  margin-bottom: 0.2rem;
+}
+
+/** Redefine Griddle Table styles **/
+
+.griddle-container{
+  font-family: $font-family;
+  font-size: 0.8rem;
+}
+
+.griddle td {
+  padding:5px !important;
+  border-bottom: solid 1px $border-color !important;
+}
+
+// .table-chart {
+// }
+//
+.td-values {
+  text-align: center;
+}
+
+/** Redefine highcharts styles **/
+.highcharts-root {
+  font-family: $font-family;
+}
+
+.highcharts-container {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/** Redefine rc-slider styles **/
+.rc-slider-track {
+  background-color: $base-color-alt !important;
+}
+
+.rc-slider-handle {
+  background-color: $base-color !important;
+  height: 1rem;
+  width: 1rem;
+}
+
+.branch-slider {
+  margin: 0.5rem;
+}
