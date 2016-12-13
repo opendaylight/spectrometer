@@ -51,4 +51,7 @@ setup(
         [console_scripts]
         spectrometer=spectrometer.cli:cli
     ''',
+    data_files=[
+        ('/etc/systemd/system', ['data/spectrometer.service']),
+    ],
 )

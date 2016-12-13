@@ -1,0 +1,15 @@
+[Unit]
+Description=spectrometer daemon
+After=network.target
+
+[Service]
+PIDFile=/run/spectrometer/pid
+User=spectrometer
+Group=spectrometer
+WorkingDirectory=/home/zxiiro/.virtualenvs/spectrometer
+ExecStart=/home/spectrometer/.virtualenvs/spectrometer/bin/gunicorn --pid /run/spectrometer/pid -b 0.0.0.0:5000 'spectrometer:run_app()'
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target
