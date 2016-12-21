@@ -33,6 +33,7 @@ log = logging.getLogger(__name__)
 
 def create_app(config):
     app = Flask(__name__)
+    config = os.path.abspath(config)
     app.config.from_pyfile(config)
     app.debug = app.config.get('DEBUG', False)
 
