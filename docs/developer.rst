@@ -33,7 +33,7 @@ achieve this using pip's editable install mode.
 
     cd server  # From spectrometer repo root
     pip install -e .
-    spectrometer server start -c example-config/config.py
+    spectrometer server -c example-config/config.py start
 
 Testing Code
 ^^^^^^^^^^^^
