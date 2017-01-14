@@ -53,7 +53,7 @@ export default class CardLayout extends Component {
             clazz += button.group ? ' group' : ''
             return (
               <a key={`${props.id}-${button.type}-${button.option}`} className={clazz} title={button.tooltip}
-                onClick={this.handleButtonActions.bind(this, button.type, button.option)}>{button.icon}
+                onClick={this.handleButtonActions.bind(this, button.type, button.option)} href={`#${this.props.id}`}>{button.icon}
               </a>)
           })}
         </div>
