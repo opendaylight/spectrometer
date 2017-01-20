@@ -257,6 +257,7 @@ html {
   cursor: pointer;
   float: right;
   margin: 0 0.2rem 0 0.2rem;
+  text-decoration: none;
 
   &.selected {
     color: $base-color;
