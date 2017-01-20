@@ -55,6 +55,7 @@ def create_app(config):
         logfile = os.path.join(logdir, 'spectrometer.log')
 
         logging.getLogger().setLevel(logging.NOTSET)
+        logging.getLogger('git.cmd').setLevel(logging.INFO)
         formatter = logging.Formatter('%(asctime)s (%(levelname)8s) %(name)-40s: %(message)s')
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
