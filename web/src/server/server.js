@@ -34,7 +34,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
-import createLocation from 'history/lib/createLocation';
+import createHistory from 'history/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import logger from './logger'
@@ -138,7 +138,7 @@ app.get('/*', function(req, res, next) {
   logger.info("serving url:", req.url)
   if ((/\.(gif|jpg|jpeg|tiff|png|ico|svg)$/i).test(req.url)) next()
 
-  const location = createLocation(req.url);
+  const location = req.url //createLocation(req.url);
   match({ routes, location }, (err, redirectLocation, renderProps) => {
     if (err) {
       logger.error(err)
