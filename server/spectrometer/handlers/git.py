@@ -60,6 +60,7 @@ class GitHandler:
                 'committed_date': commit.committed_date,  # seconds since epoch
                 'committer_tz_offset': commit.committer_tz_offset,  # seconds west of utc
                 'message': commit.message,
+                'project': self.name,
             }
 
     def _fetch_commits(self, revision, filters=None):

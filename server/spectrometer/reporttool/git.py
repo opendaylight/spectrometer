@@ -32,6 +32,7 @@ class GitReport():
         self.organizations = Counter()
         self.projects = Counter()
         self.tz_data = Counter()
+        self.project_lines = Counter()
 
         self._fetch_data()
 
@@ -63,10 +64,13 @@ class GitReport():
             author_tz_offset = c['author_tz_offset']
             commit_message = c['message']
             organization = c['author_email'].split('@', 1)[-1]
+            lines = c['lines']
+            project = c['project']
 
             self._process_author_contributions(author_email, commit_message)
             self._process_tz_offset(author_tz_offset)
             self.organizations[organization] += 1
+            self.project_lines[project] += lines.get('lines')
 
         self._process_author_names()
 
@@ -110,14 +114,16 @@ class GitReport():
         print('Total Organizations: {0}'.format(len(self.organizations)))
         print('Total Commits: {0}'.format(len(self.commits)))
 
-        top_authors = ['{0} ({1})'.format(k.split(':')[0], v) for k, v in OrderedDict(self.authors.most_common(10)).items()]  # noqa
-        top_organizations = ['{0} ({1})'.format(k, v) for k, v in OrderedDict(self.organizations.most_common(10)).items()]  # noqa
-        top_projects = ['{0} ({1})'.format(k, v) for k, v in OrderedDict(self.projects.most_common(10)).items()]
+        top_authors = ['{0} ({1})'.format(k.split(':')[0], v) for k, v in OrderedDict(self.authors.most_common(20)).items()]  # noqa
+        top_organizations = ['{0} ({1})'.format(k, v) for k, v in OrderedDict(self.organizations.most_common(20)).items()]  # noqa
+        top_projects = ['{0} ({1})'.format(k, v) for k, v in OrderedDict(self.projects.most_common(20)).items()]
+        top_projects_by_loc = ['{0} ({1})'.format(k, v) for k, v in OrderedDict(self.project_lines.most_common(20)).items()]  # noqa
         all_timezones = sorted(['{0} ({1})'.format(k, v) for k, v in self.tz_data.items()])
         table = OrderedDict()
-        table['Top 10 Projects'] = top_projects
-        table['Top 10 Contributors'] = top_authors
-        table['Top 10 Organizations'] = top_organizations
+        table['Top 20 Projects'] = top_projects
+        table['Top 20 Projects by LOC'] = top_projects_by_loc
+        table['Top 20 Contributors'] = top_authors
+        table['Top 20 Organizations'] = top_organizations
         table['Timezones'] = all_timezones
         print('\n')
         print(tabulate(table, headers='keys'))
